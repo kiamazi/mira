@@ -45,11 +45,20 @@ WriteMakefile
         'Template::Alloy'       => 0,
         'Plack'                 => 0,
 },
-TEST_REQUIRES => {
-        'Test::More'                => 0,
-},
+  TEST_REQUIRES => {
+        'Test::More'            => 0,
+  },
   dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-
+  META_MERGE => {
+    'meta-spec' => { version => 2 },
+    resources => {
+      repository => {
+          type => 'git',
+          url  => 'https://github.com/kiamazi/mira.git',
+          web  => 'https://github.com/kiamazi/mira',
+      },
+    },
+  },
 );
 
 
