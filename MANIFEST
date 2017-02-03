@@ -1,4 +1,6 @@
 MANIFEST
+LICENSE
+README.md
 Makefile.PL
 lib/Mira.pm
 lib/Mira/CLI.pm
