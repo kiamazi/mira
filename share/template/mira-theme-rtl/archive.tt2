@@ -1,0 +1,79 @@
+
+[% INCLUDE header %]
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="hidden-xs col-md-1"></div>
+            <div class="col-xs-12 col-md-10">
+                <img src="[% STATIC %]/mira-theme/img/mira-c.png" class="img-responsive mira-header" alt="mira">
+                <div class="page-header">
+                  <h1>[% FloorTITLE %]</h1>
+                  <h2>[% ArchiveTITLE %]</h2>
+                </div>
+            <div class="hidden-xs col-md-1"></div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7 col-lg-offset-1 col-md-7 col-md-offset-1">
+      [% FOREACH POSTS %]
+        <h4><a href="[% url %]">[% title %]</a> - <small>[% date %]</small></h4>
+      [%- END %]
+
+      <ul class="pager">
+        [% IF prev %]
+        <li class="previous">
+          <a href="[% prev %]">&larr; Newer Posts</a>
+        </li>
+        [%- END %]
+        [% IF next %]
+        <li class="next">
+          <a href="[% next %]">Older Posts &rarr;</a>
+        </li>
+        [%- END %]
+      </ul>
+    </div>
+
+    [% INCLUDE sidebar %]
+
+  </div>
+</div>
+
+[% INCLUDE footer %]
+
+
+<!--
+  <body>
+
+[% FOREACH entry IN posts %]
+  <h2>[% entries.$entry.title %]</h2>
+  <h5>[% entries.$entry.date %]</h5>
+  <h5>[% entries.$entry.floor %]</h5>
+  <entry>[% entries.$entry.body %]</entry>
+  [% IF entries.$entry.category %]<h4>category: [% entries.$entry.category %]</h4>[%- END %]
+  [% IF entries.$entry.tag %]<h4>tag: [% entries.$entry.tag %]</h4>[%- END %]
+  <hr>
+[%- END %]
+
+  </body>
+
+</html>
+
+### [% # key = sitedata.keys %]
+[% FOREACH utid IN sitedata.keys.sort %]
+  [% sitedata.$utid.title %]
+  [% sitedata.$utid.body %]
+**************************************************
+  [% FOREACH val IN sitedata.$utid.values -%]
+    [% val %]
+  [% END %]
+**************************************************
+[%- END %]
+
+    [% # FOREACH entry IN sitedata.values %]
+      [% # entry.title %]
+    [% # END %] -->

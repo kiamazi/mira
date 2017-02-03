@@ -1,0 +1,127 @@
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+mira - static site generator
+
+=head1 VERSION
+
+This document describes L<mira> version B<0.05>.
+
+
+=head1 DESCRIPTION
+
+mira is an integrated content management framework for create multiple websites
+
+you can create your blogs, photoblogs, image galleries, podcasts, books, portfolio, docs, manuals, projects pages and... in mira's floors. each floor is a separate website which can have its own config, template and fields or use main floor settings.
+
+=head1 mira is cool?
+
+=over
+
+=item simple
+
+No need databases, just static content flies and a template body. mira performs all other tasks
+
+=item modern
+
+Write your contetnt's body whatever you like, Markdown, Textile, BBcode, HTML or just simple texts.
+
+=item flexible
+
+no limit for make archive lists like categories, tags, seassions, chapters and... or single fields like title, sub title, thumbs and... just keep dreaming about what you need, mira will make them
+
+=back
+
+=head1 NOTE
+
+simple, fast & perlish multiple website generator
+
+mira structure based in floors, each folder in content directory is a separate site, which can have them config and template, or use main config seting
+
+=head1 start
+
+  mkdir mira_Site_name
+  cd mira_Site_name
+  mira init
+
+now you have a mira site in your mira_Site_name folder
+
+edit config.yml
+
+  title: YOUR MAIN SITE TITLE
+  description: A Description about your site
+  author: your name
+  email: your-email@domain.com
+  url: PUBLISH.ADDRESS.COM      # or something else like http://localhost:80   
+  root: /                       # root address of your site, leave it / if you dont like publish in subfolders like ADDRES.COM/SUB/
+  static: /static               # the site static files address, content of 'statics' folder in your root mira_Site_name folder will be copy here, ADDRES.COM/static
+  imageurl: /static/img         # in your entries if you use [% img %] will be replaced by this address
+  permalink: :year/:month/:day/:title/ #your entry address static address follow this path
+
+  default_body_format: markdown # default markup for your entry body, but you can change it for each post in header field: body_format
+  default_floor: blog           # default floor for when you use 'mira new' without --floor switch
+  template: THEME_NAME          # body template for make your static HTMLs, your template folder name in template directory in mira root
+  lists:                        # the fields which your archive based on them
+    - categories
+    - tags
+    - author
+  
+
+you can make config file for each floor in config directory in mira root, e.x: config/YOUR_FLOOR.yml
+
+=head1 SYNOPSIS
+
+    mira <CoMMand> [-?h] [options]
+	-? -h --help  show help
+
+Available commands:
+
+commands: list the application's commands
+    help  : display a command's help screen
+    build : site builder
+    init  : mira structure generator
+    new   : new entry maker
+
+available options:
+
+command 'new' options:
+    -f, --floor : make new post in your floor
+
+
+=head2 usage
+
+=head3 new post
+
+  mira new -t "YOUR POST TITLE" -f "FLOOR_NAME"
+this command your content file in: content/FLOOR_NAME/yy-mm-dd-YOUR_POST_TITLE.pen  
+in header this file have your fields structures, from structure/FLOOR_NAME + utid, title, date...
+
+NOTE: never edit utid
+
+=head3 build
+
+  mira build
+
+mira make your sites in public directory, if your floor have them config file, mira use it for make your floor, and if no config file mira make it in public/FLOOR_NAME by default configs stored in main config.yml
+
+=head3 preview
+
+  mira view [--host 127.0.0.1] [--port 5000]
+
+a simple static file server based on your public directory
+
+=head1 AUTHOR
+
+kiavash <kiavash@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+See L<http://www.perl.com/perl/misc/Artistic.html>
+
+=cut

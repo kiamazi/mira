@@ -1,0 +1,37 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use 5.012;
+
+use Mira::CLI;
+
+if (@ARGV && $ARGV[0] !~ m/^(build|new|init|view)/) {
+  usage();
+}
+
+
+sub usage {
+  print <<END_USAGE;
+
+mira <command> [option]
+
+commands:
+  init
+    make new site structure
+  new
+    make new post file in content directory
+  build
+    build your site by your content files and structures
+  view
+    build a preview server with your public directory content
+
+options:
+      -d | --directory
+            use another directory source
+
+END_USAGE
+exit 1;
+}
+
+Mira::CLI->run;

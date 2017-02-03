@@ -1,0 +1,116 @@
+package Mira::Config;
+
+use strict;
+use warnings;
+use utf8;
+
+use YAML;
+use File::Spec::Functions;
+use File::Basename qw/basename/;
+use Carp;
+use Encode;
+use Encode::Locale;
+use File::Path qw(make_path);
+use 5.012;
+
+sub new {
+  my $class = shift;
+  my $source = shift;
+  my $self = {};
+  $self->{_source} = $source;
+
+    my $yaml;
+    if (-f catfile($source, 'config.yml') )
+    {
+      {
+        open my $fh, '<:encoding(UTF-8)', 'config.yml' or die $!;
+        local $/ = undef;
+        $yaml = <$fh>;
+        close $fh;
+      }
+      eval { #must read yaml message and print it in error output
+        $self->{_default} = Load( $yaml );
+      };
+      if ($@) {croak "$source/config.yml have problem";}
+      #$self->{_default} = $self->{_default}->[0];
+    } else
+    {
+      croak " ! - you are not in true path or --source is invalid path or /conf/config.yml isn't valid file";
+    }
+
+    $self->{_default}->{post_num} = "3" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
+    $self->{_default}->{post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
+    $self->{_default}->{default_new_entry_floor} = "blog" unless (exists $self->{_default}->{default_new_entry_floor} and $self->{_default}->{default_new_entry_floor});
+    $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
+
+    my $glob = catfile($source, 'content', '*');
+
+    my @floors = glob encode(locale_fs => $glob);
+    @floors = grep {-d} @floors;
+    @floors = map {decode(locale_fs => basename($_))} @floors;
+
+    foreach my $floor (@floors)
+    {
+      if (-f catfile($source, 'config', "$floor.yml") )
+      {
+        my $flyaml = catfile($source, 'config', "$floor.yml");
+        {
+          open my $fh, '<:encoding(UTF-8)', $flyaml or die $!;
+          local $/ = undef;
+          $yaml = <$fh>;
+          close $fh;
+        }
+        my $floorconf;
+        eval { #must read yaml message and print it in error output
+          $floorconf = Load($yaml);
+        };
+        if ($@)
+        {
+          carp " # - $floor\.yml have problem, use default configs for floor: $floor";
+          $self->{$floor} = _not_valids($floor);
+          next;
+        }
+        $self->{$floor} = $floorconf;
+        $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
+        $self->{$floor}->{description} = $self->{_default}->{description} unless ($self->{$floor}->{description});
+        $self->{$floor}->{url} = $self->{_default}->{url} unless ($self->{$floor}->{url});
+        $self->{$floor}->{root} = "$self->{_default}->{root}/$floor" unless ($self->{$floor}->{root});
+        $self->{$floor}->{static} = $self->{_default}->{static} unless ($self->{$floor}->{static});
+        $self->{$floor}->{imageurl} = $self->{_default}->{imageurl} unless ($self->{$floor}->{imageurl});
+        $self->{$floor}->{author} = $self->{_default}->{author} unless ($self->{$floor}->{author});
+        $self->{$floor}->{email} = $self->{_default}->{email} unless ($self->{$floor}->{email});
+        $self->{$floor}->{template} = $self->{_default}->{template} unless ($self->{$floor}->{template});
+        $self->{$floor}->{lists} = $self->{_default}->{lists} unless ($self->{$floor}->{lists});
+        $self->{$floor}->{namespace} = $self->{_default}->{namespace} unless ($self->{$floor}->{namespace});
+        $self->{$floor}->{date_format} = $self->{_default}->{namespace} unless ($self->{$floor}->{date_format});
+      } else
+      {
+        $self->{$floor} = _not_valids($floor, $self);
+      }
+    }
+
+    #bless $self, $class;
+    return $self;
+}
+
+sub _not_valids {
+  my $floor = shift;
+  my $self = shift;
+  my $configs = {
+    title => "$floor",
+    root => "/$floor/",
+    url => $self->{_default}->{url},
+    permalink => ":year/:month/:day/:title/",
+    default_body_format => "markdown",
+    post_num => "5",
+    archive_post_num => "20",
+    static => "/static/",
+    imageurl => "/static/img",
+    template => $self->{_default}->{template},
+    lists => $self->{_default}->{lists},
+    namespace => $self->{_default}->{namespace},
+  };
+  return $configs;
+}
+
+1;
