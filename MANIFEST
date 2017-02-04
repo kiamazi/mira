@@ -18,6 +18,7 @@ lib/Mira/Parser/img.pm
 lib/Mira/Parser/Markup.pm
 lib/Mira/View.pm
 lib/Mira/View/Archive.pm
+lib/Mira/View/Feed.pm
 lib/Mira/View/Floor.pm
 lib/Mira/View/Main.pm
 lib/Mira/View/Post.pm
@@ -91,6 +92,7 @@ share/statics/mira-theme/js/jquery.min.js
 share/structure/blog
 share/structure/default
 share/template/mira-theme-rtl/archive.tt2
+share/template/mira-theme-rtl/atom.tt2
 share/template/mira-theme-rtl/include/footer
 share/template/mira-theme-rtl/include/header
 share/template/mira-theme-rtl/include/navbar
@@ -99,6 +101,7 @@ share/template/mira-theme-rtl/index.tt2
 share/template/mira-theme-rtl/main.tt2
 share/template/mira-theme-rtl/post.tt2
 share/template/mira-theme/archive.tt2
+share/template/mira-theme/atom.tt2
 share/template/mira-theme/include/footer
 share/template/mira-theme/include/header
 share/template/mira-theme/include/navbar
