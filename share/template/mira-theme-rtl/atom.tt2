@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[% FloorTITLE %]</title>
+    <description>[% FloorDESCRIPTION %]</description>
+    <link>[% FloorURL %]</link>
+    <atom:link href="[% URL %]/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>[% DATE %]</pubDate>
+    <lastBuildDate>[% DATE %]</lastBuildDate>
+    <generator>mira</generator>
+
+
+      [% FOREACH POSTS %]
+        <item>
+          <title>[% title %]</title>
+          <description>[% body.more | html %]</description>
+          <pubDate>[% date %]</pubDate>
+          <link>[% url %]</link>
+          <guid isPermaLink="true">[% url %]</guid>
+
+
+        <category>
+          [% FOREACH categories.values %]
+            [% name %]
+            [% IF (loop.index != loop.max) %],[%- END %]
+          [%- END %]
+        </category>
+        </item>
+      [% END %]
+
+
+    </channel>
+</rss>

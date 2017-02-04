@@ -7,6 +7,7 @@ our $VERSION = '0.05';
 
 use Mira::View::Main;
 use Mira::View::Floor;
+use Mira::View::Feed;
 use Mira::View::Archive;
 use Mira::View::Post;
 

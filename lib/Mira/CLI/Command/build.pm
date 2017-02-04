@@ -126,6 +126,16 @@ sub execute {
     	floor_data => $floor_data,
     );
 
+    Mira::View::Feed->template(
+    	config => $config,
+    	posts => $posts, #utids
+    	allentries => $data_base, #all entries hash
+    	floors => $floors_base,
+    	pensource => $pensource,
+    	lists => $lists,
+    	floor_data => $floor_data,
+    );
+
     $diff = Time::HiRes::tv_interval($start_time);
     print "start archives indexes: $diff\n";
 
