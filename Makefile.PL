@@ -42,7 +42,6 @@ WriteMakefile
         'File::Spec::Functions' => 0,
         'FindBin'               => 0,
         'Getopt::Long'          => 0,
-        'Template::Alloy'       => 0,
         'Plack'                 => 0,
 },
   TEST_REQUIRES => {
