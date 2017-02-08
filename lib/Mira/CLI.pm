@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use App::Cmd::Setup -app;
 
-$Mira::CLI::VERSION = '0.05';
+$Mira::CLI::VERSION = '0.07';
 
 
 

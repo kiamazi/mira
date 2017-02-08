@@ -1,4 +1,5 @@
 package Mira::View::Archive;
+$Mira::View::Archive::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -20,22 +21,7 @@ sub template {
   my $lists = $switches{lists};
   my $floor_data = $switches{floor_data};
 
-#  my $floor_data = {};
-#  foreach my $floor (keys %$floors)
-#  {
-#    my @entries = reverse sort @{$floors->{$floor}};
-#    splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
-#    $floor_data->{$floor}->{name} = $config->{$floor}->{title};
-#    $floor_data->{$floor}->{description} = $config->{$floor}->{description};
-#    $floor_data->{$floor}->{url} = $config->{$floor}->{root};
-#    foreach my $utid (@entries)
-#    {
-#      push @{ $floor_data->{$floor}->{posts} }, $allentries->{$utid};
-#    }
-#  }
-
   foreach my $floor (keys %$lists) {
-
   	foreach my $archive ( keys %{ $lists->{$floor} } ) {
   		my $archive_template_root =
       (
@@ -109,7 +95,6 @@ sub template {
         {
           next if $archive eq 'date';
           next if $archive eq 'jdate';
-          #$vars->{$archive} = [ values %{ $lists->{$floor}->{$archive} } ]; #TRUE VALUE
           $vars->{$archive} = [
           reverse sort
           {
@@ -169,7 +154,6 @@ sub template {
           my $arch_template = (-f catfile($archive_template_root, "$archive.tt2"))
            ?
            "$archive.tt2" : "archive.tt2";
-#$opts{source}/public/$show_list_url/index.html
           $archive_index->process($arch_template, $vars, $index, { binmode => ':utf8' })
               || die $archive_index->error(), "\n";
           $page++;

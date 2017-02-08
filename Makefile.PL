@@ -17,7 +17,9 @@ WriteMakefile
   VERSION_FROM     => 'lib/Mira.pm',
   ABSTRACT         => 'multiple website content management framework',
   LICENSE          => 'gpl_3',
-  EXE_FILES        => [grep { -x } glob 'bin/*'],
+  EXE_FILES        => [
+	"bin/mira"
+  ],
   MIN_PERL_VERSION => 5.012,
   CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker'       => 0,

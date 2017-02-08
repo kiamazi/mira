@@ -1,4 +1,5 @@
 package Mira::Config;
+$Mira::Config::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -17,7 +18,7 @@ sub new {
   my $class = shift;
   my $source = shift;
   my $self = {};
-  $self->{_source} = $source;
+  #$self->{_source} = $source;
 
     my $yaml;
     if (-f catfile($source, 'config.yml') )
@@ -32,14 +33,14 @@ sub new {
         $self->{_default} = Load( $yaml );
       };
       if ($@) {croak "$source/config.yml have problem";}
-      #$self->{_default} = $self->{_default}->[0];
     } else
     {
       croak " ! - you are not in true path or --source is invalid path or /conf/config.yml isn't valid file";
     }
 
     $self->{_default}->{post_num} = "3" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
-    $self->{_default}->{post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
+    $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
+    $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
     $self->{_default}->{default_new_entry_floor} = "blog" unless (exists $self->{_default}->{default_new_entry_floor} and $self->{_default}->{default_new_entry_floor});
     $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
 
@@ -89,7 +90,6 @@ sub new {
       }
     }
 
-    #bless $self, $class;
     return $self;
 }
 

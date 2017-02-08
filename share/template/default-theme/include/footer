@@ -1,0 +1,29 @@
+
+    <!-- Footer -->
+    <footer>
+      <a href="[% EMAIL %]">
+         <span class="fa-stack fa-lg">
+         <i class="fa fa-circle fa-stack-2x"></i>
+         <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+          </span>
+      </a>
+      <a href="[% URL %]">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+
+      <a href="[% FloorROOT %]/feed.xml">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-rss fa-stack-1x fa-inverse" ></i>
+        </span>
+      </a>
+
+      <p><i class="fa fa-copyright" aria-hidden="true"></i>&nbsp; GPLv3</p>
+    </footer>
+
+</body>
+
+</html>

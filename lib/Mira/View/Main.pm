@@ -1,4 +1,5 @@
 package Mira::View::Main;
+$Mira::View::Main::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -19,25 +20,7 @@ sub template {
   my $pensource = $switches{pensource};
   my $floor_data = $switches{floor_data};
 
-#  my $data = $switches->{data};
   my $template_root = catdir($pensource,'template', $config->{_default}->{template});
-
-#  my $floor_data = {};
-#  foreach my $floor (keys %$floors)
-#  {
-#  	my @entries = reverse sort @{$floors->{$floor}};
-#  	splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
-#    $floor_data->{$floor}->{name} = $config->{$floor}->{title};
-#    $floor_data->{$floor}->{description} = $config->{$floor}->{description};
-#    $floor_data->{$floor}->{url} = $config->{$floor}->{root};
-#  	foreach my $utid (@entries)
-#  	{
-#  		push @{ $floor_data->{$floor}->{Posts} }, $allentries->{$utid};
-#  	}
-#  }
-#use Data::Dumper;
-#print Dumper($floor_data);
-#exit;
 
   my $root_index = Template->new({
       INCLUDE_PATH => [$template_root, catdir($template_root, 'include') ],

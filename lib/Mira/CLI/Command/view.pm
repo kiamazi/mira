@@ -1,4 +1,5 @@
 package Mira::CLI::Command::view;
+$Mira::CLI::Command::view::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -8,6 +9,7 @@ use App::Cmd::Setup -command;
 use 5.012;
 
 use Cwd;
+use File::Spec::Functions;
 use Plack::Runner;
 
 
@@ -29,6 +31,11 @@ sub opt_spec {
 
 sub validate_args {
   my ($self, $opt, $args) = @_;
+  my $path = $opt->{directory};
+  -d $path or $self->usage_error("directory '$path' does not exist");
+  -f catfile($path, 'config.yml') or _usage_error("directory '$path' does not valid address.\ncant't find config.yml");
+  -d catdir($path, 'content') or _usage_error("directory '$path' does not valid address.\ncant't find content folder");
+  -d catdir($path, 'template') or _usage_error("directory '$path' does not valid address.\ncant't find template folder");
 }
 
 sub execute {
@@ -56,6 +63,13 @@ sub execute {
       return $self->SUPER::locate_file( $env );
   }
 
+}
+
+sub _usage_error {
+  my $message = shift;
+  say "ERROR:";
+  say $message;
+  exit;
 }
 
 

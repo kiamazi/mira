@@ -1,4 +1,5 @@
 package Mira::CLI::Command::init;
+$Mira::CLI::Command::init::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -17,7 +18,7 @@ use File::ShareDir ':ALL';
 use utf8;
 binmode STDOUT, ":utf8";
 
-use Mira;
+
 
 my $cwd = cwd;
 

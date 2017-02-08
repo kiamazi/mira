@@ -1,4 +1,5 @@
 package Mira::Parser::Markup;
+$Mira::Parser::Markup::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -11,9 +12,7 @@ use Carp;
 sub markup {
   my $class = shift;
   my $body = shift;
-  my $title = shift;
-  my $floor = shift;
-  my $markup_lang = shift;
+  my $markup_lang = shift || 'md';
 
   unless ($markup_lang and $markup_lang =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
@@ -44,14 +43,8 @@ sub markup {
   if ($fbody =~ /(?<less>.*)<!--\s*more\s*-->(?<more>.*)/s)
   {
     $body->{less} = $+{less};
-    #$body->{more} = "<a name=\"more\"></a><br>" . $+{more};
     $fbody =~ s:<!--\s*more\s*-->:<a name="more"></a>:;
     $body->{more} = $fbody;
-#    } elsif ($fbody =~ /(?<less>.{0,600})(?<more>.*)/s)
-#    {
-#      #$body->{full} = $fbody;
-#      $body->{less} = $+{less};
-#      $body->{more} = $+{more};
   } else
   {
     my $lessbody = $fbody;
@@ -60,7 +53,6 @@ sub markup {
     $lessbody =~ s/(.{0,600}).*/$1/s;
     $body->{less} = "<p>" . $lessbody . "</p>";
     $body->{more} = "<a name=\"more\"></a><br>" . $fbody;
-    #$body->{full} = "<a name=\"more\"></a><br>" . $fbody;
   }
 
   return $body;

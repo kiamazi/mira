@@ -1,4 +1,5 @@
 package Mira::View::Post;
+$Mira::View::Post::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -20,19 +21,6 @@ sub template {
   my $lists = $switches{lists};
   my $floor_data = $switches{floor_data};
 
-#  my $floor_data = {};
-#  foreach my $floor (keys %$floors)
-#  {
-#    my @entries = reverse sort @{$floors->{$floor}};
-#    splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
-#    $floor_data->{$floor}->{name} = $config->{$floor}->{title};
-#    $floor_data->{$floor}->{description} = $config->{$floor}->{description};
-#    $floor_data->{$floor}->{url} = $config->{$floor}->{root};
-#    foreach my $utid (@entries)
-#    {
-#      push @{ $floor_data->{$floor}->{posts} }, $allentries->{$utid};
-#    }
-#  }
 
   foreach my $utid (keys %$allentries)
   {
@@ -44,17 +32,6 @@ sub template {
 
 
   	#TODO complete and check this code, for each post template
-  #	my $post_template_root;
-  #	if (exists $data->{$utid}->{_template} and $data->{$utid}->{floor} =~ /.tt2$/ and -f $data->{$utid}->{floor})
-  #	{
-  #		my @address = split (:/:, $data->{$utid}->{floor});
-  #		splice @address, $#address, 1;
-  #		my $address = catdir(@address);
-  #		$post_template_root = $address
-  #	} else
-  #	{
-  #		my $post_template_root = (-f "$template_root/$floor/post.tt2") ? "$template_root/$floor" : $template_root;
-  #	}
 
 
   	my $post_index = Template->new({
@@ -120,7 +97,6 @@ sub template {
     {
       next if $archive eq 'date';
       next if $archive eq 'jdate';
-      #$vars->{$archive} = [ values %{ $lists->{$floor}->{$archive} } ]; #TRUE VALUE
       $vars->{$archive} = [
       reverse sort
       {

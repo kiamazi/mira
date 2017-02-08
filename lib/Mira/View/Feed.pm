@@ -1,4 +1,5 @@
 package Mira::View::Feed;
+$Mira::View::Feed::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -7,7 +8,7 @@ use 5.012;
 
 use File::Spec::Functions;
 use Template;
-use Carp;
+
 
 sub template {
   my $class = shift;
@@ -35,7 +36,7 @@ sub template {
     my $num = $config->{$floor}->{feed_post_num} ? $config->{$floor}->{feed_post_num} : $config->{_default}->{feed_post_num};
     @utids = splice @utids, 0, $num;
 
-    #my $posts = \@utids;
+
 
         my $floor_index = Template->new({
             INCLUDE_PATH => [ $floor_template_root, catdir($floor_template_root, 'include') ],
@@ -99,7 +100,6 @@ sub template {
         {
           next if $archive eq 'date';
           next if $archive eq 'jdate';
-          #$vars->{$archive} = [ values %{ $lists->{$floor}->{$archive} } ]; #TRUE VALUE
           $vars->{$archive} = [
           reverse sort
           {

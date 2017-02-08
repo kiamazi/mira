@@ -1,4 +1,5 @@
 package Mira::CLI::Command::new;
+$Mira::CLI::Command::new::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -15,7 +16,7 @@ use utf8;
 binmode STDOUT, ":utf8";
 
 
-use Mira;
+use Mira::Config;
 
 my $cwd = cwd;
 
@@ -27,6 +28,7 @@ sub opt_spec {
     return (
         [ 'floor|f=s',  'new entry floor'],
         [ 'title|t=s',    'new entry title' ],
+        [ 'directory|d=s', 'application path (default: current directory)', { default => $cwd } ],
         [ 'help|h',     'this help' ],
 
     );
@@ -36,17 +38,19 @@ sub validate_args {
   my ($self, $opt, $args) = @_;
   my $title = $opt->{title};
   $self->usage_error("your post need a title") unless $title;
+  my $path = $opt->{directory};
+  -d $path or $self->usage_error("directory '$path' does not exist");
+  -f catfile($path, 'config.yml') or _usage_error("directory '$path' does not valid address.\ncant't find config.yml");
+  -d catdir($path, 'content') or _usage_error("directory '$path' does not valid address.\ncant't find content folder");
+  -d catdir($path, 'template') or _usage_error("directory '$path' does not valid address.\ncant't find template folder");
 }
 
 sub execute {
   my ($self, $opt, $args) = @_;
   my $pensource = $cwd;
 
-  my $except = Mira::Exception->new($pensource, 'config');
-  @$except ? err_chk(@$except) : log_save("exception test: ok", 0, "ok", $pensource);
-
   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-  $year += 1900; #sprintf("%02d", $year % 100);
+  $year += 1900;
   $mon += 1;
   my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
   my $utid = sprintf "%04d%02d%02d%02d%02d%02d", $year, $mon, $mday, $hour, $min, $sec;
@@ -139,34 +143,13 @@ $title =~ s/[\W]+/_/g;
 
 
 
+sub _usage_error {
+  my $message = shift;
+  say "ERROR:";
+  say $message;
+  exit;
+}
 
-
-
-  sub err_chk {
-    my $level = shift;
-    my $message = shift;
-    my $err_num = shift;
-    say $message;
-    log_save($message, $err_num, $level);
-    say "lethal problem" and exit if ($level eq "lethal" or $err_num == 1001 or 1002);
-  }
-
-  sub log_save {
-    my $message = shift;
-    my $err_num = shift;
-    my $level = shift;
-    my $pensource = shift;
-    return if ($err_num == 1);
-    make_path catdir($pensource,'log') unless (-d catdir($pensource,'log'));
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-    $mon = sprintf "%02d", $mon+1;
-    $year += 1900;
-    my $symb = $level eq "ok" ? "+" : $level eq "lethal" ? "!" : "#";
-    if (open my $logfile, '>>:encoding(UTF-8)', "$pensource/log/log.txt") {
-      print $logfile " $symb - $year/$mon/$mday|$hour:$min:$sec - $err_num - $message\n";
-      close $logfile;
-    }
-  }
 
 
 1;

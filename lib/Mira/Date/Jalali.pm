@@ -1,4 +1,5 @@
 package Mira::Date::Jalali;
+$Mira::Date::Jalali::VERSION = '0.07';
 
 use strict;
 use warnings;

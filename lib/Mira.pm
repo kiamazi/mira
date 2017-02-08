@@ -3,16 +3,7 @@ package Mira;
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = '0.05_01';
-
-use Mira::Parser;
-use Mira::Field;
-use Mira::Data;
-use Mira::Date;
-use Mira::Config;
-use Mira::Exception;
-use Mira::View;
-use Mira::CLI;
+our $VERSION = '0.07';
 
 
 1;
@@ -28,7 +19,7 @@ Mira - module used for 'mira' site generator
 
 =head1 VERSION
 
-This document describes L<Mira> version B<0.05>.
+This document describes L<Mira> version B<0.07>.
 
 =head1 NOTE
 

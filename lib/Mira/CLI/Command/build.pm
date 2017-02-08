@@ -1,4 +1,5 @@
 package Mira::CLI::Command::build;
+$Mira::CLI::Command::build::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -9,19 +10,16 @@ use 5.012;
 
 use Cwd;
 use File::Spec::Functions;
-use File::Path qw(make_path);
 use File::Copy::Recursive qw(dircopy);
-use File::Basename qw/basename/;
 use Time::HiRes;
 
 use utf8;
 binmode STDOUT, ":utf8";
 
-use FindBin; #qw($bin)
-use lib "$FindBin::Bin/lib";
-use Mira;
 
 my $cwd = cwd;
+my $source;
+my $config;
 
 sub abstract { 'site builder' }
 
@@ -38,44 +36,92 @@ sub validate_args {
   my ($self, $opt, $args) = @_;
   my $path = $opt->{directory};
   -d $path or $self->usage_error("directory '$path' does not exist");
+  -f catfile($path, 'config.yml') or _usage_error("directory '$path' does not valid address.\ncant't find config.yml");
+  -d catdir($path, 'content') or _usage_error("directory '$path' does not valid address.\ncant't find content folder");
+  -d catdir($path, 'template') or _usage_error("directory '$path' does not valid address.\ncant't find template folder");
 }
 
 sub execute {
     my ($self, $opt, $args) = @_;
     my $start_time = [Time::HiRes::gettimeofday()];
 
-    my $pensource = $opt->{directory};
-
-    my $except = Mira::Exception->new($pensource,'config,content');
-    @$except ? err_chk(@$except) : log_save("exception test: ok", 0, "ok", $pensource);
-
-    my $config = Mira::Config->new($pensource);
-
-    my $fields = Mira::Field->new($pensource,$config);
-    $config->{_default}->{permalink} = ":year/:month/:title" if ($config->{_default}->{permalink} !~ m/:(year|month|day|title)/i);
-    $config->{_default}->{permalink} .= "/:title" if ($config->{_default}->{permalink} !~ m/:title/i);
-    my $data = Mira::Data->new(
-    		source => $pensource,
-    		config => $config,
-    		markup => $config->{_default}->{default_body_format},
-    		baseurl => $config->{_default}->{root},
-    		permalink => $config->{_default}->{permalink},
-    		imgurl => $config->{_default}->{imgurl},
-    );
+    $source = $opt->{directory};
+    $config = Mira::Config->new($source);
 
 
-    my $lists = $data->lists($fields, $config);
-    $lists = { %{$lists} };
+    ######################
+    use Mira::Model::Base;
+    my $data = Mira::Model::Base->new;
+    ######################
+    use Mira::Model::Floor;
+    my $floors_data = Mira::Model::Floor->new;
 
-    my $floors = $data->floors;
+    ######################
+    use Mira::Model::Content;
+    my $content = Mira::Model::Content->new(source => $source, ext => 'pen');
+    my $floors = $content->floors;
+    my $files = $content->files($floors);
 
+
+    ######################
+    use Mira::Parser::Entry;
+    use Mira::Control::Date;
+    use Mira::Control::Jdate;
+    use Mira::Parser::Markup;
+    use Mira::Parser::img;
+
+    foreach my $floor (@$floors)
+    {
+      foreach my $file (@{$files->{$floor}})
+      {
+        my $parser = Mira::Parser::Entry->parse(entry => $file, floor => $floor);
+        next unless $parser;
+
+        my $utid = $parser->{utid};
+        my $values = $parser->{values};
+        if (not exists $data->{$utid})
+        {
+          Mira::Control::Date->date($values);
+          Mira::Control::Jdate->jdate($values) if ($config->{$floor}->{date_format} and $config->{$floor}->{date_format} eq 'jalali');
+          $values->{body} = Mira::Parser::Markup->markup(
+                                    $values->{body},
+                                    _markup_lang($values),
+                                    );
+          $values->{body} = Mira::Parser::img->replace(
+                                    $values->{body},
+                                    _img_url($floor),
+                                    );
+          $data->add($parser->{utid}, $values);
+          $floors_data->add($floor, $utid);
+        } else
+        {
+          say "this files have same utid, plz fix it\n"
+          .">". $file
+          .">". $data->{$utid}->{_spec}->{file_address} ."\n";
+        }
+
+      }
+    }
+
+    ######################
+    use Mira::Control::Address;
+    Mira::Control::Address->address($data, $config);
+
+    ######################
+    use Mira::Model::Lists;
+    my $lists_data = Mira::Model::Lists->lists($data, $config);
+
+    ######################
+    ######################
+    ######################
+    ######################
+    ######################
     my $diff = Time::HiRes::tv_interval($start_time);
     print "make database time: $diff\n";
-
     dircopy(
-    catdir($pensource, 'statics')
+    catdir($source, 'statics')
     ,
-    catdir($pensource, 'public', $config->{_default}->{static})
+    catdir($source, 'public', $config->{_default}->{static})
     );
 
 
@@ -84,12 +130,12 @@ sub execute {
     my $posts = \@utids;
 
     my $data_base = { %$data };
-    my $floors_base = { %$floors };
+    my $floors_base = { %$floors_data };
 
     my $floor_data = {};
-    foreach my $floor (keys %$floors)
+    foreach my $floor (keys %$floors_data)
     {
-      my @entries = reverse sort @{$floors->{$floor}};
+      my @entries = reverse sort @{$floors_data->{$floor}};
       splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
       $floor_data->{$floor}->{name} = $config->{$floor}->{title};
       $floor_data->{$floor}->{description} = $config->{$floor}->{description};
@@ -101,65 +147,69 @@ sub execute {
     }
 
 
+    ######################
+    use Mira::View;
+
+
     $diff = Time::HiRes::tv_interval($start_time);
     print "start main: $diff\n";
 
     Mira::View::Main->template(
-    	config => $config,
-    	posts => $posts, #utids
-    	allentries => $data_base, #all entries hash
-    	floors => $floors_base,
-    	pensource => $pensource,
-    	floor_data => $floor_data,
+      config => $config,
+      posts => $posts, #utids
+      allentries => $data_base, #all entries hash
+      floors => $floors_base,
+      pensource => $source,
+      floor_data => $floor_data,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start floor indexes: $diff\n";
 
     Mira::View::Floor->template(
-    	config => $config,
-    	posts => $posts, #utids
-    	allentries => $data_base, #all entries hash
-    	floors => $floors_base,
-    	pensource => $pensource,
-    	lists => $lists,
-    	floor_data => $floor_data,
+      config => $config,
+      posts => $posts, #utids
+      allentries => $data_base, #all entries hash
+      floors => $floors_base,
+      pensource => $source,
+      lists => $lists_data,
+      floor_data => $floor_data,
     );
 
     Mira::View::Feed->template(
-    	config => $config,
-    	posts => $posts, #utids
-    	allentries => $data_base, #all entries hash
-    	floors => $floors_base,
-    	pensource => $pensource,
-    	lists => $lists,
-    	floor_data => $floor_data,
+      config => $config,
+      posts => $posts, #utids
+      allentries => $data_base, #all entries hash
+      floors => $floors_base,
+      pensource => $source,
+      lists => $lists_data,
+      floor_data => $floor_data,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start archives indexes: $diff\n";
 
     Mira::View::Archive->template(
-    	config => $config,
-    	posts => $posts, #utids
-    	allentries => $data_base, #all entries hash
-    	floors => $floors_base,
-    	pensource => $pensource,
-    	lists => $lists,
-    	floor_data => $floor_data,
+      config => $config,
+      posts => $posts, #utids
+      allentries => $data_base, #all entries hash
+      floors => $floors_base,
+      pensource => $source,
+      lists => $lists_data,
+      floor_data => $floor_data,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start post indexes: $diff\n";
 
     Mira::View::Post->template(
-    	config => $config,
-    	posts => $posts, #utids
-    	allentries => $data_base, #all entries hash
-    	floors => $floors_base,
-    	pensource => $pensource,
-    	lists => $lists,
-    	floor_data => $floor_data,
+      config => $config,
+      posts => $posts, #utids
+      allentries => $data_base, #all entries hash
+      floors => $floors_base,
+      pensource => $source,
+      lists => $lists_data,
+      floor_data => $floor_data,
     );
 
     print "The program ran for ", time() - $^T, " seconds\n";
@@ -167,33 +217,60 @@ sub execute {
 
 }
 
-sub err_chk {
-  my $level = shift;
-  my $message = shift;
-  my $err_num = shift;
-  say $message;
-  log_save($message, $err_num, $level);
-  say "lethal problem" and exit if ($level eq "lethal" or $err_num == 1001 or 1002);
-}
-
-sub log_save {
-  my $message = shift;
-  my $err_num = shift;
-  my $level = shift;
-  my $pensource = shift;
-  return if ($err_num == 1);
-  make_path catdir($pensource, 'log') unless (-d catdir($pensource, 'log'));
-  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-  $mon = sprintf "%02d", $mon+1;
-  $year += 1900;
-  my $symb = $level eq "ok" ? "+" : $level eq "lethal" ? "!" : "#";
-  if (open my $logfile, '>>:encoding(UTF-8)', "$pensource/log/log.txt") {
-    print $logfile " $symb - $year/$mon/$mday|$hour:$min:$sec - $err_num - $message\n";
-    close $logfile;
+sub _markup_lang {
+  my $post = shift;
+  my $floor = $post->{floor};
+  my $markup_lang;
+  if ($post->{'body-format'} and $post->{'body-format'} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+  {
+    $markup_lang = $post->{'body-format'};
+  } elsif (
+    $config->{$floor} and
+    $config->{$floor}->{default_body_format} and
+    $config->{$floor}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
+    )
+  {
+    $markup_lang = $config->{$floor}->{default_body_format};
+  } elsif (
+    $config->{_default}->{default_body_format} and
+    $config->{_default}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
+    )
+  {
+    $markup_lang = $config->{_default}->{default_body_format};
+  } else
+  {
+    $markup_lang = 'markdown';
   }
+  $markup_lang = 'markdown' if $markup_lang eq 'md';
+  return $markup_lang;
 }
 
+sub _img_url {
+  my $floor = shift;
+  my $imgurl;
+  if ($config->{$floor} and $config->{$floor}->{imageurl})
+  {
+    $imgurl = $config->{$floor}->{imageurl};
+  } elsif ($config->{_default}->{imageurl})
+  {
+    $imgurl = $config->{_default}->{imageurl};
+  } elsif ($config->{$floor} and $config->{$floor}->{root})
+  {
+    $imgurl = "/$config->{$floor}->{root}/static/img/";
+  } else
+  {
+    $imgurl = "/$floor/static/img/";
+  }
+  $imgurl =~ s:/+:/:g;
+  return $imgurl;
+}
 
+sub _usage_error {
+  my $message = shift;
+  say "ERROR:";
+  say $message;
+  exit;
+}
 
 
 

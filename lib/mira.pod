@@ -8,7 +8,7 @@ mira - static site generator
 
 =head1 VERSION
 
-This document describes L<mira> version B<0.05>.
+This document describes L<mira> version B<0.07>.
 
 
 =head1 DESCRIPTION
@@ -55,7 +55,7 @@ edit config.yml
   description: A Description about your site
   author: your name
   email: your-email@domain.com
-  url: PUBLISH.ADDRESS.COM      # or something else like http://localhost:80   
+  url: PUBLISH.ADDRESS.COM      # or something else like http://localhost:80
   root: /                       # root address of your site, leave it / if you dont like publish in subfolders like ADDRES.COM/SUB/
   static: /static               # the site static files address, content of 'statics' folder in your root mira_Site_name folder will be copy here, ADDRES.COM/static
   imageurl: /static/img         # in your entries if you use [% img %] will be replaced by this address
@@ -68,7 +68,7 @@ edit config.yml
     - categories
     - tags
     - author
-  
+
 
 you can make config file for each floor in config directory in mira root, e.x: config/YOUR_FLOOR.yml
 
@@ -96,7 +96,7 @@ command 'new' options:
 =head3 new post
 
   mira new -t "YOUR POST TITLE" -f "FLOOR_NAME"
-this command your content file in: content/FLOOR_NAME/yy-mm-dd-YOUR_POST_TITLE.pen  
+this command your content file in: content/FLOOR_NAME/yy-mm-dd-YOUR_POST_TITLE.pen
 in header this file have your fields structures, from structure/FLOOR_NAME + utid, title, date...
 
 NOTE: never edit utid

@@ -1,4 +1,5 @@
 package Mira::View::Floor;
+$Mira::View::Floor::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -7,7 +8,7 @@ use 5.012;
 
 use File::Spec::Functions;
 use Template;
-use Carp;
+
 
 sub template {
   my $class = shift;
@@ -22,37 +23,6 @@ sub template {
   my $floor_data = $switches{floor_data};
 
 
-#  my $template_root = catdir($pensource,'template', $config->{_default}->{template});
-
-#my $floor_data = {};
-#foreach my $floor (keys %$floors)
-#{
-#  my @entries = reverse sort @{$floors->{$floor}};
-#  splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
-#  $floor_data->{$floor}->{name} = $config->{$floor}->{title};
-#  $floor_data->{$floor}->{description} = $config->{$floor}->{description};
-#  $floor_data->{$floor}->{url} = $config->{$floor}->{root};
-#  foreach my $utid (@entries)
-#  {
-#    push @{ $floor_data->{$floor}->{posts} }, $allentries->{$utid};
-#  }
-#}
-
-#my $floor_data = [];
-#  foreach my $floor (keys %$floors)
-#{
-#  my $floorref = {};
-#  my @entries = reverse sort @{$floors->{$floor}};
-#  splice @entries, $config->{_default}->{post_num};
-#  $floorref->{name} = $config->{$floor}->{title};
-#  $floorref->{description} = $config->{$floor}->{description};
-#  $floorref->{url} = $config->{$floor}->{root};
-#  foreach my $utid (@entries)
-#  {
-#    push @{ $floorref->{posts} }, $allentries->{$utid};
-#  }
-#  push @$floor_data, $floorref;
-#}
 
   foreach my $floor (keys %$floors)
   {
@@ -123,7 +93,6 @@ sub template {
         {
           next if $archive eq 'date';
           next if $archive eq 'jdate';
-          #$vars->{$archive} = [ values %{ $lists->{$floor}->{$archive} } ]; #TRUE VALUE
           $vars->{$archive} = [
           reverse sort
           {
@@ -158,8 +127,6 @@ sub template {
           (values %{ $lists->{$floor}->{jdate} })
           ];
         }
-        #use Data::Dumper;
-        #print Dumper($vars->{Date});
 
         my $floor_post_num = ($config->{$floor}->{post_num} eq 'all') ? scalar @utids : $config->{$floor}->{post_num};
         my $page = 1;
@@ -175,10 +142,10 @@ sub template {
           my $target = $page == 1 ? "index.html" : "/page/$page/index.html";
           my $index = catfile($pensource, 'public', $config->{$floor}->{root}, $target);
 
-          $vars->{next} = @utids ? "$config->{$floor}->{root}/page/" . ($page+1) . "/index.html" : '' ;
+          $vars->{next} = @utids ? "$config->{$floor}->{root}/page/" . ($page+1) . "/" : '' ;
           $vars->{next} =~ s"(?<!http:)/+"/"g if $vars->{next};
-          $vars->{prev} = $page == 1 ? '' : "$config->{$floor}->{root}/page/" . ($page-1) . "/index.html" ;
-          $vars->{prev} = "$config->{$floor}->{root}/index.html" if $page == 2;
+          $vars->{prev} = $page == 1 ? '' : "$config->{$floor}->{root}/page/" . ($page-1) . "/" ;
+          $vars->{prev} = $config->{$floor}->{root} . "/" if $page == 2;
           $vars->{prev} =~ s"(?<!http:)/+"/"g if $vars->{prev};
 
           $floor_index->process('index.tt2', $vars, $index, { binmode => ':utf8' })

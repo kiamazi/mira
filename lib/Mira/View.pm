@@ -1,9 +1,10 @@
 package Mira::View;
+$Mira::View::VERSION = '0.07';
 
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = '0.05';
+our $VERSION = '0.07';
 
 use Mira::View::Main;
 use Mira::View::Floor;

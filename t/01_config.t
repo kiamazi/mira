@@ -4,7 +4,7 @@ use utf8;
 use 5.012;
 
 
-use Mira;
+use Mira::Config;
 
 use File::Temp;
 use File::Spec::Functions;
