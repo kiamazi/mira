@@ -1,4 +1,5 @@
 bin/mira
+Changes
 lib/Mira.pm
 lib/mira.pod
 lib/Mira/CLI.pm
@@ -49,3 +50,4 @@ share/template/default-theme/post.tt2
 t/00_base.t
 t/01_config.t
 t/03-model_base.t
+TODO
