@@ -1,0 +1,3 @@
+ - add: server command > dynamic build
+ - add: -f --floor switch for build command
+ - add: choose custom template for each post
