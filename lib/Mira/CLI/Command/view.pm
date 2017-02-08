@@ -9,6 +9,7 @@ use App::Cmd::Setup -command;
 use 5.012;
 
 use Cwd;
+use File::Spec;
 use File::Spec::Functions;
 use Plack::Runner;
 

@@ -9,6 +9,7 @@ use App::Cmd::Setup -command;
 use 5.012;
 
 use Cwd;
+use File::Spec;
 use File::Spec::Functions;
 use File::Path qw(make_path);
 
@@ -47,7 +48,7 @@ sub validate_args {
 
 sub execute {
   my ($self, $opt, $args) = @_;
-  my $pensource = $cwd;
+  my $pensource = $opt->{directory};
 
   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
   $year += 1900;
