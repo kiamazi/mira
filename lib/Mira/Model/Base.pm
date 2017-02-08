@@ -1,7 +1,8 @@
 package Mira::Model::Base;
 $Mira::Model::Base::VERSION = '0.07';
 
-use Data::Dumper;
+use strict;
+use warnings;
 use 5.012;
 
 sub new {
@@ -19,7 +20,6 @@ sub add {
 
   $self->{$utid} = $values;
 
-#  %$self = (%$self , %$utid);
 }
 
 1;

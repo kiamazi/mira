@@ -1,7 +1,8 @@
 package Mira::Model::Content;
 $Mira::Model::Content::VERSION = '0.07';
 
-use Data::Dumper;
+use strict;
+use warnings;
 use 5.012;
 
 use File::Spec::Functions;

@@ -1,8 +1,10 @@
 package Mira::Model::Floor;
 $Mira::Model::Floor::VERSION = '0.07';
 
-use Data::Dumper;
+use strict;
+use warnings;
 use 5.012;
+
 
 sub new {
   my $class = shift;
