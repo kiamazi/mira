@@ -57,7 +57,7 @@ sub files {
   {
     my $glob = catfile($source, 'content', $floor , "*.$ext");
     my @entries = glob encode(locale_fs => $glob);
-    my @entries = grep {-f} @entries;
+    @entries = grep {-f} @entries;
 
     foreach my $entry (@entries)
     {
