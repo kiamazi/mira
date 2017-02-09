@@ -7,15 +7,14 @@ use 5.012;
 use Mira::Config;
 
 use File::Temp;
+use File::Spec;
 use File::Spec::Functions;
-use File::Path qw(make_path);
 use FindBin;
 
 use Test::More tests => 3;
 
 my $dir = File::Temp->newdir();
 chdir $dir;
-
 
 
 my $config_file = <<"EOCF";
