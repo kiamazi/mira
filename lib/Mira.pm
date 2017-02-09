@@ -3,7 +3,7 @@ package Mira;
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = '0.0701';
+our $VERSION = '0.0702';
 
 
 1;

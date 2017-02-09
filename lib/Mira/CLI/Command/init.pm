@@ -45,6 +45,7 @@ sub execute {
   my $pensource = $opt->{directory};
 
   {
+my $user = $ENV{'USER'};
   my $config_file = <<"EOCF";
 
 #general 'mira' config, you can make config files for any floor in /config/FLOOR_NAME.yml
@@ -53,7 +54,7 @@ sub execute {
 title: Your Site Tilte
 description: Description of your site
 
-author: $ENV{USER}
+author: $user
 email: your-email\@domain.com
 
  # the base hostname & protocol for your site
@@ -80,15 +81,12 @@ archive_post_num: 10
 ## if create new entry without --floor switch, mira use this field
 default_floor: blog
 
-## Mira's main directory in your pc
-penurl: $pensource
-
 
 ## template path by root is penurlPATH/template
 ## if you want use a custom template for examle in penurlPATH/template/CustomThEM
 ## just type custom template folder name
 #> template: Custom_Template_Folde_Name
-template: mira-theme-rtl
+template: default-theme
 
 ## the fields you want use for archive, like category, tag and ...
 ## by default Mira archive date field dont need type it here
@@ -103,13 +101,13 @@ lists:
 
 #url address for long keys or unicode which you want make latin addres for'em
 # for example if you have 'longcategoryname' you can make /category/lcn
-namespace:
-  veryverylongarchivename : vlan
-  آموزش: learn
-  کتاب: book
-  درباره: about
-  شخصی: personal
-  ترمینال: terminal
+#namespace:
+#  veryverylongarchivename : vlan
+#  learnsections: learn
+#  mybooksButWithALongname: book
+#  aboutThisSite: about
+#  myPersonalDailyDiary: personal
+#  terminalCommandLearning: terminal
 
 EOCF
 
