@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use 5.012;
 
+use File::Spec;
 use File::Spec::Functions;
 use File::Basename qw/basename/;
 use Carp;
