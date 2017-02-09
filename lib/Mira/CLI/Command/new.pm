@@ -95,9 +95,7 @@ sub execute {
   } else
   {
   	$content =<<"END_CNTNT";
-_index:
 _permalink:
-title:
 author:
 categories:
   -
