@@ -83,7 +83,6 @@ sub template {
         $vars->{ROOT} =~ s"/$""g unless $vars->{ROOT} eq "/";
 
         $vars->{FloorURL} =~ s"(?<!http:)/+"/"g;
-        $vars->{FloorROOT} = "/" . $vars->{FloorROOT} if $vars->{FloorROOT} !~ m:^/:;
         $vars->{FloorURL} =~ s"/$""g;
 
         $vars->{FloorROOT} =~ s"^http:/+"/"g;
