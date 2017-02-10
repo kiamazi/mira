@@ -78,17 +78,18 @@ sub template {
         $vars->{URL} =~ s"/$""g;
 
         $vars->{ROOT} =~ s"^http:/+"/"g;
-        $vars->{ROOT} = "/" . $vars->{ROOT};
+        $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
         $vars->{ROOT} =~ s"/+"/"g;
-        $vars->{ROOT} =~ s"/$""g;
+        $vars->{ROOT} =~ s"/$""g unless $vars->{ROOT} eq "/";
 
         $vars->{FloorURL} =~ s"(?<!http:)/+"/"g;
+        $vars->{FloorROOT} = "/" . $vars->{FloorROOT} if $vars->{FloorROOT} !~ m:^/:;
         $vars->{FloorURL} =~ s"/$""g;
 
         $vars->{FloorROOT} =~ s"^http:/+"/"g;
-        $vars->{FloorROOT} = "/" . $vars->{FloorROOT};
+        $vars->{FloorROOT} = "/" . $vars->{FloorROOT} if $vars->{FloorROOT} !~ m:^/:;
         $vars->{FloorROOT} =~ s"/+"/"g;
-        $vars->{FloorROOT} =~ s"/$""g;
+        $vars->{FloorROOT} =~ s"/$""g unless $vars->{FloorROOT} eq "/";
 
         foreach my $archive (keys %{$lists->{$floor}})
         {

@@ -1,3 +1,5 @@
  - add: server command > dynamic build
  - add: -f --floor switch for build command
  - add: choose custom template for each post
+
+ - add: /config and /config/blog.yml to init CLI

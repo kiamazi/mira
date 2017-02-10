@@ -120,6 +120,7 @@ EOCF
 
   make_path catdir($pensource,"content");
   make_path catdir($pensource,"content","blog");
+  make_path catdir($pensource,"config");
 
   my $sharedir = dist_dir('Mira');
 
