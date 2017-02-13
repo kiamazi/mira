@@ -1,10 +1,10 @@
 <section id="menu">
 		<ul>
-                <li><a href="[% ROOT %]">Main Page</a>
-            [% FOREACH Floors.values.sort('url') %]
+                <li><a href="{{ ROOT }}">Main Page</a>
+            {{ FOREACH Floors.values.sort('url') }}
                  <li>
-                     <a href="[% url %]" name="[% description %]">[% name %]</a>
+                     <a href="{{ url }}" name="{{ description }}">{{ name }}</a>
                  </li>
-            [% END %]
+            {{ END }}
 		</ul>
 	</section>

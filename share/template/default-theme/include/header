@@ -6,12 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="[% FloorDESCRIPTION %]">
-    <meta name="author" content="[% FloorAUTHOR %]">
+    <meta name="description" content="{{ FloorDESCRIPTION }}">
+    <meta name="author" content="{{ FloorAUTHOR }}">
 
-    <title>[% PageTITLE %]</title>
+    <title>{{ PageTITLE }}</title>
 
-    <link href="[% STATIC %]/default-theme/style.css" rel="stylesheet">
+    <link href="{{ STATIC }}/default-theme/style.css" rel="stylesheet">
 
     <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/vazir-font/v7.0.0/dist/font-face.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/samim-font/v1.0.2/dist/font-face.css">

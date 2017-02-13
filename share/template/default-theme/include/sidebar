@@ -3,46 +3,46 @@
   <!-- another way -->
   <!--
   <h3>cat</h3>
-  [% FOREACH categories %]
-    <a href="[% url %]">[% name %]</a> - <small>[% posts.size %]</small><br>
-  [% END %]
+  {{ FOREACH categories }}
+    <a href="{{ url }}">{{ name }}</a> - <small>{{ posts.size }}</small><br>
+  {{ END }}
   <hr>
 
   <h3>tags</h3>
-  [% FOREACH tags.sort('name') %]
-    &nbsp;<a href="[% url %]">[% name %](<small>[% posts.size %]</small>)</a>&nbsp;
-  [% END %]
+  {{ FOREACH tags.sort('name') }}
+    &nbsp;<a href="{{ url }}">{{ name }}(<small>{{ posts.size }}</small>)</a>&nbsp;
+  {{ END }}
   <hr>
 
-  [% IF Date %]
+  {{ IF Date }}
   <h3>date</h3>
-  [% FOREACH Date %]
-    <a href="[% url %]">[% name %](<small>[% posts.size %]</small>)</a><br>
-  [% END %]
+  {{ FOREACH Date }}
+    <a href="{{ url }}">{{ name }}(<small>{{ posts.size }}</small>)</a><br>
+  {{ END }}
   <hr>
-  [% END %]
+  {{ END }}
   -->
 
-  [% FOREACH archive IN Archives.pairs %]
-    <h5>[% archive.key %]</h5>
+  {{ FOREACH archive IN Archives.pairs }}
+    <h5>{{ archive.key }}</h5>
     <hr>
-    [% FOREACH item IN archive.value.values.sort('name').sort('number') %]
-      <a href="[% item.url %]">[% item.name %]</a>
-      [% IF (archive.key == 'categories') %]<br>[% END %]
-      [% IF (archive.key == 'date') or (archive.key == 'jdate') %]<br>[% END %]
-      [% IF (archive.key == 'author') %]<br>[% END %]
-      [% IF (loop.index != loop.max) and (archive.key == 'tags') %]&nbsp;-&nbsp;[% END %]
-    [%- END %]
+    {{ FOREACH item IN archive.value.values.sort('name').sort('number') }}
+      <a href="{{ item.url }}">{{ item.name }}</a>
+      {{ IF (archive.key == 'categories') }}<br>{{ END }}
+      {{ IF (archive.key == 'date') or (archive.key == 'jdate') }}<br>{{ END }}
+      {{ IF (archive.key == 'author') }}<br>{{ END }}
+      {{ IF (loop.index != loop.max) and (archive.key == 'tags') }}&nbsp;-&nbsp;{{ END }}
+    {{- END }}
     <br>
-  [%- END %]
+  {{- END }}
 
 <!--
-  [% IF Archives.date %]
+  {{ IF Archives.date }}
     <h5>+ date +</h5>
-    [% FOREACH Archives.date.values.sort('url').reverse %]
-      <a href="[% url %]">[% name %]</a><br>
-    [% END %]
-  [% END %]
+    {{ FOREACH Archives.date.values.sort('url').reverse }}
+      <a href="{{ url }}">{{ name }}</a><br>
+    {{ END }}
+  {{ END }}
 -->
 
 </div>
