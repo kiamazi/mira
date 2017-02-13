@@ -43,6 +43,8 @@ sub template {
   		    	INCLUDE_PATH => [ $archive_template_root, catdir($archive_template_root, 'include') ],
   		    	INTERPOLATE  => 1,
             ENCODING => 'utf8',
+            START_TAG => quotemeta('{{'),
+            END_TAG   => quotemeta('}}'),
   				}) || die "$Template::ERROR\n";
 
         my $vars = {
