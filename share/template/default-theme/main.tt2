@@ -1,47 +1,47 @@
 
 
-  [% INCLUDE header %]
+  {{ INCLUDE header }}
 
   <header id="header">
-    <img id="header_img" src="[% STATIC %]/default-theme/img/mira-c.png">
-		<h1><a href="[% ROOT %]">
-            [% TITLE %]
+    <img id="header_img" src="{{ STATIC }}/default-theme/img/mira-c.png">
+		<h1><a href="{{ ROOT }}">
+            {{ TITLE }}
 		</a></h1>
 		<h5>
-			[% DESCRIPTION %]
+			{{ DESCRIPTION }}
 		</h5>
 	</header>
 
-  [% INCLUDE navbar %]
+  {{ INCLUDE navbar }}
 
 <div class="container">
 <section id="content" style="width: 100%">
-  [% FOREACH Floors.values.sort('name') %]
+  {{ FOREACH Floors.values.sort('name') }}
   <article class="post">
 		<div class="header">
 
-      <h1><a href="[% url %]">[% name %]</a></h1>
-      <p>[% description %]</p>
+      <h1><a href="{{ url }}">{{ name }}</a></h1>
+      <p>{{ description }}</p>
 
-      [% FOREACH posts %]
+      {{ FOREACH posts }}
             <h2 class="title">
-				      <a href="[% url %]">[% title %]</a>
+				      <a href="{{ url }}">{{ title }}</a>
 			      </h2>
             <h6 class="date">
 				      <i class="icon icon-calendar-empty"></i>
-              [% date %]
+              {{ date }}
       			</h6>
             <div class="body">
-              <p>[% body.less %]</p>
+              <p>{{ body.less }}</p>
             </div>
-      [% END %]
+      {{ END }}
 			<div class="clear-both"></div>
 		</div>
 
 	</article>
-  [% END %]
+  {{ END }}
 </section>
 
 </div>
 
-[% INCLUDE footer %]
+{{ INCLUDE footer }}
