@@ -106,6 +106,8 @@ sub template {
           (values %{ $lists->{$floor}->{$archive} })
           ];
         }
+        #	use Data::Dumper;
+        #	print Dumper($allentries);
 
         if ($lists->{$floor}->{date})
         {

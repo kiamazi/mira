@@ -1,5 +1,5 @@
 package Mira::Parser::img;
-$Mira::Parser::img::VERSION = '0.07';
+$Mira::Parser::img::VERSION = '0.0706';
 
 use strict;
 use warnings;
@@ -13,7 +13,7 @@ sub replace {
   my $self = shift;
   my $imgurl = shift;
 
-  $self =~ s/(?<!\\)\[\%\s+img\s+\%\]/$imgurl/g;
+  $self =~ s/(?<!\\)\{\{\s+img\s+\}\}/$imgurl/g;
 
   return $self;
 }

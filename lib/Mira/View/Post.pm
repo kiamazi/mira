@@ -62,6 +62,7 @@ sub template {
       FloorEMAIL => $config->{$floor}->{email},
       PageTITLE => "$allentries->{$utid}->{title} - $config->{$floor}->{title}",
       PostTITLE => $allentries->{$utid}->{title},
+      Entries  => $allentries,
       Floors => $floor_data,
       Archives => $lists->{$floor},
       FarsiNum => bless(\&farsinum, 'mira'),
