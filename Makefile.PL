@@ -34,6 +34,9 @@ WriteMakefile
         'File::Copy::Recursive' => 0,
         'File::ShareDir'        => 0,
         'Plack'                 => 0,
+        'Text::Textile'         => "2.12",
+        'Text::Markdown'        => "1.0.25",
+        'HTML::BBCode'          => "2.06",
 },
   TEST_REQUIRES => {
         'Test::More'            => 0,
