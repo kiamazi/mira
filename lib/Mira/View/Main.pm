@@ -37,7 +37,7 @@ sub template {
      URL => $config->{_default}->{url},
      ROOT => $config->{_default}->{root},
      STATIC => $config->{_default}->{static},
-  	 IMGURL => $config->{_default}->{imgurl},
+     IMGURL => $config->{_default}->{imageurl},
      AUTHOR => $config->{_default}->{author},
      EMAIL => $config->{_default}->{email},
      PageTITLE => $config->{_default}->{title},
