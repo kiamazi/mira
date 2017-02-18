@@ -43,7 +43,7 @@ sub template {
      PageTITLE => $config->{_default}->{title},
      Entries  => $allentries,
      Floors => $floor_data,
-     Posts => $allposts,
+     UTIDS => $allposts,
      FarsiNum => bless(\&farsinum, 'mira'),
    };
 

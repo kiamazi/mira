@@ -44,6 +44,7 @@ sub template {
             ENCODING => 'utf8',
             START_TAG => quotemeta('{{'),
             END_TAG   => quotemeta('}}'),
+            OUTLINE_TAG => '{%',
           }) || die "$Template::ERROR\n";
 
         my $vars = {

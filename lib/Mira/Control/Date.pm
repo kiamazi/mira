@@ -44,6 +44,9 @@ sub date {
       $values->{CALENDAR}->{month} = $values->{_spec}->{month};
       $values->{CALENDAR}->{month_name} = $month_names[$month-1];
       $values->{CALENDAR}->{day} = $values->{_spec}->{day};
+      $values->{CALENDAR}->{hour} = $values->{_spec}->{hour};
+      $values->{CALENDAR}->{minute} = $values->{_spec}->{minute};
+      $values->{CALENDAR}->{second} = $values->{_spec}->{second};
 
     } else
     {
