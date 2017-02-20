@@ -44,6 +44,7 @@ sub template {
      Entries  => $allentries,
      Floors => $floor_data,
      UTIDS => $allposts,
+     CONF => $config->{_default},
      FarsiNum => bless(\&farsinum, 'mira'),
    };
 

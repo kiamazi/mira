@@ -66,6 +66,8 @@ sub template {
       Entries  => $allentries,
       Floors => $floor_data,
       Archives => $lists->{$floor},
+      CONF => $config->{_default},
+      FloorCONF => $config->{$floor},
       FarsiNum => bless(\&farsinum, 'mira'),
     };
 
