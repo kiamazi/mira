@@ -41,7 +41,7 @@ sub address {
       {
         $permanent = ":year/:month/:title";
       }
-      $permanent .= "/:title" if $permanent !~ /:title/;
+#      $permanent .= "/:title" if $permanent !~ /:title/;
 
 
   ####### make Address Field #######
@@ -53,6 +53,20 @@ sub address {
       $permalink =~ s/:month/$self->{$utid}->{_spec}->{month}/g if (defined $self->{$utid}->{_spec}->{month});
       $permalink =~ s/:day/$self->{$utid}->{_spec}->{day}/g if (defined $self->{$utid}->{_spec}->{day});
       $permalink =~ s/(:year|:month|:day)//g;
+
+      while ($permalink =~ m{:(.*?)(/|$)}g)
+      {
+        next if $1 eq 'title';
+        my $field = $1;
+        if ($self->{$utid}->{$field} and not ref($self->{$utid}->{$field}))
+        {
+          $permalink =~ s/:$field/$self->{$utid}->{$field}/g;
+        } else
+        {
+          $permalink =~ s/:$field//g;
+        }
+      }
+
       my @permalink = split (m:/:, $permalink);
       @permalink = map {$_ =~ s/\W//g if $_ !~ m/:title/; $_} @permalink;
       $permalink = join ("/", $baseurl, @permalink, "");

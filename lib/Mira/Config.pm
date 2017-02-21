@@ -69,7 +69,7 @@ sub new {
         if ($@)
         {
           carp " # - $floor\.yml have problem, use default configs for floor: $floor";
-          $self->{$floor} = _not_valids($floor);
+          $self->{$floor} = _not_valids($floor, $self);
           next;
         }
         $self->{$floor} = $floorconf;
@@ -99,14 +99,14 @@ sub _not_valids {
   my $self = shift;
   my $configs = {
     title => "$floor",
-    root => "/$floor/",
+    root => "$self->{_default}->{root}/$floor/",
     url => $self->{_default}->{url},
     permalink => ":year/:month/:day/:title/",
     default_body_format => "markdown",
     post_num => "5",
     archive_post_num => "20",
-    static => "/static/",
-    imageurl => "/static/img",
+    static => $self->{_default}->{static},
+    imageurl => $self->{_default}->{imageurl},
     template => $self->{_default}->{template},
     lists => $self->{_default}->{lists},
     namespace => $self->{_default}->{namespace},

@@ -45,7 +45,7 @@ sub execute {
   my $pensource = $opt->{directory};
 
   {
-my $user = $ENV{'USER'};
+my $user = $ENV{'USER'} ? $ENV{'USER'} : 'YOUR_USER_NAME';
   my $config_file = <<"EOCF";
 
 #general 'mira' config, you can make config files for any floor in /config/FLOOR_NAME.yml
