@@ -21,6 +21,7 @@ sub template {
   my $pensource = $switches{pensource};
   my $lists = $switches{lists};
   my $floor_data = $switches{floor_data};
+  my $now_date = $switches{date};
 
   foreach my $floor (keys %$lists) {
   	foreach my $archive ( keys %{ $lists->{$floor} } ) {
@@ -49,29 +50,29 @@ sub template {
   				}) || die "$Template::ERROR\n";
 
         my $vars = {
-          TITLE => $config->{_default}->{title},
-          DESCRIPTION => $config->{_default}->{description},
-          URL => $config->{_default}->{url},
-          ROOT => $config->{_default}->{root},
-          STATIC => $config->{_default}->{static},
-       	  IMGURL => $config->{_default}->{imageurl},
-          AUTHOR => $config->{_default}->{author},
-          EMAIL => $config->{_default}->{email},
-          FloorTITLE => $config->{$floor}->{title},
-          FloorDESCRIPTION => $config->{$floor}->{description},
-          FloorURL => $config->{$floor}->{url},
-          FloorROOT => $config->{$floor}->{root},
-          FloorSTATIC => $config->{$floor}->{static},
-          FloorIMGURL => $config->{$floor}->{imageurl},
-          FloorAUTHOR => $config->{$floor}->{author},
-          FloorEMAIL => $config->{$floor}->{email},
+          MainTITLE => $config->{_default}->{title},
+          MainDESCRIPTION => $config->{_default}->{description},
+          MainURL => $config->{_default}->{url},
+          MainROOT => $config->{_default}->{root},
+          MainSTATIC => $config->{_default}->{static},
+       	  MainIMAGEURL => $config->{_default}->{imageurl},
+          MainAUTHOR => $config->{_default}->{author},
+          MainEMAIL => $config->{_default}->{email},
+          TITLE => $config->{$floor}->{title},
+          DESCRIPTION => $config->{$floor}->{description},
+          URL => $config->{$floor}->{url},
+          ROOT => $config->{$floor}->{root},
+          STATIC => $config->{$floor}->{static},
+          IMAGEURL => $config->{$floor}->{imageurl},
+          AUTHOR => $config->{$floor}->{author},
+          EMAIL => $config->{$floor}->{email},
           ArchiveTITLE => $list,
           PageTITLE => "$config->{$floor}->{title} - $list",
           Entries  => $allentries,
           Floors => $floor_data,
           Archives => $lists->{$floor},
-          CONF => $config->{_default},
-          FloorCONF => $config->{$floor},
+          MAIN => $config->{_default},
+          SITE => $config->{$floor},
           FarsiNum => bless(\&farsinum, 'mira'),
         };
 
@@ -81,6 +82,16 @@ sub template {
           return $string;
         }
 
+        $vars->{DATE} = $now_date;
+
+        $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
+        $vars->{MainURL} =~ s"/$""g;
+
+        $vars->{MainROOT} =~ s"^http:/+"/"g;
+        $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
+        $vars->{MainROOT} =~ s"/+"/"g;
+        $vars->{MainROOT} =~ s"/$""g unless $vars->{MainROOT} eq "/";
+
         $vars->{URL} =~ s"(?<!http:)/+"/"g;
         $vars->{URL} =~ s"/$""g;
 
@@ -88,14 +99,6 @@ sub template {
         $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
         $vars->{ROOT} =~ s"/+"/"g;
         $vars->{ROOT} =~ s"/$""g unless $vars->{ROOT} eq "/";
-
-        $vars->{FloorURL} =~ s"(?<!http:)/+"/"g;
-        $vars->{FloorURL} =~ s"/$""g;
-
-        $vars->{FloorROOT} =~ s"^http:/+"/"g;
-        $vars->{FloorROOT} = "/" . $vars->{FloorROOT} if $vars->{FloorROOT} !~ m:^/:;
-        $vars->{FloorROOT} =~ s"/+"/"g;
-        $vars->{FloorROOT} =~ s"/$""g unless $vars->{FloorROOT} eq "/";
 
         foreach my $archive (keys %{$lists->{$floor}})
         {

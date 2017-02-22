@@ -57,6 +57,11 @@ description: Description of your site
 author: $user
 email: your-email\@domain.com
 
+# each field you make here, like github and...
+# is available in template: {{ MAIN.github }}
+github: https://www.github.com/Your_GitHub_NAME
+
+
  # the base hostname & protocol for your site
 url: http://localhost:80
 root: /
@@ -70,7 +75,7 @@ permalink: :year/:month/:day/:title/
 #TimeZone: +00:00
 
 ## Build settings
-default_body_format: markdown
+default_markup: markdown
 
 ## number of posts will be show in main index page
 post_num: 3
@@ -108,6 +113,28 @@ lists:
 #  aboutThisSite: about
 #  myPersonalDailyDiary: personal
 #  terminalCommandLearning: terminal
+
+social:
+ -  icon: twitter
+    url: https://twitter.com/Twitter_UserName
+    desc: Follow me on twitter
+    share_url: http://twitter.com/share
+    share_title: ?text=
+    share_link: "&amp;url="
+
+ -  icon: github
+    url: https://github.com/GitHub_UserName
+    desc: Fork me on github
+    share_url:
+    share_title:
+    share_link:
+
+ -  icon: instagram
+    url: https://instagram.com/NAME
+    desc: Follow me
+    share_url:
+    share_title:
+    share_link:
 
 EOCF
 

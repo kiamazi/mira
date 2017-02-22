@@ -141,6 +141,8 @@ sub execute {
       $floor_data->{$floor}->{name} = $config->{$floor}->{title};
       $floor_data->{$floor}->{description} = $config->{$floor}->{description};
       $floor_data->{$floor}->{url} = $config->{$floor}->{root};
+      $floor_data->{$floor}->{url} =~ s"^http:/+"/"g;
+      $floor_data->{$floor}->{url} =~ s"/+"/"g;
       foreach my $utid (@entries)
       {
         push @{ $floor_data->{$floor}->{posts} }, $data->{$utid};
@@ -155,6 +157,11 @@ sub execute {
     $diff = Time::HiRes::tv_interval($start_time);
     print "start main: $diff\n";
 
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+    $year += 1900;
+    $mon += 1;
+    my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
+
     Mira::View::Main->template(
       config => $config,
       posts => $posts, #utids
@@ -162,6 +169,7 @@ sub execute {
       floors => $floors_base,
       pensource => $source,
       floor_data => $floor_data,
+      date => $now_date,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -175,6 +183,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
+      date => $now_date,
     );
 
     Mira::View::Feed->template(
@@ -185,6 +194,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
+      date => $now_date,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -198,6 +208,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
+      date => $now_date,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -211,6 +222,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
+      date => $now_date,
     );
 
     print "The program ran for ", time() - $^T, " seconds\n";
@@ -222,22 +234,22 @@ sub _markup_lang {
   my $post = shift;
   my $floor = $post->{floor};
   my $markup_lang;
-  if ($post->{'body-format'} and $post->{'body-format'} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+  if ($post->{'markup'} and $post->{'markup'} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
-    $markup_lang = $post->{'body-format'};
+    $markup_lang = $post->{'markup'};
   } elsif (
     $config->{$floor} and
-    $config->{$floor}->{default_body_format} and
-    $config->{$floor}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
+    $config->{$floor}->{default_markup} and
+    $config->{$floor}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
     )
   {
-    $markup_lang = $config->{$floor}->{default_body_format};
+    $markup_lang = $config->{$floor}->{default_markup};
   } elsif (
-    $config->{_default}->{default_body_format} and
-    $config->{_default}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
+    $config->{_default}->{default_markup} and
+    $config->{_default}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i
     )
   {
-    $markup_lang = $config->{_default}->{default_body_format};
+    $markup_lang = $config->{_default}->{default_markup};
   } else
   {
     $markup_lang = 'markdown';

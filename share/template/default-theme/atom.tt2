@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ FloorTITLE }}</title>
-    <description>{{ FloorDESCRIPTION }}</description>
-    <link>{{ FloorURL }}</link>
-    <atom:link href="{{ URL }}/feed.xml" rel="self" type="application/rss+xml" />
+    <title>{{ TITLE }}</title>
+    <description>{{ DESCRIPTION }}</description>
+    <link>{{ URL }}</link>
+    <atom:link href="{{ ROOT }}/feed.xml" rel="self" type="application/rss+xml" />
     <pubDate>{{ DATE }}</pubDate>
     <lastBuildDate>{{ DATE }}</lastBuildDate>
     <generator>mira</generator>

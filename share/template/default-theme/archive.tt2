@@ -2,9 +2,9 @@
 {{ INCLUDE header }}
 
   <header id="header">
-    <img id="header_img" src="{{ STATIC }}/default-theme/img/mira-c.png">
+    <img id="header_img" src="{{ MainSTATIC }}/default-theme/img/mira-c.png">
 		<h1>
-      {{ FloorTITLE }}</a>
+      {{ TITLE }}
 		</h1>
 		<h5>
 			{{ ArchiveTITLE }}

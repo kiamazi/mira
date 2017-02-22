@@ -20,6 +20,7 @@ sub template {
   my $config = $switches{config}; #configs
   my $pensource = $switches{pensource};
   my $floor_data = $switches{floor_data};
+  my $now_date = $switches{date};
 
   my $template_root = catdir($pensource,'template', $config->{_default}->{template});
 
@@ -32,19 +33,19 @@ sub template {
   }) || die "$Template::ERROR\n";
 
   my $vars = {
-  	 TITLE => $config->{_default}->{title},
-     DESCRIPTION => $config->{_default}->{description},
-     URL => $config->{_default}->{url},
-     ROOT => $config->{_default}->{root},
-     STATIC => $config->{_default}->{static},
-     IMGURL => $config->{_default}->{imageurl},
-     AUTHOR => $config->{_default}->{author},
-     EMAIL => $config->{_default}->{email},
+  	 MainTITLE => $config->{_default}->{title},
+     MainDESCRIPTION => $config->{_default}->{description},
+     MainURL => $config->{_default}->{url},
+     MainROOT => $config->{_default}->{root},
+     MainSTATIC => $config->{_default}->{static},
+     MainIMAGEURL => $config->{_default}->{imageurl},
+     MainAUTHOR => $config->{_default}->{author},
+     MainEMAIL => $config->{_default}->{email},
      PageTITLE => $config->{_default}->{title},
      Entries  => $allentries,
      Floors => $floor_data,
      UTIDS => $allposts,
-     CONF => $config->{_default},
+     MAIN => $config->{_default},
      FarsiNum => bless(\&farsinum, 'mira'),
    };
 
@@ -54,13 +55,15 @@ sub template {
      return $string;
    }
 
-   $vars->{URL} =~ s"(?<!http:)/+"/"g;
-   $vars->{URL} =~ s"/$""g;
+   $vars->{DATE} = $now_date;
 
-   $vars->{ROOT} =~ s"^http:/+"/"g;
-   $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
-   $vars->{ROOT} =~ s"/+"/"g;
-   $vars->{ROOT} =~ s"/$""g unless $vars->{ROOT} eq "/";
+   $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
+   $vars->{MainURL} =~ s"/$""g;
+
+   $vars->{MainROOT} =~ s"^http:/+"/"g;
+   $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
+   $vars->{MainROOT} =~ s"/+"/"g;
+   $vars->{MainROOT} =~ s"/$""g unless $vars->{MainROOT} eq "/";
 
 
   my $index = catfile($pensource, 'public', $config->{_default}->{root}, 'index.html');

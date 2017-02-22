@@ -3,14 +3,19 @@
 
 ## Site settings
 title: YOUR BLOG TITLE
-description: YOUR BLOG DESCRIPTIONS 
+description: YOUR BLOG DESCRIPTIONS
 
 author: YOUR NAME
 email: your-email@domain.com
 
+# each field you make here, like twitter and...
+# is available in template: {{ SITE.twitter }}
+twitter: https://www.twitter.com/Your_Twitter_NAME
+
+
  # the base hostname & protocol for your site
-url: http://localhost:80
-root: /BLOG/
+url: http://localhost:80/blog
+root: /blog/
 # if fill static and imageurl, they will be cretaed in your root
 # change from /MAIN_ROOT/YOUR_MAIN_STATIC_PATH to-> /MAIN_ROOT/FLOOR_ROOT/YOUR_STATIC_PATH
 # and
@@ -28,7 +33,7 @@ permalink: :year/:month/:day/:title/
 TimeZone: +00:00
 
 ## Build settings
-default_body_format: markdown
+default_markup: markdown
 
 ## number of posts will be show in main index page
 post_num: 5
@@ -59,3 +64,25 @@ namespace:
   درباره: about
   شخصی: personal
 
+
+social:
+ -  icon: twitter
+    url: https://twitter.com/Twitter_UserName
+    desc: Follow me on twitter
+    share_url: http://twitter.com/share
+    share_title: ?text=
+    share_link: "&amp;url="
+
+ -  icon: github
+    url: https://github.com/GitHub_UserName
+    desc: Fork me on github
+    share_url:
+    share_title:
+    share_link:
+
+ -  icon: instagram
+    url: https://instagram.com/NAME
+    desc: Follow me
+    share_url:
+    share_title:
+    share_link:

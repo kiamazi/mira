@@ -3,12 +3,12 @@
   {{ INCLUDE header }}
 
   <header id="header">
-    <img id="header_img" src="{{ STATIC }}/default-theme/img/mira-c.png">
+    <img id="header_img" src="{{ MainSTATIC }}/default-theme/img/mira-c.png">
 		<h1><a href="{{ ROOT }}">
-            {{ TITLE }}
+            {{ MainTITLE }}</a>
 		</a></h1>
 		<h5>
-			{{ DESCRIPTION }}
+			{{ MainDESCRIPTION }}
 		</h5>
 	</header>
 

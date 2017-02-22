@@ -7,15 +7,27 @@
          <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
           </span>
       </a>
-      <a href="{{ URL }}">
+
+<!-- if conf/FLOORNAME.yml have twitter field -->
+      {{ IF SITE.twitter }}
+      <a href="{{ SITE.twitter }}">
         <span class="fa-stack fa-lg">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
         </span>
       </a>
+<!-- elsif config.yml have twitter field -->
+      {{ ELSIF MAIN.twitter }}
+      <a href="{{ MAIN.twitter }}">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      {{ END }}
 
-      {{ IF FloorTITLE }}
-      <a href="{{ FloorROOT }}/feed.xml">
+      {{ IF TITLE }}
+      <a href="{{ ROOT }}/feed.xml">
         <span class="fa-stack fa-lg">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-rss fa-stack-1x fa-inverse" ></i>

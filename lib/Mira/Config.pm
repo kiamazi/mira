@@ -75,8 +75,8 @@ sub new {
         $self->{$floor} = $floorconf;
         $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
         $self->{$floor}->{description} = $self->{_default}->{description} unless ($self->{$floor}->{description});
-        $self->{$floor}->{url} = $self->{_default}->{url} unless ($self->{$floor}->{url});
         $self->{$floor}->{root} = "$self->{_default}->{root}/$floor" unless ($self->{$floor}->{root});
+        $self->{$floor}->{url} = "$self->{_default}->{url}/$floor" unless ($self->{$floor}->{url});
         $self->{$floor}->{static} = $self->{_default}->{static} unless ($self->{$floor}->{static});
         $self->{$floor}->{imageurl} = $self->{_default}->{imageurl} unless ($self->{$floor}->{imageurl});
         $self->{$floor}->{author} = $self->{_default}->{author} unless ($self->{$floor}->{author});
@@ -100,9 +100,10 @@ sub _not_valids {
   my $configs = {
     title => "$floor",
     root => "$self->{_default}->{root}/$floor/",
-    url => $self->{_default}->{url},
+    url => "$self->{_default}->{url}/$floor",
+    author => $self->{_default}->{author},
     permalink => ":year/:month/:day/:title/",
-    default_body_format => "markdown",
+    default_markup => "markdown",
     post_num => "5",
     archive_post_num => "20",
     static => $self->{_default}->{static},
