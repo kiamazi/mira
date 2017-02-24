@@ -92,7 +92,6 @@ sub execute {
                                     $values->{body},
                                     _markup_lang($values),
                                     );
-
           $data->add($parser->{utid}, $values);
           $floors_data->add($floor, $utid);
         } else

@@ -26,7 +26,6 @@ sub replace {
     $addr .= " title=$title" if $title;
     $addr .= " >";
     $addr =~ s"(?<!http:)/+"/"g;
-    say $addr;
     $self =~ s/(?<!\\)\{\{\s+img\s+([^\s]*?)\s*(".*?")?\s*(".*?")?\s*\}\}/$addr/;
   }
 
