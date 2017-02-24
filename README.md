@@ -17,6 +17,19 @@ Write your contetnt's body whatever you like, Markdown, Textile, BBcode, HTML or
 no limit for make archive lists like categories, tags, seassions, chapters and... or single fields like title, sub title, thumbs and... just keep dreaming about what you need, mira will make them
 
 
+## install
+
+#### perl shell
+
+```
+$ perl -MCPAN -e shell
+> install Mira
+```
+
+#### cpanm
+
+	cpanm Mira
+
 ## start
 
 ```
@@ -33,7 +46,7 @@ mira init
   mira new -t "YOUR POST TITLE" -f "FLOOR_NAME"
 ```
 
-this command your content file in: content/FLOOR_NAME/yy-mm-dd-YOUR_POST_TITLE.pen  
+this command make your content file in: content/FLOOR_NAME/yy-mm-dd-YOUR_POST_TITLE.pen  
 in header this file have your fields structures, from structure/FLOOR_NAME + utid, title, date...
 
 NOTE: never edit utid

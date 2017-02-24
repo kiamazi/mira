@@ -84,14 +84,15 @@ sub execute {
         {
           Mira::Control::Date->date($values);
           Mira::Control::Jdate->jdate($values) if ($config->{$floor}->{date_format} and $config->{$floor}->{date_format} eq 'jalali');
-          $values->{body} = Mira::Parser::Markup->markup(
-                                    $values->{body},
-                                    _markup_lang($values),
-                                    );
           $values->{body} = Mira::Parser::img->replace(
                                     $values->{body},
                                     _img_url($floor),
                                     );
+          $values->{body} = Mira::Parser::Markup->markup(
+                                    $values->{body},
+                                    _markup_lang($values),
+                                    );
+
           $data->add($parser->{utid}, $values);
           $floors_data->add($floor, $utid);
         } else
