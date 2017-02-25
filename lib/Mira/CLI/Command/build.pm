@@ -236,7 +236,7 @@ sub _markup_lang {
   my $markup_lang;
   if ($post->{_markup} and $post->{_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
-    $markup_lang = $post->{'markup'};
+    $markup_lang = $post->{_markup};
   } elsif (
     $config->{$floor} and
     $config->{$floor}->{default_markup} and
