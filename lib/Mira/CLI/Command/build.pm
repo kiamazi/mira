@@ -234,7 +234,7 @@ sub _markup_lang {
   my $post = shift;
   my $floor = $post->{floor};
   my $markup_lang;
-  if ($post->{'markup'} and $post->{'markup'} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+  if ($post->{_markup} and $post->{_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
     $markup_lang = $post->{'markup'};
   } elsif (

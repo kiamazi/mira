@@ -133,7 +133,7 @@ $title =~ s/[\W]+/_/g;
   print $fh "_index:\n";
   print $fh $content."\n";
   print $fh "author: $segments{author}\n";
-  print $fh "markup: $segments{markup}\n";
+  print $fh "_markup: $segments{markup}\n";
   print $fh "---\n";
   close $fh;
   say "$target_post_file created";
