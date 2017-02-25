@@ -42,7 +42,7 @@ sub new {
     $self->{_default}->{post_num} = "3" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
     $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
     $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
-    $self->{_default}->{default_new_entry_floor} = "blog" unless (exists $self->{_default}->{default_new_entry_floor} and $self->{_default}->{default_new_entry_floor});
+    $self->{_default}->{default_floor} = "blog" unless (exists $self->{_default}->{default_floor} and $self->{_default}->{default_floor});
     $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
 
     my $glob = catfile($source, 'content', '*');
@@ -84,7 +84,7 @@ sub new {
         $self->{$floor}->{template} = $self->{_default}->{template} unless ($self->{$floor}->{template});
         $self->{$floor}->{lists} = $self->{_default}->{lists} unless ($self->{$floor}->{lists});
         $self->{$floor}->{namespace} = $self->{_default}->{namespace} unless ($self->{$floor}->{namespace});
-        $self->{$floor}->{date_format} = $self->{_default}->{namespace} unless ($self->{$floor}->{date_format});
+        $self->{$floor}->{date_format} = $self->{_default}->{date_format} unless ($self->{$floor}->{date_format});
       } else
       {
         $self->{$floor} = _not_valids($floor, $self);

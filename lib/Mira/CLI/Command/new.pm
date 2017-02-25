@@ -67,15 +67,15 @@ sub execute {
   $segments{utid} = $utid;
   $segments{date} = $now_date;
   $segments{title} = $opt->{title};
-  if ($config->{$floor}->{default_body_format} and $config->{$floor}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+  if ($config->{$floor}->{default_markup} and $config->{$floor}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
-  	$segments{'body-format'} = $config->{$floor}->{default_body_format};
-  } elsif ($config->{_default}->{default_body_format} and $config->{_default}->{default_body_format} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+  	$segments{markup} = $config->{$floor}->{default_markup};
+  } elsif ($config->{_default}->{default_markup} and $config->{_default}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
-  	$segments{'body-format'} = $config->{_default}->{default_body_format};
+  	$segments{markup} = $config->{_default}->{default_markup};
   } else
   {
-  	$segments{'body-format'} = "markdown";
+  	$segments{markup} = "markdown";
   }
   $segments{author} = $config->{$floor}->{author} ? $config->{$floor}->{author} : ($config->{_default}->{author} ? $config->{_default}->{author} : $ENV{USER});
 
@@ -133,7 +133,7 @@ $title =~ s/[\W]+/_/g;
   print $fh "_index:\n";
   print $fh $content."\n";
   print $fh "author: $segments{author}\n";
-  print $fh "body-format: $segments{'body-format'}\n";
+  print $fh "markup: $segments{markup}\n";
   print $fh "---\n";
   close $fh;
   say "$target_post_file created";
