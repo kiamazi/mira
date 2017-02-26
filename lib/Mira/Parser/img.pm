@@ -11,7 +11,7 @@ use 5.012;
 sub replace {
   my $class= shift;
   my $self = shift;
-  my $imgurl = shift;
+  my $static_img_addr = shift;
 
   while ($self =~ /(?<!\\)\{\{\s+img\s+([^\s]*?)\s*(".*?")?\s*(".*?")?\s*\}\}/g)
   {
@@ -20,22 +20,14 @@ sub replace {
     my $title = $3 ? $3 : ($2 ? $2 : '');
     next unless $source;
 
-    if ($source =~ m{^(.*?)//})
-    {
-      $imgurl = $source;
-    } else
-    {
-      $imgurl .= "/$source" ;
-    }
-#    my $title = $2 if (! $3 and $2);
+    my $imgurl = $static_img_addr;
+    $source =~ m{^(.*?)://} ? ($imgurl = $source) : ($imgurl .= "/$source");
+
     my $addr = "<img src=\"$imgurl\"";
-#    $addr .= "$source\"" if $source;
-#    $addr .= "\"" unless $source;
     $addr .= " alt=$alt" if $alt;
     $addr .= " title=$title" if $title;
     $addr .= " >";
     $addr =~ s"(?<!:)/+"/"g;
-    say $addr;
     $self =~ s/(?<!\\)\{\{\s+img\s+([^\s]*?)\s*(".*?")?\s*(".*?")?\s*\}\}/$addr/;
   }
 
