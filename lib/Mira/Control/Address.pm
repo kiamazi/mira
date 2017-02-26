@@ -76,6 +76,7 @@ sub address {
       $titr_address =~ s/[^\w]+$//g;
       $titr_address = $utid if (! $titr_address);
       $titr_address =~ s/[^\w]+/-/g;
+      $self->{$utid}->{slug} = $titr_address;
       my $url;
       my $address;
       $permalink =~ s/:title/$titr_address/g;
