@@ -27,10 +27,29 @@ sub template {
   foreach my $utid (keys %$allentries)
   {
   	my $floor = $allentries->{$utid}->{floor};
-    my $post_template_root =
-      (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
-      ? catdir($pensource,'template',$config->{$floor}->{template})
-      : catdir($pensource,'template', $config->{_default}->{template});
+
+    my $post_template_root;
+    my $post_layout;
+    if (
+    $allentries->{$utid}->{_layout}
+    and
+    -f catfile($pensource,'template',$config->{$floor}->{template},$allentries->{$utid}->{_layout})
+    ) {
+      $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
+      $post_layout = $allentries->{$utid}->{_layout};
+    } elsif (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
+    {
+      $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
+      $post_layout = 'post.tt2';
+    } else
+    {
+      $post_template_root = catdir($pensource,'template', $config->{_default}->{template});
+      $post_layout = 'post.tt2';
+    }
+#    my $post_template_root =
+#      (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
+#      ? catdir($pensource,'template',$config->{$floor}->{template})
+#      : catdir($pensource,'template', $config->{_default}->{template});
 
 
   	#TODO complete and check this code, for each post template
@@ -147,7 +166,7 @@ sub template {
     my @target = split (m:/:, $allentries->{$utid}->{_spec}->{address});
     my $index = catfile($pensource, 'public', @target);
 
-  	$post_index->process('post.tt2', $vars, $index, { binmode => ':utf8' })
+  	$post_index->process($post_layout, $vars, $index, { binmode => ':utf8' })
   			|| die $post_index->error(), "\n";
 
   }
