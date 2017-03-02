@@ -157,10 +157,24 @@ sub execute {
     $diff = Time::HiRes::tv_interval($start_time);
     print "start main: $diff\n";
 
+    my @week_day = qw(Sun Mon Tue Wed Thu Fri Sat);
+    my @month_names = qw(January February March April May June July August September October November December);
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
     $year += 1900;
     $mon += 1;
     my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
+
+    #my ($year, $month, $day, $hour, $minute, $second);
+    my $build = {};
+      $build->{year} = sprintf "%04d", $year;
+      $build->{month} = sprintf "%02d", $mon;
+      $build->{month_name} = $month_names[$mon-1];
+      $build->{day} = sprintf "%02d", $mday;
+      $build->{day_name} = $week_day[$wday];
+      $build->{hour} = sprintf "%02d", $hour;
+      $build->{minute} = sprintf "%02d", $min;
+      $build->{second} = sprintf "%02d", $sec;
+
 
     Mira::View::Main->template(
       config => $config,
@@ -169,7 +183,7 @@ sub execute {
       floors => $floors_base,
       pensource => $source,
       floor_data => $floor_data,
-      date => $now_date,
+      build => $build,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -183,7 +197,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
-      date => $now_date,
+      build => $build,
     );
 
     Mira::View::Feed->template(
@@ -194,7 +208,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
-      date => $now_date,
+      build => $build,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -208,7 +222,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
-      date => $now_date,
+      build => $build,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
@@ -222,7 +236,7 @@ sub execute {
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,
-      date => $now_date,
+      build => $build,
     );
 
     print "The program ran for ", time() - $^T, " seconds\n";

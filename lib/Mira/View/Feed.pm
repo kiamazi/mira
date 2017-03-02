@@ -22,7 +22,7 @@ sub template {
   my $pensource = $switches{pensource};
   my $lists = $switches{lists};
   my $floor_data = $switches{floor_data};
-  my $now_date = $switches{date};
+  my $build = $switches{build};
 
 
   foreach my $floor (keys %$floors)
@@ -72,6 +72,7 @@ sub template {
           Archives => $lists->{$floor},
           MAIN => $config->{_default},
           SITE => $config->{$floor},
+          BUILD => $build,
           FarsiNum => bless(\&farsinum, 'mira'),
         }; #sort { <=> }
 
@@ -80,8 +81,6 @@ sub template {
           $string =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
           return $string;
         }
-
-        $vars->{DATE} = $now_date;
 
         $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
         $vars->{MainURL} =~ s"/$""g;

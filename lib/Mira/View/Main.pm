@@ -20,7 +20,7 @@ sub template {
   my $config = $switches{config}; #configs
   my $pensource = $switches{pensource};
   my $floor_data = $switches{floor_data};
-  my $now_date = $switches{date};
+  my $build = $switches{build};
 
   my $template_root = catdir($pensource,'template', $config->{_default}->{template});
 
@@ -46,6 +46,7 @@ sub template {
      Floors => $floor_data,
      UTIDS => $allposts,
      MAIN => $config->{_default},
+     BUILD => $build,
      FarsiNum => bless(\&farsinum, 'mira'),
    };
 
@@ -54,8 +55,6 @@ sub template {
      $string =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
      return $string;
    }
-
-   $vars->{DATE} = $now_date;
 
    $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
    $vars->{MainURL} =~ s"/$""g;

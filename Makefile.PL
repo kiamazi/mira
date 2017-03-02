@@ -33,6 +33,7 @@ WriteMakefile
         'Encode::Locale'        => 0,
         'File::Copy::Recursive' => 0,
         'File::ShareDir'        => 0,
+        'DateTime'              => 0,
         'Plack'                 => 0,
         'Text::Textile'         => "2.12",
         'Text::Markdown'        => "1.0.25",
