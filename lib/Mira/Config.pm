@@ -85,6 +85,8 @@ sub new {
         $self->{$floor}->{lists} = $self->{_default}->{lists} unless ($self->{$floor}->{lists});
         $self->{$floor}->{namespace} = $self->{_default}->{namespace} unless ($self->{$floor}->{namespace});
         $self->{$floor}->{date_format} = $self->{_default}->{date_format} unless ($self->{$floor}->{date_format});
+        $self->{$floor}->{post_num} = $self->{_default}->{post_num} unless $self->{$floor}->{post_num};
+        $self->{$floor}->{archive_post_num} = $self->{_default}->{archive_post_num} unless $self->{$floor}->{archive_post_num};
       } else
       {
         $self->{$floor} = _not_valids($floor, $self);

@@ -6,12 +6,13 @@ use warnings;
 use 5.012;
 
 use Mira::Date::Jalali;
+use DateTime;
 
 sub date {
   my $class = shift;
   my $values = shift;
 
-  my @month_names = qw(January February March April May June July August September October November December);
+  #my @month_names = qw(January February March April May June July August September October November December);
 
   if (exists $values->{date})
   {
@@ -40,10 +41,24 @@ sub date {
       say "$values->{_spec}->{file_address}\'s second number is biger than 59 >> $second, for this build Mira use 59 for your post second, but plz fix it" if ($second > 59);
       $values->{_spec}->{second} = 31 if ($day > 31);
 
+      my $date_time = DateTime->new(
+        year       => $year,
+        month      => $month,
+        day        => $day,
+      );
+      my $month_name  = $date_time->month_name;
+      my $month_abbr  = $date_time->month_abbr;
+      my $day_name    = $date_time->day_name;
+      my $day_abbr    = $date_time->day_abbr;
+
       $values->{CALENDAR}->{year} = $values->{_spec}->{year};
       $values->{CALENDAR}->{month} = $values->{_spec}->{month};
-      $values->{CALENDAR}->{month_name} = $month_names[$month-1];
+      #$values->{CALENDAR}->{month_name} = $month_names[$month-1];
+      $values->{CALENDAR}->{month_name} = $month_name;
+      $values->{CALENDAR}->{month_abbr} = $month_abbr;
       $values->{CALENDAR}->{day} = $values->{_spec}->{day};
+      $values->{CALENDAR}->{day_name} = $day_name;
+      $values->{CALENDAR}->{day_abbr} = $day_abbr;
       $values->{CALENDAR}->{hour} = $values->{_spec}->{hour};
       $values->{CALENDAR}->{minute} = $values->{_spec}->{minute};
       $values->{CALENDAR}->{second} = $values->{_spec}->{second};
@@ -61,13 +76,28 @@ sub date {
       month => $month,
       day => $day
     );
+
+    my $date_time = DateTime->new(
+      year       => $date->gregorian->{year},
+      month      => $date->gregorian->{month},
+      day        => $date->gregorian->{day},
+    );
+    my $month_name  = $date_time->month_name;
+    my $month_abbr  = $date_time->month_abbr;
+    my $day_name    = $date_time->day_name;
+    my $day_abbr    = $date_time->day_abbr;
+
     $values->{_spec}->{year} = sprintf "%04d", $date->gregorian->{year};
     $values->{_spec}->{month} = sprintf "%02d", $date->gregorian->{month};
     $values->{_spec}->{day} = sprintf "%02d", $date->gregorian->{day};
     $values->{CALENDAR}->{year} = $values->{_spec}->{year};
     $values->{CALENDAR}->{month} = $values->{_spec}->{month};
-    $values->{CALENDAR}->{month_name} = $month_names[$month-1];
+    #$values->{CALENDAR}->{month_name} = $month_names[$month-1];
+    $values->{CALENDAR}->{month_name} = $month_name;
+    $values->{CALENDAR}->{month_abbr} = $month_abbr;
     $values->{CALENDAR}->{day} = $values->{_spec}->{day};
+    $values->{CALENDAR}->{day_name} = $day_name;
+    $values->{CALENDAR}->{day_abbr} = $day_abbr;
   }
 
 }
