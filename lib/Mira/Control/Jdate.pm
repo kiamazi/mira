@@ -14,7 +14,7 @@ sub jdate {
   my $values = shift;
 
   my @jmonth_names = qw(فروردین اردیبهشت خرداد تیر مرداد شهریور مهر آبان آذر دی بهمن اسفند);
-  my @jday_names = qw(شنبه یک‌شنبه دوشنبه سه‌شنبه چهارشنبه پنج‌شنبه جمعه);
+  my @jday_names = qw(دوشنبه سه‌شنبه‌ چهارشنبه پنج‌شنبه جمعه شنبه یک‌شنبه);
 
   if (not exists $values->{jdate})
   {
