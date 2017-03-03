@@ -32,9 +32,9 @@ sub jdate {
       $values->{_spec}->{jday} = sprintf "%02d", $date->jalali->{day};
 
       my $date_time = DateTime->new(
-        year       => $date->jalali->{year},
-        month      => $date->jalali->{month},
-        day        => $date->jalali->{day},
+        year       => $year,
+        month      => $month,
+        day        => $day,
       );
       my $dow = $date_time->day_of_week;
 
