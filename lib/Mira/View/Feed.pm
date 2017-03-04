@@ -35,6 +35,9 @@ sub template {
 
     my @utids = @{$floors->{$floor}};
     @utids = reverse sort @utids;
+    @utids = grep {
+      not $allentries->{$_}->{_type} or $allentries->{$_}->{_type} !~ m/^(page|draft)$/
+    } @utids;
     my $num = $config->{$floor}->{feed_post_num} ? $config->{$floor}->{feed_post_num} : $config->{_default}->{feed_post_num};
     @utids = splice @utids, 0, $num;
 

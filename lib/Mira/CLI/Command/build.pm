@@ -137,6 +137,9 @@ sub execute {
     foreach my $floor (keys %$floors_data)
     {
       my @entries = reverse sort @{$floors_data->{$floor}};
+      @entries = grep {
+        not $data_base->{$_}->{_type} or $data_base->{$_}->{_type} !~ m/^(page|draft)$/
+      }@entries;
       splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
       $floor_data->{$floor}->{name} = $config->{$floor}->{title};
       $floor_data->{$floor}->{description} = $config->{$floor}->{description};
@@ -193,7 +196,7 @@ sub execute {
       config => $config,
       posts => $posts, #utids
       allentries => $data_base, #all entries hash
-      floors => $floors_base,
+#      floors => $floors_base,
       pensource => $source,
       floor_data => $floor_data,
       build => $build,
@@ -231,7 +234,7 @@ sub execute {
       config => $config,
       posts => $posts, #utids
       allentries => $data_base, #all entries hash
-      floors => $floors_base,
+#      floors => $floors_base,
       pensource => $source,
       lists => $lists_data,
       floor_data => $floor_data,

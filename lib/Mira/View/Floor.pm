@@ -36,6 +36,9 @@ sub template {
 
     my @utids = @{$floors->{$floor}};
     @utids = ($config->{$floor}->{post_sort} and $config->{$floor}->{post_sort} eq 'reverse') ? sort @utids : reverse sort @utids;
+    @utids = grep {
+      not $allentries->{$_}->{_type} or $allentries->{$_}->{_type} !~ m/^(page|draft)$/
+    } @utids;
 
     #my $posts = \@utids;
 
@@ -139,9 +142,18 @@ sub template {
         }
 
         my $floor_post_num = ($config->{$floor}->{post_num} eq 'all') ? scalar @utids : $config->{$floor}->{post_num};
-        my $page = 1;
+        my $page_number = 1;
+        my $page_total;
+        if ((scalar @utids) % ($floor_post_num) == 0)
+        {
+          $page_total = (scalar @utids) / ($floor_post_num);
+        } else {
+          $page_total = int( (scalar @utids) / ($floor_post_num) ) + 1;
+        }
+
         while (my @pagepost = splice @utids, 0, $floor_post_num)
         {
+          my $page = {};
           my $posts = [];
           foreach my $utid (@pagepost)
           {
@@ -149,18 +161,27 @@ sub template {
           }
           $vars->{POSTS} = $posts;
 
-          my $target = $page == 1 ? "index.html" : "/page/$page/index.html";
+          my $target = $page_number == 1 ? "index.html" : "/page/$page_number/index.html";
           my $index = catfile($pensource, 'public', $config->{$floor}->{root}, $target);
 
-          $vars->{next} = @utids ? "$config->{$floor}->{root}/page/" . ($page+1) . "/" : '' ;
-          $vars->{next} =~ s"(?<!http:)/+"/"g if $vars->{next};
-          $vars->{prev} = $page == 1 ? '' : "$config->{$floor}->{root}/page/" . ($page-1) . "/" ;
-          $vars->{prev} = $config->{$floor}->{root} . "/" if $page == 2;
-          $vars->{prev} =~ s"(?<!http:)/+"/"g if $vars->{prev};
+          $page->{next}->{url} = @utids ? "$config->{$floor}->{root}/page/" . ($page_number+1) . "/" : '' ;
+          $page->{next}->{url} =~ s{(?<!http:)\/+}{\/}g if $page->{next}->{url};
+          $page->{next}->{title} = ($page_number+1) if $vars->{next}->{url};
+          delete $page->{next} unless $page->{next}->{url};
+
+          $page->{prev}->{url} = $page_number == 1 ? '' : "$config->{$floor}->{root}/page/" . ($page_number-1) . "/" ;
+          $page->{prev}->{url} = $config->{$floor}->{root} . "/" if $page_number == 2;
+          $page->{prev}->{url} =~ s{(?<!http:)/+}{/}g if $page->{prev}->{url};
+          $page->{prev}->{title} = ($page_number-1) if $vars->{prev}->{url};
+          delete $page->{prev} unless $page->{prev}->{url};
+
+          $page->{number} = $page_number;
+          $page->{total} = $page_total;
+          $vars->{PAGE} = $page;
 
           $floor_index->process('index.tt2', $vars, $index, { binmode => ':utf8' })
               || die $floor_index->error(), "\n";
-          $page++;
+          $page_number++;
         }
 
   }

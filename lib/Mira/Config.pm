@@ -39,7 +39,7 @@ sub new {
       croak " ! - you are not in true path or --source is invalid path or /conf/config.yml isn't valid file";
     }
 
-    $self->{_default}->{post_num} = "3" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
+    $self->{_default}->{post_num} = "5" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
     $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
     $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
     $self->{_default}->{default_floor} = "blog" unless (exists $self->{_default}->{default_floor} and $self->{_default}->{default_floor});
@@ -75,8 +75,8 @@ sub new {
         $self->{$floor} = $floorconf;
         $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
         $self->{$floor}->{description} = $self->{_default}->{description} unless ($self->{$floor}->{description});
-        $self->{$floor}->{root} = "$self->{_default}->{root}/$floor" unless ($self->{$floor}->{root});
-        $self->{$floor}->{url} = "$self->{_default}->{url}/$floor" unless ($self->{$floor}->{url});
+        $self->{$floor}->{root} = "$self->{_default}->{root}/$floor/" unless ($self->{$floor}->{root});
+        $self->{$floor}->{url} = "$self->{_default}->{url}/$floor/" unless ($self->{$floor}->{url});
         $self->{$floor}->{static} = $self->{_default}->{static} unless ($self->{$floor}->{static});
         $self->{$floor}->{imageurl} = $self->{_default}->{imageurl} unless ($self->{$floor}->{imageurl});
         $self->{$floor}->{author} = $self->{_default}->{author} unless ($self->{$floor}->{author});
@@ -87,6 +87,7 @@ sub new {
         $self->{$floor}->{date_format} = $self->{_default}->{date_format} unless ($self->{$floor}->{date_format});
         $self->{$floor}->{post_num} = $self->{_default}->{post_num} unless $self->{$floor}->{post_num};
         $self->{$floor}->{archive_post_num} = $self->{_default}->{archive_post_num} unless $self->{$floor}->{archive_post_num};
+        $self->{$floor}->{feed_post_num} = $self->{_default}->{feed_post_num} unless $self->{$floor}->{feed_post_num};
       } else
       {
         $self->{$floor} = _not_valids($floor, $self);
@@ -108,6 +109,7 @@ sub _not_valids {
     default_markup => "markdown",
     post_num => "5",
     archive_post_num => "20",
+    feed_post_num => "20",
     static => $self->{_default}->{static},
     imageurl => $self->{_default}->{imageurl},
     template => $self->{_default}->{template},

@@ -139,9 +139,17 @@ sub template {
         }
 
         my $archive_post_num = ($config->{$floor}->{archive_post_num} eq 'all') ? scalar @utids : $config->{$floor}->{archive_post_num};
-        my $page = 1;
+        my $page_number = 1;
+        my $page_total;
+        if ((scalar @utids) % ($archive_post_num) == 0)
+        {
+          $page_total = (scalar @utids) / ($archive_post_num);
+        } else {
+          $page_total = int( (scalar @utids) / ($archive_post_num) ) + 1;
+        }
         while (my @pagepost = splice @utids, 0, $archive_post_num)
         {
+          my $page = {};
           my $posts = [];
           foreach my $utid (@pagepost)
           {
@@ -149,22 +157,30 @@ sub template {
           }
           $vars->{POSTS} = $posts;
 
-
-          my $target = $page == 1 ? "index.html" : "/page/$page/index.html";
+          my $target = $page_number == 1 ? "index.html" : "/page/$page_number/index.html";
           my $index = catfile($pensource, 'public', @show_list_address, $target);
 
-          $vars->{next} = @utids ? "$show_list_url/page/" . ($page+1) . "/index.html" : '' ;
-          $vars->{next} =~ s"(?<!http:)/+"/"g if $vars->{next};
-          $vars->{prev} = $page == 1 ? '' : "$show_list_url/page/" . ($page-1) . "/index.html" ;
-          $vars->{prev} = "$show_list_url/index.html" if $page == 2;
-          $vars->{prev} =~ s"(?<!http:)/+"/"g if $vars->{prev};
+          $page->{next}->{url} = @utids ? "$show_list_url/page/" . ($page_number+1) . "/index.html" : '' ;
+          $page->{next}->{url} =~ s"(?<!http:)/+"/"g if $page->{next}->{url};
+          $page->{next}->{title} = ($page_number+1) if $vars->{next}->{url};
+          delete $page->{next} unless $page->{next}->{url};
+
+          $page->{prev}->{url} = $page_number == 1 ? '' : "$show_list_url/page/" . ($page_number-1) . "/index.html" ;
+          $page->{prev}->{url} = "$show_list_url/index.html" if $page_number == 2;
+          $page->{prev}->{url} =~ s"(?<!http:)/+"/"g if $page->{prev}->{url};
+          $page->{prev}->{title} = ($page_number-1) if $vars->{prev}->{url};
+          delete $page->{prev} unless $page->{prev}->{url};
+
+          $page->{number} = $page_number;
+          $page->{total} = $page_total;
+          $vars->{PAGE} = $page;
 
           my $arch_template = (-f catfile($archive_template_root, "$archive.tt2"))
            ?
            "$archive.tt2" : "archive.tt2";
           $archive_index->process($arch_template, $vars, $index, { binmode => ':utf8' })
               || die $archive_index->error(), "\n";
-          $page++;
+          $page_number++;
         }
   		}
   	}

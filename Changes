@@ -1,14 +1,52 @@
 0.0712
 ===
+- bug fix
+- change {{ next }} in template's tags:
+		{{ PAGE.next.url }}
+		{{ PAGE.next.title }}
+- change {{ prev }} in template's tags:
+		{{ PAGE.prev.url }}
+		{{ PAGE.prev.title }}
+- add {{ PAGE.number }} for current page
+- add {{ PAGE.total }} for totla page number
+- add {{ PAGE.* }} to post layout
+- add _type field to content's header for support pages.
+		usage > _type: page
+- add _layout field to content's header for support custom layouts.
+		usage > _layout: page.tt2
+						_layout: custom.tt2
+						...
+- add more fields to {{ CALENDAR.* }}
+		{{ CALENDAR.day_name }}
+		{{ CALENDAR.day_abbr }}
+		{{ CALENDAR.month_abbr }}
+		{{ CALENDAR.jday_name }}
+		{{ CALENDAR.jmonth_name }}
+- add {{ BUILD.* }}, date and time, when run 'mira build'
+		{{ BUILD.date }}
+		{{ BUILD.year }}
+		{{ BUILD.month }}
+		{{ BUILD.month_name }}
+		{{ BUILD.month_abbr }}
+		{{ BUILD.day }}
+		{{ BUILD.day_name }}
+		{{ BUILD.day_abbr }}
+		{{ BUILD.hour }}
+		{{ BUILD.minute }}
+		{{ BUILD.second }}
+
+----------------------------------
+0.0712
+===
 change body labels
 
-
+----------------------------------
 0.0703
 ===
 change TT Start and End Tag to: {{ }}
 bug fix
 
-
+----------------------------------
 0.07
 ===
 bug fix
