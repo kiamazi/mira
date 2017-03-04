@@ -5,8 +5,8 @@
     <description>{{ DESCRIPTION }}</description>
     <link>{{ URL }}</link>
     <atom:link href="{{ ROOT }}/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>{{ DATE }}</pubDate>
-    <lastBuildDate>{{ DATE }}</lastBuildDate>
+    <pubDate>{{ BUILD.date }}</pubDate>
+    <lastBuildDate>{{ BUILD.date }}</lastBuildDate>
     <generator>mira</generator>
 
 

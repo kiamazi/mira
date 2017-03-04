@@ -16,7 +16,7 @@ sub template {
 
   my $allposts = $switches{posts}; #all utids reverse sorted
   my $allentries = $switches{allentries}; #all entries data hash
-  my $floors = $switches{floors};
+#  my $floors = $switches{floors};
   my $config = $switches{config}; #configs
   my $pensource = $switches{pensource};
   my $floor_data = $switches{floor_data};

@@ -19,7 +19,7 @@
 <!-- Main Content -->
 <section id="content">
   {{ FOREACH POSTS }}
-  <article class="post">
+  <article class="post" id="{{ slug }}">
 		<div class="header">
 
       <h2 class="title">
@@ -79,12 +79,12 @@
 
   <div class="pagination">
 
-    {{ IF prev }}
-      <a class="newerpage" href="{{ prev }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Newer Posts</a>
+    {{ IF PAGE.prev }}
+      <a class="newerpage" href="{{ PAGE.prev.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Newer Posts</a>
     {{- END }}
-
-    {{ IF next }}
-      <a class="olderpage" href="{{ next }}">Older Posts <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+| page {{ PAGE.number }} of {{PAGE.total}} |
+    {{ IF PAGE.next }}
+      <a class="olderpage" href="{{ PAGE.next.url }}">Older Posts <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
     {{- END }}
 
   </div>
