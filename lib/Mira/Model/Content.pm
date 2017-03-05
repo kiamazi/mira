@@ -56,8 +56,9 @@ sub files {
   foreach my $floor (@$floors)
   {
     my $glob = catfile($source, 'content', $floor , "*");
-    my @entries = glob encode(locale_fs => $glob);
-    @entries = grep {-f and not /($ext)$/} @entries;
+    my @path = glob encode(locale_fs => $glob);
+    my @files = _room(@path);
+    my @entries = grep {-f and not /($ext)$/} @files;
 
     foreach my $entry (@entries)
     {
@@ -67,6 +68,23 @@ sub files {
   }
 
   return $files;
+}
+
+sub _room {
+  my @path = @_;
+  my @files;
+  foreach my $path (@path)
+  {
+    next if (-d $path) && ($path =~ /static$/i);
+    (-f $path) && (push @files, $path) && next;# if -f $path;
+    if (-d $path)
+    {
+      my $glob = catfile($path , "*");
+      my @paths = glob encode(locale_fs => $glob);
+      push @files, _room(@paths);
+    }
+  }
+  return @files;
 }
 
 
