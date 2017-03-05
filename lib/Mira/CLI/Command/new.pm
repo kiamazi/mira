@@ -62,6 +62,8 @@ sub execute {
   $opt->{floor} = lc($opt->{floor});
   my $floor = $opt->{floor};
 
+  my $ext = $config->{$floor}->{default_extension} ? $config->{$floor}->{default_extension} : 'md';
+  $ext =~ s/\.+//;
 
   my %segments;
   $segments{utid} = $utid;
@@ -113,14 +115,14 @@ $title =~ s/[\W]+/_/g;
   make_path $target_post_dir unless -d $target_post_dir;
 
   my $target_post_file;
-  if (! -f catfile($target_post_dir, "$year-$mon-$mday-$title.pen")) {
-  	$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title.pen");
+  if (! -f catfile($target_post_dir, "$year-$mon-$mday-$title.$ext")) {
+  	$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title.$ext");
   } else {
-  	print "/$opt->{floor}/$year-$mon-$mday-$title.pen already exist\n";
+  	print "/$opt->{floor}/$year-$mon-$mday-$title.$ext already exist\n";
   	while (1) {
   		state $nfid = 2;
   		$nfid = sprintf "%02d", $nfid;
-  		$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title-$nfid.pen");
+  		$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title-$nfid.$ext");
   		last unless (-e $target_post_file);
   		$nfid++;
   	}

@@ -39,7 +39,7 @@ sub address {
         $permanent = $config->{_default}->{permalink};
       } else
       {
-        $permanent = ":year/:month/:title";
+        $permanent = ":year/:month/:day/:title/";
       }
 #      $permanent .= "/:title" if $permanent !~ /:title/;
 

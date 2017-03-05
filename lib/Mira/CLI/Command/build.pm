@@ -62,6 +62,7 @@ sub execute {
     my $content = Mira::Model::Content->new(source => $source, ext => '.draft');
     my $floors = $content->floors;
     my $files = $content->files($floors);
+    my $statics = $content->statics($floors);
 
 
     ######################

@@ -59,7 +59,6 @@ sub files {
     my @path = glob encode(locale_fs => $glob);
     my @files = _room(@path);
     my @entries = grep {-f and not /($ext)$/} @files;
-
     foreach my $entry (@entries)
     {
       $entry = decode(locale_fs => $entry);
@@ -70,12 +69,40 @@ sub files {
   return $files;
 }
 
+sub statics {
+  my $self = shift;
+  my $floors = shift;
+  my $source = $self->{source};
+
+  my $statics = {};
+
+  foreach my $floor (@$floors)
+  {
+    my $glob = catfile($source, 'content', $floor , "*");
+    my @path = glob encode(locale_fs => $glob);
+    @path = grep {-d} @path;
+    my @statics = _static_rooms(@path);
+    #@statics = grep {-d and /statics$/} @statics;
+    foreach my $static (@statics)
+    {
+      $static = decode(locale_fs => $static);
+      push @{ $statics->{$floor} }, $static;
+    }
+  }
+
+  return $statics;
+
+}
+
+
+
+
 sub _room {
   my @path = @_;
   my @files;
   foreach my $path (@path)
   {
-    next if (-d $path) && ($path =~ /static$/i);
+    next if (-d $path && basename($path) =~ /static/i);
     (-f $path) && (push @files, $path) && next;# if -f $path;
     if (-d $path)
     {
@@ -87,5 +114,19 @@ sub _room {
   return @files;
 }
 
+sub _static_rooms {
+  my @path = @_;
+  my @dirs;
+  foreach my $path (@path)
+  {
+    next if not -d $path;
+    (push @dirs, $path) && next if (-d $path && basename($path) =~ /^static$/i);
+    my $glob = catfile($path , "*");
+    my @paths = glob encode(locale_fs => $glob);
+    @path = grep {-d} @path;
+    push @dirs, _static_rooms(@paths);
+  }
+  return @dirs;
+}
 
 1;

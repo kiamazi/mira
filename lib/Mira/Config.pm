@@ -44,6 +44,11 @@ sub new {
     $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
     $self->{_default}->{default_floor} = "blog" unless (exists $self->{_default}->{default_floor} and $self->{_default}->{default_floor});
     $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
+    $self->{_default}->{root} = "/" unless (exists $self->{_default}->{root} and $self->{_default}->{root});
+    $self->{_default}->{url} = "/" unless (exists $self->{_default}->{url} and $self->{_default}->{url});
+    $self->{_default}->{permalink} = ":year/:month/:day/:title/" unless (exists $self->{_default}->{permalink} and $self->{_default}->{permalink});
+    $self->{_default}->{default_markup} = "markdown" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
+    $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
 
     my $glob = catfile($source, 'content', '*');
 
@@ -70,27 +75,35 @@ sub new {
         {
           carp " # - $floor\.yml have problem, use default configs for floor: $floor";
           $self->{$floor} = _not_valids($floor, $self);
-          next;
+          #next;
         }
         $self->{$floor} = $floorconf;
         $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
-        $self->{$floor}->{description} = $self->{_default}->{description} unless ($self->{$floor}->{description});
+#        $self->{$floor}->{description} = $self->{_default}->{description} unless ($self->{$floor}->{description});
         $self->{$floor}->{root} = "$self->{_default}->{root}/$floor/" unless ($self->{$floor}->{root});
         $self->{$floor}->{url} = "$self->{_default}->{url}/$floor/" unless ($self->{$floor}->{url});
-        $self->{$floor}->{static} = $self->{_default}->{static} unless ($self->{$floor}->{static});
-        $self->{$floor}->{imageurl} = $self->{_default}->{imageurl} unless ($self->{$floor}->{imageurl});
-        $self->{$floor}->{author} = $self->{_default}->{author} unless ($self->{$floor}->{author});
-        $self->{$floor}->{email} = $self->{_default}->{email} unless ($self->{$floor}->{email});
-        $self->{$floor}->{template} = $self->{_default}->{template} unless ($self->{$floor}->{template});
-        $self->{$floor}->{lists} = $self->{_default}->{lists} unless ($self->{$floor}->{lists});
-        $self->{$floor}->{namespace} = $self->{_default}->{namespace} unless ($self->{$floor}->{namespace});
-        $self->{$floor}->{date_format} = $self->{_default}->{date_format} unless ($self->{$floor}->{date_format});
-        $self->{$floor}->{post_num} = $self->{_default}->{post_num} unless $self->{$floor}->{post_num};
-        $self->{$floor}->{archive_post_num} = $self->{_default}->{archive_post_num} unless $self->{$floor}->{archive_post_num};
-        $self->{$floor}->{feed_post_num} = $self->{_default}->{feed_post_num} unless $self->{$floor}->{feed_post_num};
+#        $self->{$floor}->{static} = $self->{_default}->{static} unless ($self->{$floor}->{static});
+#        $self->{$floor}->{imageurl} = $self->{_default}->{imageurl} unless ($self->{$floor}->{imageurl});
+#        $self->{$floor}->{author} = $self->{_default}->{author} unless ($self->{$floor}->{author});
+#        $self->{$floor}->{email} = $self->{_default}->{email} unless ($self->{$floor}->{email});
+#        $self->{$floor}->{template} = $self->{_default}->{template} unless ($self->{$floor}->{template});
+#        $self->{$floor}->{lists} = $self->{_default}->{lists} unless ($self->{$floor}->{lists});
+#        $self->{$floor}->{namespace} = $self->{_default}->{namespace} unless ($self->{$floor}->{namespace});
+#        $self->{$floor}->{date_format} = $self->{_default}->{date_format} unless ($self->{$floor}->{date_format});
+#        $self->{$floor}->{post_num} = $self->{_default}->{post_num} unless $self->{$floor}->{post_num};
+#        $self->{$floor}->{archive_post_num} = $self->{_default}->{archive_post_num} unless $self->{$floor}->{archive_post_num};
+#        $self->{$floor}->{feed_post_num} = $self->{_default}->{feed_post_num} unless $self->{$floor}->{feed_post_num};
       } else
       {
         $self->{$floor} = _not_valids($floor, $self);
+      }
+
+      foreach my $key (keys %{ $self->{_default} })
+      {
+        if (not exists $self->{$floor}->{$key})
+        {
+          $self->{$floor}->{$key} = $self->{_default}->{$key};
+        }
       }
     }
 
@@ -105,17 +118,21 @@ sub _not_valids {
     root => "$self->{_default}->{root}/$floor/",
     url => "$self->{_default}->{url}/$floor",
     author => $self->{_default}->{author},
-    permalink => ":year/:month/:day/:title/",
-    default_markup => "markdown",
-    post_num => "5",
-    archive_post_num => "20",
-    feed_post_num => "20",
-    static => $self->{_default}->{static},
-    imageurl => $self->{_default}->{imageurl},
-    template => $self->{_default}->{template},
-    lists => $self->{_default}->{lists},
-    namespace => $self->{_default}->{namespace},
+#    permalink => ":year/:month/:day/:title/",
+#    default_markup => "markdown",
+#    post_num => "5",
+#    archive_post_num => "20",
+#    feed_post_num => "20",
+#    static => $self->{_default}->{static},
+#    imageurl => $self->{_default}->{imageurl},
+#    template => $self->{_default}->{template},
+#    lists => $self->{_default}->{lists},
+#    namespace => $self->{_default}->{namespace},
   };
+  $configs->{root} =~ s{/+}{/}g;
+  $configs->{url} =~ s{/+}{/}g;
+  say $configs->{root};
+  $configs->{url};
   return $configs;
 }
 
