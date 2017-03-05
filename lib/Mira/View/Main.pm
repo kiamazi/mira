@@ -56,13 +56,14 @@ sub template {
      return $string;
    }
 
-   $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
-   $vars->{MainURL} =~ s"/$""g;
+   #$vars->{MainURL} =~ s"(?<!http:)/+"/"g;
+   $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
+   $vars->{MainURL} =~ s{/$}{}g;
 
-   $vars->{MainROOT} =~ s"^http:/+"/"g;
+   $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
    $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
-   $vars->{MainROOT} =~ s"/+"/"g;
-   $vars->{MainROOT} =~ s"/$""g unless $vars->{MainROOT} eq "/";
+   $vars->{MainROOT} =~ s{/+}{/}g;
+   $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
 
 
   my $index = catfile($pensource, 'public', $config->{_default}->{root}, 'index.html');

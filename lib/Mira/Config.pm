@@ -92,7 +92,7 @@ sub new {
 
       $self->{$floor}->{url} =~ s{(?<!:)/+}{/}g;
       #$self->{$floor}->{url} =~ s{((?:(?!.*?:)/+))}{/}g;
-      $self->{$floor}->{root} =~ s{^(.*)?:/+}{/}g;
+      $self->{$floor}->{root} =~ s{^(.*?):/+}{/}g;
       $self->{$floor}->{root} =~ s{/+}{/}g;
       $self->{$floor}->{static} =~ s{/+}{/}g;
 

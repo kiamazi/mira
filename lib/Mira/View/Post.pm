@@ -131,21 +131,23 @@ sub template {
          return $string;
        }
 
-       $vars->{MainURL} =~ s"(?<!http:)/+"/"g;
-       $vars->{MainURL} =~ s"/$""g;
+       #$vars->{MainURL} =~ s"(?<!http:)/+"/"g;
+       $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
+       $vars->{MainURL} =~ s{/$}{}g;
 
-       $vars->{MainROOT} =~ s"^http:/+"/"g;
+       $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
        $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
-       $vars->{MainROOT} =~ s"/+"/"g;
-       $vars->{MainROOT} =~ s"/$""g unless $vars->{MainROOT} eq "/";
+       $vars->{MainROOT} =~ s{/+}{/}g;
+       $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
 
-       $vars->{URL} =~ s"(?<!http:)/+"/"g;
-       $vars->{URL} =~ s"/$""g;
+       #$vars->{URL} =~ s"(?<!http:)/+"/"g;
+       $vars->{URL} =~ s{(?<!:)/+}{/}g;
+       $vars->{URL} =~ s{/$}{}g;
 
-       $vars->{ROOT} =~ s"^http:/+"/"g;
+       $vars->{ROOT} =~ s{^(.*?):/+}{/}g;
        $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
-       $vars->{ROOT} =~ s"/+"/"g;
-       $vars->{ROOT} =~ s"/$""g unless $vars->{ROOT} eq "/";
+       $vars->{ROOT} =~ s{/+}{/}g;
+       $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";
 
        my $posts = [];
        push @$posts, $allentries->{$utid};

@@ -70,7 +70,8 @@ sub address {
       my @permalink = split (m:/:, $permalink);
       @permalink = map {$_ =~ s/\W//g if $_ !~ m/:title/; $_} @permalink;
       $permalink = join ("/", $baseurl, @permalink, "");
-      $permalink =~ s"(?<!http:)/+"/"g;
+      $permalink =~ s{(?<!:)/+}{/}g;
+      #$permalink =~ s"(?<!http:)/+"/"g;
 
       my $titr_address = $self->{$utid}->{_index} ? $self->{$utid}->{_index} : $self->{$utid}->{title};
       $titr_address =~ s/[^\w]+$//g;
@@ -100,12 +101,14 @@ sub address {
         $addr{$permalink} = 1;
       }
       #$permalink = $permalink . "/";
-      $permalink =~ s"(?<!http:)/+"/"g;
+      $permalink =~ s{(?<!:)/+}{/}g;
+      #$permalink =~ s"(?<!http:)/+"/"g;
 
       @permalink = split (/\//, $permalink);
       $self->{$utid}->{_spec}->{address} = catfile(@permalink, "index.html");
       $self->{$utid}->{url} = $permalink;
-      $self->{$utid}->{url} =~ s"(?<!http:)/+"/"g;
+      $self->{$utid}->{url} =~ s{(?<!:)/+}{/}g;
+      #$self->{$utid}->{url} =~ s"(?<!http:)/+"/"g;
     } #end foreach utid;
 
 
