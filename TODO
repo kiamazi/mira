@@ -1,5 +1,6 @@
  - add: server command > dynamic build
  - add: -f --floor switch for build command
+ - support static folder in floor directories
 
 done
  - add: choose custom template for each post
