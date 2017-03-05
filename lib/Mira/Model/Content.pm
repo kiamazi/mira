@@ -18,7 +18,7 @@ sub new {
   my %switches = @_;
 
   my $source = $switches{source};
-  my $ext = $switches{ext} ? $switches{ext} : 'pen';
+  my $ext = $switches{ext} ? $switches{ext} : '.draft';
 
   my $self = {
     source => $source,
@@ -55,9 +55,9 @@ sub files {
 
   foreach my $floor (@$floors)
   {
-    my $glob = catfile($source, 'content', $floor , "*.$ext");
+    my $glob = catfile($source, 'content', $floor , "*");
     my @entries = glob encode(locale_fs => $glob);
-    @entries = grep {-f} @entries;
+    @entries = grep {-f and not /($ext)$/} @entries;
 
     foreach my $entry (@entries)
     {
