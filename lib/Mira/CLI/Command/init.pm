@@ -100,6 +100,7 @@ template: default-theme
 
 #this fields are not allowed: archives, static
 lists:
+  - date
   - categories
   - tags
   - author

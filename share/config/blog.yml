@@ -54,6 +54,7 @@ template: mira-theme
 
 #this fields are not allowed: archives, static
 lists:
+ - date
  - categories
  - tags
 
