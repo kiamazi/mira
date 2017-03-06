@@ -46,23 +46,23 @@ sub copy {
   my $class = shift;
   my $static_path = shift;
 
+  my $total;
+
   foreach my $floor (keys %{$static_path})
   {
     foreach my $copy (@{$static_path->{$floor}})
     {
-      dircopy(
+      my $copy_num = dircopy(
       catdir($copy->{path}, '/')
       ,
       catdir($copy->{address}, '/')
       );
+      say "can't copy ". $copy->{path} . " to " . $copy->{address} . ", check your permisions and try again"
+      if not $copy_num;
+      $total += $copy_num;
     }
   }
-
-#  dircopy(
-#  catdir($source, 'statics')
-#  ,
-#  catdir($source, 'public', $config->{_default}->{static})
-#  );
+  return $total;
 }
 
 1;

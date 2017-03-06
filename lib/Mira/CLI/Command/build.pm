@@ -124,7 +124,9 @@ sub execute {
     ######################
     use Mira::Control::Static;
     my $static_path = Mira::Control::Static->address($statics, $config, $source);
-    Mira::Control::Static->copy($static_path);
+    my $total_statics = Mira::Control::Static->copy($static_path);
+
+    say $total_statics . " files and directories copied to static folders";
 
 
     ######################
