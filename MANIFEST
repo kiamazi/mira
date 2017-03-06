@@ -11,6 +11,7 @@ lib/Mira/Config.pm
 lib/Mira/Control/Address.pm
 lib/Mira/Control/Date.pm
 lib/Mira/Control/Jdate.pm
+lib/Mira/Control/Static.pm
 lib/Mira/Date.pm
 lib/Mira/Date/Jalali.pm
 lib/Mira/Model/Base.pm
@@ -50,4 +51,5 @@ share/template/default-theme/post.tt2
 t/00_base.t
 t/01_config.t
 t/03-model_base.t
+t/04-model_content.t
 TODO
