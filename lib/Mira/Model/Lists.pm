@@ -32,7 +32,10 @@ sub lists {
   {
     my $floor = $self->{$utid}->{floor};
 
-    if (defined $self->{$utid}->{date} and $fields->{$floor}->{date} eq 'list')
+    if (defined $self->{$utid}->{date} and
+    defined $fields->{$floor}->{date} and
+    $fields->{$floor}->{date} eq 'list'
+    )
     {
       my $date_field = $self->{$utid}->{date};
       if ($date_field =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
@@ -55,7 +58,13 @@ sub lists {
       }
     }
 
-    if ($config->{$floor}->{'date_format'} and $config->{$floor}->{'date_format'} eq 'jalali' and defined $self->{$utid}->{jdate} and $fields->{$floor}->{jdate} eq 'list')
+    if (
+    $config->{$floor}->{'date_format'} and
+    $config->{$floor}->{'date_format'} eq 'jalali' and
+    defined $self->{$utid}->{jdate} and
+    defined $fields->{$floor}->{jdate} and
+    $fields->{$floor}->{jdate} eq 'list'
+    )
     {
       my $date_field = $self->{$utid}->{jdate};
       if ($date_field =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
