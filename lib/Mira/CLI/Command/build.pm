@@ -11,7 +11,6 @@ use 5.012;
 use Cwd;
 use File::Spec;
 use File::Spec::Functions;
-use File::Copy::Recursive qw(dircopy);
 use Time::HiRes;
 
 use utf8;
@@ -120,13 +119,15 @@ sub execute {
     ######################
     my $diff = Time::HiRes::tv_interval($start_time);
     print "make database time: $diff\n";
-    dircopy(
-    catdir($source, 'statics')
-    ,
-    catdir($source, 'public', $config->{_default}->{static})
-    );
 
 
+    ######################
+    use Mira::Control::Static;
+    my $static_path = Mira::Control::Static->address($statics, $config, $source);
+    Mira::Control::Static->copy($static_path);
+
+
+    ######################
     my @utids = keys %$data;
     @utids = reverse sort @utids;
     my $posts = \@utids;

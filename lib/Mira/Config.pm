@@ -53,6 +53,7 @@ sub new {
     $self->{_default}->{permalink} = ":year/:month/:day/:title/" unless (exists $self->{_default}->{permalink} and $self->{_default}->{permalink});
     $self->{_default}->{default_markup} = "markdown" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
+    $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
 
     my $glob = catfile($source, 'content', '*');
 
