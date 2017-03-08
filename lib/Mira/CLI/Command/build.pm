@@ -131,7 +131,7 @@ sub execute {
 
     ######################
     my @utids = keys %$data;
-    @utids = reverse sort @utids;
+    @utids = reverse sort{$a <=> $b} @utids;
     my $posts = \@utids;
 
     my $data_base = { %$data };
@@ -147,9 +147,7 @@ sub execute {
       splice @entries, $config->{_default}->{post_num} if ($config->{_default}->{post_num} ne 'all');
       $floor_data->{$floor}->{name} = $config->{$floor}->{title};
       $floor_data->{$floor}->{description} = $config->{$floor}->{description};
-      $floor_data->{$floor}->{url} = $config->{$floor}->{root};
-      $floor_data->{$floor}->{url} =~ s"^http:/+"/"g;
-      $floor_data->{$floor}->{url} =~ s"/+"/"g;
+      $floor_data->{$floor}->{url} = $config->{$floor}->{url};
       foreach my $utid (@entries)
       {
         push @{ $floor_data->{$floor}->{posts} }, $data->{$utid};
@@ -187,13 +185,31 @@ sub execute {
       $build->{second} = sprintf "%02d", $sec;
 
 
+    ######################
+    use Mira::Plugin;
+    use Mira::Control::Plugin;
 
+    foreach my $floor (keys %$floors_base)
+    {
+      my $plugins = Mira::Control::Plugin::Check->check($source, $config->{$floor});
+      my $apis = Mira::Plugin->new($floor, $data_base, $floors_base, $lists_data);
+      #use Data::Dumper;
+      #print Dumper($apis);
+      Mira::Control::Plugin::Plug->plug($source, $plugins, $apis);
+#      use Data::Dumper;
+#      print Dumper(\@plugins);
+    }
+
+
+#      use Data::Dumper;
+#      print Dumper($apis);
     ######################
     use Mira::View;
 
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start main: $diff\n";
+
 
 
     Mira::View::Main->template(
