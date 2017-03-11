@@ -1,10 +1,10 @@
 package Mira::View::Floor;
-$Mira::View::Floor::VERSION = '0.07';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use File::Spec;
 use File::Spec::Functions;

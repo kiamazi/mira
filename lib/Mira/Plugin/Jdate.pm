@@ -3,6 +3,7 @@ package Mira::Plugin::Jdate;
 use strict;
 use warnings;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use utf8;
 

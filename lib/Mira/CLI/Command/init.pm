@@ -1,5 +1,4 @@
 package Mira::CLI::Command::init;
-$Mira::CLI::Command::init::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -7,6 +6,7 @@ use warnings;
 use App::Cmd::Setup -command;
 
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use Cwd;
 use File::Spec;

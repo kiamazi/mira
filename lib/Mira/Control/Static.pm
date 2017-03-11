@@ -1,9 +1,9 @@
 package Mira::Control::Static;
-$Mira::Control::Address::VERSION = '0.0721';
 
 use strict;
 use warnings;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use File::Spec;
 use File::Spec::Functions;
