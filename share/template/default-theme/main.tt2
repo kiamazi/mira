@@ -16,7 +16,7 @@
 
 <div class="container">
 <section id="content" style="width: 100%">
-  {{ FOREACH Floors.values.sort('name') }}
+  {{ FOREACH FLOORS.values.sort('name') }}
   <article class="post">
 		<div class="header">
 

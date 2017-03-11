@@ -120,27 +120,16 @@ sub template {
           ];
         }
 
-        if ($archives->{$floor}->{date}->{date})
+        foreach my $field (keys %{$archives->{$floor}->{date}})
         {
-          $vars->{DATE} = [
-          reverse sort
-          {
-            $a->{_number} <=> $b->{_number}
-          }
-          (values %{ $archives->{$floor}->{date} })
-          ];
-        }
-
-        if ($archives->{$floor}->{date}->{jdate})
-        {
-          $vars->{JDATE} = [
+          $vars->{uc($field)."-ARCHIVE"} = [
           reverse sort
           {
             $a->{_year} <=> $b->{_year}
             or
             $a->{_number} <=> $b->{_number}
           }
-          (values %{ $archives->{$floor}->{jdate} })
+          (values %{ $archives->{$floor}->{date} })
           ];
         }
 
