@@ -56,6 +56,15 @@ sub parse {
       $utid =~ s/[^\d]//g;
       $self->{utid} = $utid;
 
+      foreach my $field (keys %$top)
+      {
+        if (ref($top->{$field}) eq "ARRAY")
+        {
+          @{ $top->{$field} } = grep {$_} @{ $top->{$field} };
+          delete $top->{$field} unless @{ $top->{$field} };
+        }
+      }
+
       $self->{values}->{_spec}->{file_address} = $entry;
 
       @{$self->{values}}{keys %$top} = values %$top;
