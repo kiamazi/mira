@@ -9,7 +9,6 @@ use File::ShareDir::Install;
 
 install_share dist => 'share';
 
-
 WriteMakefile
 (
   NAME             => 'Mira',
