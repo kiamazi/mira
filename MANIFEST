@@ -9,11 +9,21 @@ lib/Mira/CLI/Command/new.pm
 lib/Mira/CLI/Command/view.pm
 lib/Mira/Config.pm
 lib/Mira/Control/Address.pm
+lib/Mira/Control/Content.pm
+lib/Mira/Control/Content/Address.pm
+lib/Mira/Control/Content/Date.pm
+lib/Mira/Control/Content/Load.pm
 lib/Mira/Control/Date.pm
 lib/Mira/Control/Jdate.pm
+lib/Mira/Control/Parser/Entry.pm
+lib/Mira/Control/Parser/img.pm
+lib/Mira/Control/Parser/Markup.pm
+lib/Mira/Control/Plugin/Load.pm
+lib/Mira/Control/Plugin/Plug.pm
 lib/Mira/Control/Static.pm
 lib/Mira/Date.pm
 lib/Mira/Date/Jalali.pm
+lib/Mira/Model/Archive.pm
 lib/Mira/Model/Base.pm
 lib/Mira/Model/Content.pm
 lib/Mira/Model/Floor.pm
@@ -22,6 +32,9 @@ lib/Mira/Parser.pm
 lib/Mira/Parser/Entry.pm
 lib/Mira/Parser/img.pm
 lib/Mira/Parser/Markup.pm
+lib/Mira/Plugin.pm
+lib/Mira/Plugin/Date/Jalali.pm
+lib/Mira/Plugin/Jdate.pm
 lib/Mira/View.pm
 lib/Mira/View/Archive.pm
 lib/Mira/View/Feed.pm
@@ -31,6 +44,8 @@ lib/Mira/View/Post.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
+META.yml
+META.json
 README.md
 share/config/blog.yml
 share/statics/default-theme/img/mira-b.png
