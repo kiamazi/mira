@@ -1,7 +1,10 @@
  - add: server command > dynamic build
  - add: -f --floor switch for build command
- - support static folder in floor directories
+ - write more test
+
 
 done
+ - plugin support
+ - support static folder in floor directories
  - add: choose custom template for each post
  - add: /config and /config/blog.yml to init CLI
