@@ -1,7 +1,7 @@
 <section id="menu">
 		<ul>
                 <li><a href="{{ MainROOT }}">Main Page</a>
-            {{ FOREACH Floors.values.sort('url') }}
+            {{ FOREACH FLOORS.values.sort('url') }}
                  <li>
                      <a href="{{ url }}" name="{{ description }}">{{ name }}</a>
                  </li>

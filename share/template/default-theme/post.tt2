@@ -73,7 +73,7 @@
         <p>{{ body.more }}</p>
       </div>
 
-<!-- if conf/FLOORNAME.yml have social array -->
+
       {{ IF SITE.social }}
         {{ FOREACH social IN SITE.social }}
           {{ IF social.share_url }}
@@ -83,17 +83,7 @@
             </a>
           {{- END }}
         {{- END }}
-<!-- elsif config.yml have social array -->
-      {{ ELSIF MAIN.social }}
-        {{ FOREACH social IN MAIN.social }}
-          {{ IF social.share_url }}
-            <a class="icon-{{ social.icon }}" href="{{ social.share_url }}{{ social.share_title }}{{ title | uri }}{{ social.share_link }}{{ URL }}{{ url }}"
-              onclick="window.open(this.href, '{{ icon }}-share', 'width=550,height=255');return false;">
-              <i class="fa fa-{{ social.icon }}"></i><span class="hidden">{{ social.icon }}</span>
-            </a>
-          {{- END }}
-        {{- END }}
-      {{ END }}
+
 
 
 
