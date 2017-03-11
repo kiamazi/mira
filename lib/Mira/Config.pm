@@ -114,7 +114,7 @@ sub _not_valids {
   my $configs = {
     title => "$floor",
     root => "$self->{_default}->{root}/$floor/",
-    url => "$self->{_default}->{url}/$floor",
+    url => "$self->{_default}->{url}/$floor/",
     static => "$self->{_default}->{root}/$floor/static",
   };
 

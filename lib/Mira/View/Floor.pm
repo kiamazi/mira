@@ -40,9 +40,6 @@ sub template {
       not $allentries->{$_}->{_type} or $allentries->{$_}->{_type} !~ m/^(page|draft)$/
     } @utids;
 
-    #my $posts = \@utids;
-#use Data::Dumper;
-#print Dumper($config);
         my $floor_index = Template->new({
             INCLUDE_PATH => [ $floor_template_root, catdir($floor_template_root, 'include') ],
             INTERPOLATE  => 1,
@@ -109,7 +106,7 @@ sub template {
 
         foreach my $field (keys %{$archives->{$floor}->{list}})
         {
-          $vars->{uc($field)."-ARCHIVE"} = [
+          $vars->{uc($field)."_ARCHIVE"} = [
           reverse sort
           {
             $#{$a->{posts}} <=> $#{$b->{posts}}
@@ -122,7 +119,7 @@ sub template {
 
         foreach my $field (keys %{$archives->{$floor}->{date}})
         {
-          $vars->{uc($field)."-ARCHIVE"} = [
+          $vars->{uc($field)."_ARCHIVE"} = [
           reverse sort
           {
             $a->{_year} <=> $b->{_year}

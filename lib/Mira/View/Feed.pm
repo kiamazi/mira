@@ -109,7 +109,7 @@ sub template {
 
         foreach my $field (keys %{$archives->{$floor}->{list}})
         {
-          $vars->{$field} = [
+          $vars->{uc($field)."_ARCHIVE"} = [
           reverse sort
           {
             $#{$a->{posts}} <=> $#{$b->{posts}}
@@ -122,7 +122,7 @@ sub template {
 
         foreach my $field (keys %{$archives->{$floor}->{date}})
         {
-          $vars->{uc($field)."-ARCHIVE"} = [
+          $vars->{uc($field)."_ARCHIVE"} = [
           reverse sort
           {
             $a->{_year} <=> $b->{_year}

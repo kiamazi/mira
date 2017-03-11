@@ -33,8 +33,8 @@ sub lists {
   foreach my $utid (keys %$self)
   {
     my $floor = $self->{$utid}->{floor};
-    $archive->{$floor}->{date} = {};
-    $archive->{$floor}->{list} = {};
+    $archive->{$floor}->{date} = {} if not $archive->{$floor}->{date};
+    $archive->{$floor}->{list} = {} if not $archive->{$floor}->{list};
 
     if (defined $self->{$utid}->{date} and
     defined $fields->{$floor}->{date} and
@@ -61,36 +61,6 @@ sub lists {
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{url} =~ s{(?<!http:)/+}{/}g;
       }
     }
-
-#    if (
-#    $config->{$floor}->{'date_format'} and
-#    $config->{$floor}->{'date_format'} eq 'jalali' and
-#    defined $self->{$utid}->{jdate} and
-#    defined $fields->{$floor}->{jdate} and
-#    $fields->{$floor}->{jdate} eq 'list'
-#    )
-#    {
-#      my $date_field = $self->{$utid}->{jdate};
-#      if ($date_field =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
-#      {
-#        my $year = $self->{$utid}->{_spec}->{jyear};
-#        my $month = $self->{$utid}->{_spec}->{jmonth};
-#        push @{ $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{posts} }, $utid;
-#
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{name} = "$jmonth_names[$month-1] $year";
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{name} =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{_year} = $year;
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{year} = $year;
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{_month} = $month;
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{month} = $month;
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{number} = "$year - $month";
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{_number} = "$year$month";
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{url} =
-#        "$config->{$floor}->{root}/archive/".
-#        "$year/$month/";
-#        $archive->{$floor}->{date}->{jdate}->{"$year$month"}->{url} =~ s{(?<!http:)/+}{/}g;
-#      }
-#    }
 
     foreach my $field (keys %{$self->{$utid}})
     {
