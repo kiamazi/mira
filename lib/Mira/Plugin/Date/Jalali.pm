@@ -16,8 +16,6 @@ our @EXPORT_OK = qw(jalali gregorian);
 #our %EXPORT_TAGS = ( 'all' => [ qw(jalali gregorian) ] );
 
 
-our $VERSION = '0.07';
-
 my @g_days_in_month = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 my @j_days_in_month = (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
 my @j_month_name = ("", "Farvardin", "Ordibehesht", "Khordad", "Tir",
