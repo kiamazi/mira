@@ -1,11 +1,10 @@
-package Mira::Parser::img;
-$Mira::Parser::img::VERSION = '0.0706';
+package Mira::Control::Parser::img;
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
-
+our $VERSION = $Mira::VERSION;
 
 
 sub replace {

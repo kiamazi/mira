@@ -1,11 +1,11 @@
-package Mira::Control::Date;
-$Mira::Control::Date::VERSION = '0.07';
+package Mira::Control::Content::Date;
 
 use strict;
 use warnings;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
-use Mira::Date::Jalali;
+#use Mira::Date::Jalali;
 use DateTime;
 
 sub date {
@@ -67,37 +67,37 @@ sub date {
     {
       say "$values->{_spec}->{file_address} date format is unvalid, plz fix it 'YYYY-MM-DD HH:MM:SS'";
     }
-  } elsif (exists $values->{jdate} and $values->{jdate} =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
-  {
-    my ($year, $month, $day) = ($+{year}, $+{month}, $+{day});
-    my $date = Mira::Date::Jalali->new
-    (
-      year => $year,
-      month => $month,
-      day => $day
-    );
-
-    my $date_time = DateTime->new(
-      year       => $date->gregorian->{year},
-      month      => $date->gregorian->{month},
-      day        => $date->gregorian->{day},
-    );
-    my $month_name  = $date_time->month_name;
-    my $month_abbr  = $date_time->month_abbr;
-    my $day_name    = $date_time->day_name;
-    my $day_abbr    = $date_time->day_abbr;
-
-    $values->{_spec}->{year} = sprintf "%04d", $date->gregorian->{year};
-    $values->{_spec}->{month} = sprintf "%02d", $date->gregorian->{month};
-    $values->{_spec}->{day} = sprintf "%02d", $date->gregorian->{day};
-    $values->{CALENDAR}->{year} = $values->{_spec}->{year};
-    $values->{CALENDAR}->{month} = $values->{_spec}->{month};
-    #$values->{CALENDAR}->{month_name} = $month_names[$month-1];
-    $values->{CALENDAR}->{month_name} = $month_name;
-    $values->{CALENDAR}->{month_abbr} = $month_abbr;
-    $values->{CALENDAR}->{day} = $values->{_spec}->{day};
-    $values->{CALENDAR}->{day_name} = $day_name;
-    $values->{CALENDAR}->{day_abbr} = $day_abbr;
+#  } elsif (exists $values->{jdate} and $values->{jdate} =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
+#  {
+#    my ($year, $month, $day) = ($+{year}, $+{month}, $+{day});
+#    my $date = Mira::Date::Jalali->new
+#    (
+#      year => $year,
+#      month => $month,
+#      day => $day
+#    );
+#
+#    my $date_time = DateTime->new(
+#      year       => $date->gregorian->{year},
+#      month      => $date->gregorian->{month},
+#      day        => $date->gregorian->{day},
+#    );
+#    my $month_name  = $date_time->month_name;
+#    my $month_abbr  = $date_time->month_abbr;
+#    my $day_name    = $date_time->day_name;
+#    my $day_abbr    = $date_time->day_abbr;
+#
+#    $values->{_spec}->{year} = sprintf "%04d", $date->gregorian->{year};
+#    $values->{_spec}->{month} = sprintf "%02d", $date->gregorian->{month};
+#    $values->{_spec}->{day} = sprintf "%02d", $date->gregorian->{day};
+#    $values->{CALENDAR}->{year} = $values->{_spec}->{year};
+#    $values->{CALENDAR}->{month} = $values->{_spec}->{month};
+#    #$values->{CALENDAR}->{month_name} = $month_names[$month-1];
+#    $values->{CALENDAR}->{month_name} = $month_name;
+#    $values->{CALENDAR}->{month_abbr} = $month_abbr;
+#    $values->{CALENDAR}->{day} = $values->{_spec}->{day};
+#    $values->{CALENDAR}->{day_name} = $day_name;
+#    $values->{CALENDAR}->{day_abbr} = $day_abbr;
   }
 
 }

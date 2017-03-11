@@ -19,7 +19,7 @@ sub template {
   my $floors = $switches{floors};
   my $config = $switches{config}; #configs
   my $pensource = $switches{pensource};
-  my $lists = $switches{lists};
+  my $archives = $switches{archives};
   my $floor_data = $switches{floor_data};
   my $build = $switches{build};
 
@@ -97,31 +97,37 @@ sub template {
   	   }) || die "$Template::ERROR\n";
 
   	   my $vars = {
-         MainTITLE => $config->{_default}->{title},
+         MainTITLE       => $config->{_default}->{title},
          MainDESCRIPTION => $config->{_default}->{description},
-         MainURL => $config->{_default}->{url},
-         MainROOT => $config->{_default}->{root},
-         MainSTATIC => $config->{_default}->{static},
-         MainIMAGEURL => $config->{_default}->{imageurl},
-         MainAUTHOR => $config->{_default}->{author},
-         MainEMAIL => $config->{_default}->{email},
-         TITLE => $config->{$floor}->{title},
-         DESCRIPTION => $config->{$floor}->{description},
-         URL => $config->{$floor}->{url},
-         ROOT => $config->{$floor}->{root},
-         STATIC => $config->{$floor}->{static},
-         IMAGEURL => $config->{$floor}->{imageurl},
-         AUTHOR => $config->{$floor}->{author},
-         EMAIL => $config->{$floor}->{email},
-         PageTITLE => "$allentries->{$utid}->{title} - $config->{$floor}->{title}",
-         PostTITLE => $allentries->{$utid}->{title},
-         Entries  => $allentries,
-         Floors => $floor_data,
-         Archives => $lists->{$floor},
-         MAIN => $config->{_default},
-         SITE => $config->{$floor},
-         BUILD => $build,
-         PAGE => $page,
+         MainURL         => $config->{_default}->{url},
+         MainROOT        => $config->{_default}->{root},
+         MainSTATIC      => $config->{_default}->{static},
+         MainIMAGEURL    => $config->{_default}->{imageurl},
+         MainAUTHOR      => $config->{_default}->{author},
+         MainEMAIL       => $config->{_default}->{email},
+         TITLE           => $config->{$floor}->{title},
+         DESCRIPTION     => $config->{$floor}->{description},
+         URL             => $config->{$floor}->{url},
+         ROOT            => $config->{$floor}->{root},
+         STATIC          => $config->{$floor}->{static},
+         IMAGEURL        => $config->{$floor}->{imageurl},
+         AUTHOR          => $config->{$floor}->{author},
+         EMAIL           => $config->{$floor}->{email},
+
+         PageTITLE       => "$allentries->{$utid}->{title} - $config->{$floor}->{title}",
+         PostTITLE       => $allentries->{$utid}->{title},
+
+         ENTRIES         => $allentries,
+         FLOORS          => $floor_data,
+         ARCHIVES        => {%{$archives->{$floor}->{list}}, %{$archives->{$floor}->{date}}}, #$archives->{$floor}->{list},
+
+         MAIN            => $config->{_default},
+         SITE            => $config->{$floor},
+         BUILD           => $build,
+         FarsiNum        => bless(\&farsinum, 'mira'),
+
+         PAGE            => $page,
+         
          FarsiNum => bless(\&farsinum, 'mira'),
   	   };
 
@@ -154,44 +160,40 @@ sub template {
        #@$posts = %{$allentries->{$utid}};
        $vars->{POSTS} = $posts;
 
-       foreach my $archive (keys %{$lists->{$floor}})
+       foreach my $field (keys %{$archives->{$floor}->{list}})
        {
-         next if $archive eq 'date';
-         next if $archive eq 'jdate';
-         $vars->{$archive} = [
+         $vars->{$field} = [
          reverse sort
          {
            $#{$a->{posts}} <=> $#{$b->{posts}}
            or
            $a->{name} cmp $b->{name}
          }
-         (values %{ $lists->{$floor}->{$archive} })
+         (values %{ $archives->{$floor}->{list}->{$field} })
          ];
        }
 
-       if ($lists->{$floor}->{date})
+       if ($archives->{$floor}->{date}->{date})
        {
-         $vars->{Date} = [
+         $vars->{DATE} = [
+         reverse sort
+         {
+           $a->{_number} <=> $b->{_number}
+         }
+         (values %{ $archives->{$floor}->{date} })
+         ];
+       }
+
+       if ($archives->{$floor}->{date}->{jdate})
+       {
+         $vars->{JDATE} = [
          reverse sort
          {
            $a->{_year} <=> $b->{_year}
            or
            $a->{_number} <=> $b->{_number}
          }
-         (values %{ $lists->{$floor}->{date} })
-         ];
-       }
-
-       if ($lists->{$floor}->{jdate})
-       {
-         $vars->{JDate} = [
-         reverse sort
-         {
-           $a->{_year} <=> $b->{_year}
-           or
-           $a->{_number} <=> $b->{_number}
-         }
-         (values %{ $lists->{$floor}->{jdate} })
+         (values %{ $archives->{$floor}->{jdate} })
          ];
        }
 

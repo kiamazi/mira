@@ -1,10 +1,10 @@
-package Mira::Parser::Markup;
-$Mira::Parser::Markup::VERSION = '0.07';
+package Mira::Control::Parser::Markup;
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use Markup::Unified;
 use Carp;
@@ -13,15 +13,6 @@ sub markup {
   my $class = shift;
   my $body = shift;
   my $markup_lang = shift || 'md';
-
-  unless ($markup_lang and $markup_lang =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
-  {
-    $markup_lang = 'markdown' if ($markup_lang !~ /^(markdown|md|html|text|txt|bbcode|textile)$/i);
-  } elsif ($markup_lang =~ /^(markdown|md|bbcode|textile|html|text|txt)$/i)
-  {
-    $markup_lang = $1;
-    $markup_lang = 'markdown' if ($markup_lang eq "md");
-  }
 
   if ($markup_lang and $markup_lang =~ /^(markdown|md|bbcode|textile)$/i)
   {

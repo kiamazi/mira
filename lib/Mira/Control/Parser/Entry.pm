@@ -1,10 +1,11 @@
-package Mira::Parser::Entry;
-$Mira::Parser::Entry::VERSION = '0.07';
+package Mira::Control::Parser::Entry;
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
+our $VERSION = $Mira::VERSION;
+
 use YAML;
 use Carp;
 

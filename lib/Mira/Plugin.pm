@@ -1,10 +1,10 @@
 package Mira::Plugin;
-$Mira::Plugin::VERSION = '0.0721';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 sub new {
   my $class = shift;
@@ -13,6 +13,7 @@ sub new {
   my $data_base = shift;
   my $floors_base = shift;
   my $lists_data = shift;
+  my $config = shift;
 
   my $data;
 
@@ -24,14 +25,14 @@ sub new {
   }
 
   my $self = {
-    floor => $floor,
-    data_base => $data,
-    floor_data => $floors_base->{$floor},
-    lists => $lists_data->{$floor},
+    floor       => $floor,
+    data_base   => $data,
+#    floor_data => $floors_base->{$floor},
+    lists       => $lists_data->{$floor}->{list},
+    dates       => $lists_data->{$floor}->{date},
+    site_config => $config->{$floor},
+    main_config => $config->{_default},
   };
-
-#  use Data::Dumper;
-#  print Dumper($data);
 
   bless $self, $class;
   return $self;
@@ -47,14 +48,30 @@ sub get_data_base {
   return $self->{data_base};
 }
 
-sub get_floor_data {
-  my $self = shift;
-  return $self->{floor_data};
-}
+#sub get_floor_data {
+#  my $self = shift;
+#  return $self->{floor_data};
+#}
 
-sub get_floor_lists {
+sub get_list_archives {
   my $self = shift;
   return $self->{lists};
 }
+
+sub get_date_archives {
+  my $self = shift;
+  return $self->{dates};
+}
+
+sub get_main_config {
+  my $self = shift;
+  return $self->{main_config};
+}
+
+sub get_site_config {
+  my $self = shift;
+  return $self->{site_config};
+}
+
 
 1;

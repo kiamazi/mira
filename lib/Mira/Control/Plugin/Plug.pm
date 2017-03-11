@@ -1,19 +1,12 @@
 package Mira::Control::Plugin::Plug;
-$Mira::Control::Plugin::Plug::VERSION = '0.0721';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
-use YAML;# qw'LoadFile';
-use Cwd; #qw($bin)
-use File::Spec;
-use File::Spec::Functions;
-use File::Basename qw/basename/;
 use Carp;
-use Encode;
-use Encode::Locale;
 
 use Module::Load;
 
@@ -29,9 +22,9 @@ sub plug {
   foreach my $plugin (@$plugins)
   {
       #eval "require $plug->{lib}";
-      $plugin->{lib} .= '.pm' if $plugin->{lib} !~ /\.pm$/;
-      load $plugin->{lib};
-      eval {$plugin->{name}->plug($apis)};
+      #$plugin->{lib} .= '.pm' if $plugin->{lib} !~ /\.pm$/;
+      load $plugin;
+      eval {$plugin->plug($apis)};
 
       ###### TODO need better checks and error messages ######
 #      say "! plugin error: " . $plug_yaml . " > " . $plug->{name} . " need plug method" if $@;

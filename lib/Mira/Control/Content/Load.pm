@@ -1,9 +1,9 @@
-package Mira::Model::Content;
-$Mira::Model::Content::VERSION = '0.07';
+package Mira::Control::Content::Load;
 
 use strict;
 use warnings;
 use 5.012;
+our $VERSION = $Mira::VERSION;
 
 use File::Spec;
 use File::Spec::Functions;
@@ -102,7 +102,7 @@ sub _room {
   my @files;
   foreach my $path (@path)
   {
-    next if (-d $path && basename($path) =~ /static/i);
+    next if (-d $path && basename($path) =~ /^static$/i);
     (-f $path) && (push @files, $path) && next;# if -f $path;
     if (-d $path)
     {
