@@ -97,7 +97,7 @@ sub execute {
     ######################
     ######################
     $diff = Time::HiRes::tv_interval($start_time);
-    print "plug addins: $diff\n";
+    print "pluging: $diff\n";
 
     ######################
     use Mira::Control::Static;
