@@ -1,10 +1,10 @@
 package Mira::Control::Parser::Markup;
+$Mira::Control::Parser::Markup::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use Markup::Unified;
 use Carp;

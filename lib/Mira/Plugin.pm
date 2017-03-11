@@ -1,18 +1,17 @@
 package Mira::Plugin;
+$Mira::Plugin::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 sub new {
   my $class = shift;
 
   my $floor = shift;
   my $data_base = shift;
-  my $floors_base = shift;
-  my $lists_data = shift;
+  my $archive_base = shift;
   my $config = shift;
 
   my $data;
@@ -27,9 +26,8 @@ sub new {
   my $self = {
     floor       => $floor,
     data_base   => $data,
-#    floor_data => $floors_base->{$floor},
-    lists       => $lists_data->{$floor}->{list},
-    dates       => $lists_data->{$floor}->{date},
+    lists       => $archive_base->{$floor}->{list},
+    dates       => $archive_base->{$floor}->{date},
     site_config => $config->{$floor},
     main_config => $config->{_default},
   };
@@ -47,11 +45,6 @@ sub get_data_base {
   my $self = shift;
   return $self->{data_base};
 }
-
-#sub get_floor_data {
-#  my $self = shift;
-#  return $self->{floor_data};
-#}
 
 sub get_list_archives {
   my $self = shift;

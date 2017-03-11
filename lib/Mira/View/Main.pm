@@ -1,10 +1,10 @@
 package Mira::View::Main;
+$Mira::View::Main::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use File::Spec;
 use File::Spec::Functions;

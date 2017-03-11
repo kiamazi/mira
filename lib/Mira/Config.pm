@@ -1,9 +1,9 @@
 package Mira::Config;
+$Mira::Config::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use utf8;
-our $VERSION = $Mira::VERSION;
 
 use YAML;
 use File::Spec;

@@ -1,4 +1,5 @@
 package Mira::Plugin::Date::Jalali;
+$Mira::Plugin::Date::Jalali::VERSION = '00.07.22';
 
 use strict;
 use warnings;
@@ -7,7 +8,7 @@ use Carp;
 
 use utf8;
 use 5.012;
-our $VERSION = $Mira::VERSION;
+
 
 use Exporter 'import';
 our @EXPORT_OK = qw(jalali gregorian);

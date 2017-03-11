@@ -1,4 +1,5 @@
 package Mira::CLI::Command::view;
+$Mira::CLI::Command::new::VERSION = '00.07.22';
 
 use strict;
 use warnings;
@@ -6,7 +7,6 @@ use warnings;
 use App::Cmd::Setup -command;
 
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use Cwd;
 use File::Spec;

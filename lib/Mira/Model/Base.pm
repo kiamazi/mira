@@ -1,9 +1,9 @@
 package Mira::Model::Base;
+$Mira::Model::Base::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 sub new {
   my $class = shift;

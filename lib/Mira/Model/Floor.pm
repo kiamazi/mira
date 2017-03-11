@@ -1,9 +1,9 @@
 package Mira::Model::Floor;
+$Mira::Model::Floor::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 sub new {
   my $class = shift;

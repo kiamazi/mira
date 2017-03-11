@@ -1,10 +1,10 @@
 package Mira::Control::Plugin::Plug;
+$Mira::Control::Plugin::Plug::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use utf8;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use Carp;
 

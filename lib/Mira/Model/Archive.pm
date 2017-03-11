@@ -1,10 +1,10 @@
 package Mira::Model::Archive;
+$Mira::Model::Archive::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use 5.012;
 use utf8;
-our $VERSION = $Mira::VERSION;
 
 sub lists {
   my $class= shift;

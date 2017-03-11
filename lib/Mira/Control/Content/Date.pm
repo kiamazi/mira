@@ -1,11 +1,10 @@
 package Mira::Control::Content::Date;
+$Mira::Control::Content::Date::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
-#use Mira::Date::Jalali;
 use DateTime;
 
 sub date {
@@ -67,6 +66,7 @@ sub date {
     {
       say "$values->{_spec}->{file_address} date format is unvalid, plz fix it 'YYYY-MM-DD HH:MM:SS'";
     }
+#TODO move this part to hdate plugin:
 #  } elsif (exists $values->{jdate} and $values->{jdate} =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
 #  {
 #    my ($year, $month, $day) = ($+{year}, $+{month}, $+{day});

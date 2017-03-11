@@ -1,9 +1,9 @@
 package Mira::Plugin::Jdate;
+$Mira::Plugin::JDate::VERSION = '00.07.22';
 
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use utf8;
 

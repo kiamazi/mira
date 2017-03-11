@@ -1,6 +1,5 @@
 package Mira::CLI::Command::build;
-
-#$Mira::CLI::Command::build::VERSION = '0.0721';
+$Mira::CLI::Command::build::VERSION = '00.07.22';
 
 use strict;
 use warnings;
@@ -8,7 +7,6 @@ use warnings;
 use App::Cmd::Setup -command;
 
 use 5.012;
-our $VERSION = $Mira::VERSION;
 
 use Cwd;
 use File::Spec;
@@ -89,7 +87,7 @@ sub execute {
         my $plugins =
           Mira::Control::Plugin::Load->check( $source, $config->{$floor} );
         my $apis =
-          Mira::Plugin->new( $floor, $data_base, $floors_base, $archive_base,
+          Mira::Plugin->new( $floor, $data_base, $archive_base,
             $config );
         Mira::Control::Plugin::Plug->plug( $source, $plugins, $apis );
     }
