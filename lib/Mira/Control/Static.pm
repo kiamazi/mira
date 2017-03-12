@@ -1,10 +1,10 @@
 package Mira::Control::Static;
-$Mira::Control::Static::VERSION = '00.07.22';
+$Mira::Control::Static::VERSION = '00.07.23';
 
 use strict;
 use warnings;
 use 5.012;
-#our $VERSION = '00.07.22';
+#our $VERSION = '00.07.23';
 
 use File::Spec;
 use File::Spec::Functions;

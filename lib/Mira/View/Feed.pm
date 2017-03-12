@@ -1,5 +1,5 @@
 package Mira::View::Feed;
-$Mira::View::Feed::VERSION = '00.07.22';
+$Mira::View::Feed::VERSION = '00.07.23';
 
 use strict;
 use warnings;
