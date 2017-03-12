@@ -19,7 +19,7 @@ sub check {
   my $config = shift;
   my @check;
 
-  if ($config->{plugin}){ foreach my $plugin (@{$config->{plugin}})
+  if ($config->{plugins}){ foreach my $plugin (@{$config->{plugins}})
   {
     if (my $chkinst = check_install( module => "Mira::Plugin::$plugin"))
     {

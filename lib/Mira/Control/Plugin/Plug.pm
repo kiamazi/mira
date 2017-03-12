@@ -31,7 +31,6 @@ sub plug {
   }
 
 
-    #my @floors = map {decode(locale_fs => basename($_))} @content_directory_list;
 
 }
 
