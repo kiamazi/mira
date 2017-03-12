@@ -78,8 +78,9 @@ sub template {
          $post_layout = 'post.tt2';
        } else
        {
-         $post_template_root = catdir($pensource,'template', $config->{_default}->{template});
-         $post_layout = 'post.tt2';
+         next;
+         #$post_template_root = catdir($pensource,'template', $config->{_default}->{template});
+         #$post_layout = 'post.tt2';
        }
 #    my $post_template_root =
 #      (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
