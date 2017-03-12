@@ -16,8 +16,10 @@ sub markup {
 
   if ($markup_lang and $markup_lang =~ /^(markdown|md|bbcode|textile)$/i)
   {
+    $markup_lang = 'markdown' if $markup_lang =~ /^md$/i;
+    $markup_lang = lc($markup_lang);
     my $markup = Markup::Unified->new();
-    $markup->format($body, "$markup_lang");
+    $markup->format($body, $markup_lang);
     $markup->formatted;
     $body = $markup->{fvalue};
     $body =~ s/(.*)\n$/$1/; #remove new line which make by text::markdown at end
