@@ -22,7 +22,7 @@ chdir $dir;
 make_path catdir($dir,'content','blog') unless (-d catdir($dir,'content','blog'));
 make_path catdir($dir,'content','pages') unless (-d catdir($dir,'content','pages'));
 make_path catdir($dir,'content','books') unless (-d catdir($dir,'content','books'));
-make_path catdir($dir,'content','یونیکد') unless (-d catdir($dir,'content','یونیکد'));
+make_path catdir($dir,'content','project') unless (-d catdir($dir,'content','project'));
 
 
 my $content = Mira::Control::Content::Load->new(source => $dir, ext => '.draft');
@@ -39,7 +39,7 @@ foreach my $floor (@$floors) {
 ok ($floor_test{blog} eq 'blog');
 ok ($floor_test{pages} eq 'pages');
 ok ($floor_test{books} eq 'books');
-ok ($floor_test{یونیکد} eq 'یونیکد');
+ok ($floor_test{project} eq 'project');
 
 
 my $post =<<"END_CNTNT";
@@ -63,7 +63,7 @@ END_CNTNT
 
 chomp $post;
 
-my $target_post_file = catfile($dir, 'content', 'یونیکد', 'testpost.pen');
+my $target_post_file = catfile($dir, 'content', 'project', 'testpost.pen');
 open my $fh1, '>:encoding(UTF-8)', $target_post_file or die $!;
 print $fh1 $post."\n";
 close $fh1;
@@ -76,8 +76,8 @@ close $fh2;
 my $files = $content->files($floors);
 ok ($files);
 
-ok (@{ $files->{یونیکد} });
-ok ($files->{یونیکد}[0] = catfile($dir, 'content', 'یونیکد', 'testpost.pen'));
+ok (@{ $files->{project} });
+ok ($files->{project}[0] = catfile($dir, 'content', 'project', 'testpost.pen'));
 ok (@{ $files->{blog} });
 ok ($files->{blog}[0] = catfile($dir, 'content', 'blog', 'testpost.pen'));
 
