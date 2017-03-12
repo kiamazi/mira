@@ -54,6 +54,7 @@ sub new {
     $self->{_default}->{default_markup} = "markdown" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
     $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
+    $self->{_default}->{imageurl} = "/static/images" unless (exists $self->{_default}->{imageurl} and $self->{_default}->{imageurl});
 
     my $glob = catfile($source, 'content', '*');
 
@@ -86,6 +87,7 @@ sub new {
         $self->{$floor}->{root} = "$self->{_default}->{root}/$floor/" unless ($self->{$floor}->{root});
         $self->{$floor}->{url} = "$self->{_default}->{url}/$floor/" unless ($self->{$floor}->{url});
         $self->{$floor}->{static} = "$self->{$floor}->{root}/static/" unless ($self->{$floor}->{static});
+        $self->{$floor}->{imageurl} = "$self->{$floor}->{root}/static/images/" unless ($self->{$floor}->{imageurl});
       } else
       {
         $self->{$floor} = _not_valids($floor, $self);
@@ -112,10 +114,11 @@ sub _not_valids {
   my $floor = shift;
   my $self = shift;
   my $configs = {
-    title => "$floor",
-    root => "$self->{_default}->{root}/$floor/",
-    url => "$self->{_default}->{url}/$floor/",
-    static => "$self->{_default}->{root}/$floor/static",
+    title    => $floor,
+    root     => $self->{_default}->{root} . "/" . $floor . "/",
+    url      => $self->{_default}->{url} . "/" . $floor . "/",
+    static   => $self->{_default}->{root} . "/" . $floor . "/static",
+    imageurl => $self->{_default}->{root} . "/" . $floor . "/static/images/",
   };
 
   return $configs;
