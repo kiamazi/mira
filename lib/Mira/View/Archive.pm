@@ -26,14 +26,30 @@ sub template {
   foreach my $floor (keys %$archives) {
     my $arch_stct = {%{$archives->{$floor}->{list}}, %{$archives->{$floor}->{date}}};
   	foreach my $archive ( keys %$arch_stct ) {
-  		my $archive_template_root =
+  		my $archive_template_root;
+      if
       (
       -f catfile($pensource,'template',$config->{$floor}->{template},'archive.tt2')
       or
       -f catfile($pensource,'template',$config->{$floor}->{template},"$archive.tt2")
       )
-  		? catdir($pensource,'template',$config->{$floor}->{template})
-      : catdir($pensource,'template', $config->{_default}->{template});
+      {
+        $archive_template_root =
+           catdir($pensource,'template',$config->{$floor}->{template});
+      } elsif
+      (
+      -f catfile($pensource,'template',$config->{$floor}->{template},'archive.tt2')
+      or
+      -f catfile($pensource,'template',$config->{$floor}->{template},"$archive.tt2")
+      )
+      {
+        $archive_template_root =
+           catdir($pensource,'template', $config->{_default}->{template});
+      } else
+      {
+        next;
+      }
+
 
   		foreach my $list ( keys %{ $arch_stct->{$archive} } ) {
   			my $show_list_url = $arch_stct->{$archive}->{$list}->{url};

@@ -22,7 +22,15 @@ sub template {
   my $floor_data = $switches{floor_data};
   my $build = $switches{build};
 
-  my $template_root = catdir($pensource,'template', $config->{_default}->{template});
+  my $template_root;
+
+  if ( -f catfile($pensource,'template', $config->{_default}->{template}, 'main.tt2') )
+  {
+    $template_root = catdir($pensource,'template', $config->{_default}->{template});
+  } else
+  {
+    return;
+  }
 
   my $root_index = Template->new({
       INCLUDE_PATH => [$template_root, catdir($template_root, 'include') ],

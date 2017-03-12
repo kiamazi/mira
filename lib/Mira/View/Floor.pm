@@ -28,10 +28,21 @@ sub template {
 
   foreach my $floor (keys %$floors)
   {
-    my $floor_template_root =
-      (-f catfile($pensource,'template',$config->{$floor}->{template},'index.tt2') )
-      ? catdir($pensource,'template',$config->{$floor}->{template})
-      : catdir($pensource,'template', $config->{_default}->{template});
+    my $floor_template_root;
+      if
+      (-f catfile($pensource,'template',$config->{$floor}->{template},'index.tt2'))
+      {
+        $floor_template_root =
+           catdir($pensource,'template',$config->{$floor}->{template})
+      } elsif
+      (-f catfile($pensource,'template',$config->{_default}->{template},'index.tt2'))
+      {
+        $floor_template_root =
+           catdir($pensource,'template', $config->{_default}->{template})
+      } else
+      {
+        next;
+      }
 
 
     my @utids = @{$floors->{$floor}};
