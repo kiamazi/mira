@@ -93,7 +93,7 @@ sub template {
         $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
         $vars->{MainURL} =~ s{/$}{}g;
 
-        $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
+        $vars->{MainROOT} =~ s{^(.*?):/+}{/};
         $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
         $vars->{MainROOT} =~ s{/+}{/}g;
         $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
@@ -102,7 +102,7 @@ sub template {
         $vars->{URL} =~ s{(?<!:)/+}{/}g;
         $vars->{URL} =~ s{/$}{}g;
 
-        $vars->{ROOT} =~ s{^(.*?):/+}{/}g;
+        $vars->{ROOT} =~ s{^(.*?):/+}{/};
         $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
         $vars->{ROOT} =~ s{/+}{/}g;
         $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";

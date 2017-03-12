@@ -151,17 +151,19 @@ sub template {
           }
           $vars->{POSTS} = $posts;
 
-          my $target = $page_number == 1 ? "index.html" : "/page/$page_number/index.html";
+          my $ext = $config->{$floor}->{output_extension} || 'html';
+          $ext =~ s{^\.+}{};
+          my $target = $page_number == 1 ? "index.$ext" : "/page/$page_number/index.$ext";
           my $index = catfile($pensource, 'public', @show_list_address, $target);
 
-          $page->{next}->{url} = @utids ? "$show_list_url/page/" . ($page_number+1) . "/index.html" : '' ;
-          $page->{next}->{url} =~ s"(?<!http:)/+"/"g if $page->{next}->{url};
+          $page->{next}->{url} = @utids ? "$show_list_url/page/" . ($page_number+1) . "/index.$ext" : '' ;
+          $page->{next}->{url} =~ s{^(.*?):/+}{/}g if $page->{next}->{url};
           $page->{next}->{title} = ($page_number+1) if $vars->{next}->{url};
           delete $page->{next} unless $page->{next}->{url};
 
-          $page->{prev}->{url} = $page_number == 1 ? '' : "$show_list_url/page/" . ($page_number-1) . "/index.html" ;
-          $page->{prev}->{url} = "$show_list_url/index.html" if $page_number == 2;
-          $page->{prev}->{url} =~ s"(?<!http:)/+"/"g if $page->{prev}->{url};
+          $page->{prev}->{url} = $page_number == 1 ? '' : "$show_list_url/page/" . ($page_number-1) . "/index.$ext" ;
+          $page->{prev}->{url} = "$show_list_url/index.$ext" if $page_number == 2;
+          $page->{prev}->{url} =~ s{^(.*?):/+}{/} if $page->{prev}->{url};
           $page->{prev}->{title} = ($page_number-1) if $vars->{prev}->{url};
           delete $page->{prev} unless $page->{prev}->{url};
 

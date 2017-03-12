@@ -106,8 +106,8 @@ sub address {
       #$permalink =~ s"(?<!http:)/+"/"g;
 
       @permalink = split (/\//, $permalink);
-      my $ext = $config->{$floor}->{output_extension} || '.html';
-      $ext =~ s/^\.+//;
+      my $ext = $config->{$floor}->{output_extension} || 'html';
+      $ext =~ s{^\.+}{};
       $self->{$utid}->{_spec}->{address} = catfile(@permalink, "index.$ext");
       $self->{$utid}->{url} = $permalink;
       $self->{$utid}->{url} =~ s{(?<!:)/+}{/}g;

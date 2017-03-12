@@ -60,13 +60,14 @@ sub template {
    $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
    $vars->{MainURL} =~ s{/$}{}g;
 
-   $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
+   $vars->{MainROOT} =~ s{^(.*?):/+}{/};
    $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
    $vars->{MainROOT} =~ s{/+}{/}g;
    $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
 
-
-  my $index = catfile($pensource, 'public', $config->{_default}->{root}, 'index.html');
+  my $ext = $config->{_default}->{output_extension} || 'html';
+  $ext =~ s{^\.+}{};
+  my $index = catfile($pensource, 'public', $config->{_default}->{root}, "index.$ext");
   $root_index->process('main.tt2', $vars, $index, { binmode => ':utf8' })
       || die $root_index->error(), "\n";
 
