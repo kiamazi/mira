@@ -1,10 +1,11 @@
 use strict;
 use warnings;
-use utf8;
 use 5.012;
 
+use utf8;
+binmode STDOUT, ":utf8";
 
-use Mira::Model::Content;
+use Mira::Control::Content::Load;
 
 use File::Temp;
 use File::Spec;
@@ -24,7 +25,7 @@ make_path catdir($dir,'content','books') unless (-d catdir($dir,'content','books
 make_path catdir($dir,'content','یونیکد') unless (-d catdir($dir,'content','یونیکد'));
 
 
-my $content = Mira::Model::Content->new(source => $dir, ext => 'pen');
+my $content = Mira::Control::Content::Load->new(source => $dir, ext => '.draft');
 ok ($content);
 
 my $floors = $content->floors;
