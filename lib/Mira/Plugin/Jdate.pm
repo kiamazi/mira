@@ -103,7 +103,7 @@ sub plug {
         my $list_test;
         if ( $config->{lists} ) {
             foreach my $list ( @{ $config->{lists} } ) {
-                $list_test = 'list' if $list eq 'jdate';
+                $list_test = 'list' if $list =~ /^jdate$/i;
             }
         }
 

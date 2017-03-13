@@ -57,7 +57,7 @@ sub address {
 
       while ($permalink =~ m{:(.*?)(/|$)}g)
       {
-        next if $1 eq 'title';
+        next if $1 =~ /title/;
         my $field = $1;
         if ($self->{$utid}->{$field} and not ref($self->{$utid}->{$field}))
         {
@@ -69,8 +69,8 @@ sub address {
       }
 
       my @permalink = split (m:/:, $permalink);
-      @permalink = map {$_ =~ s/\W//g if $_ !~ m/:title/; $_} @permalink;
-      $permalink = join ("/", $baseurl, @permalink, "");
+      @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; $_} @permalink;
+      $permalink = join ("/", $baseurl, @permalink); #, "");
       $permalink =~ s{(?<!:)/+}{/}g;
       #$permalink =~ s"(?<!http:)/+"/"g;
 
@@ -88,7 +88,14 @@ sub address {
         my $num = 2;
         while (1)
         {
-          my $new_permalink = "$permalink/$num";
+          my $new_permalink = $permalink;
+          if ($permalink =~ m{.*/.*?\.[^/]*?$})
+          {
+             $new_permalink =~ s{(.*)/(.*?)$}{$1/$num/$2};
+          } else
+          {
+             $new_permalink = "$permalink/$num";             
+          }
           unless (exists $addr{$new_permalink})
           {
             $permalink = $new_permalink;
@@ -101,17 +108,27 @@ sub address {
       {
         $addr{$permalink} = 1;
       }
-      #$permalink = $permalink . "/";
-      $permalink =~ s{(?<!:)/+}{/}g;
-      #$permalink =~ s"(?<!http:)/+"/"g;
 
-      @permalink = split (/\//, $permalink);
-      my $ext = $config->{$floor}->{output_extension} || 'html';
-      $ext =~ s{^\.+}{};
-      $self->{$utid}->{_spec}->{address} = catfile(@permalink, "index.$ext");
+      $permalink =~ s{(?<!:)/+}{/}g;
+
+      if ($permalink !~ m{.*/.*?\.[^/]*?$})
+      {
+        $permalink = $permalink . "/";
+        @permalink = split (/\//, $permalink);
+        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; lc($_)} @permalink;
+        my $ext = $config->{$floor}->{output_extension} || 'html';
+        $ext =~ s{^\.+}{};
+        $self->{$utid}->{_spec}->{address} = catfile(@permalink, "index.$ext");
+      } else
+      {
+        @permalink = split (/\//, $permalink);
+        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; lc($_)} @permalink;
+        $self->{$utid}->{_spec}->{address} = catfile(@permalink);#, "index.$ext");
+      }
+
       $self->{$utid}->{url} = $permalink;
       $self->{$utid}->{url} =~ s{(?<!:)/+}{/}g;
-      #$self->{$utid}->{url} =~ s"(?<!http:)/+"/"g;
+
     } #end foreach utid;
 
 

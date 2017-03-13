@@ -160,6 +160,7 @@ sub template {
        push @$posts, $allentries->{$utid};
        #@$posts = %{$allentries->{$utid}};
        $vars->{POSTS} = $posts;
+       $vars->{post} = $allentries->{$utid};
 
        foreach my $field (keys %{$archives->{$floor}->{list}})
        {
