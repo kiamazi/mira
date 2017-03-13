@@ -110,19 +110,20 @@ sub address {
       }
 
       $permalink =~ s{(?<!:)/+}{/}g;
+      $permalink = lc($permalink);
 
       if ($permalink !~ m{.*/.*?\.[^/]*?$})
       {
         $permalink = $permalink . "/";
         @permalink = split (/\//, $permalink);
-        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; lc($_)} @permalink;
+        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; ($_)} @permalink;
         my $ext = $config->{$floor}->{output_extension} || 'html';
         $ext =~ s{^\.+}{};
         $self->{$utid}->{_spec}->{address} = catfile(@permalink, "index.$ext");
       } else
       {
         @permalink = split (/\//, $permalink);
-        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; lc($_)} @permalink;
+        @permalink = map {$_ =~ s/[^\w\.-]//g if $_ !~ m/:title/; ($_)} @permalink;
         $self->{$utid}->{_spec}->{address} = catfile(@permalink);#, "index.$ext");
       }
 
