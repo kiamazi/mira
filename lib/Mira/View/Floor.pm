@@ -167,13 +167,13 @@ sub template {
           my $index = catfile($pensource, 'public', $config->{$floor}->{root}, $target);
 
           $page->{next}->{url} = @utids ? "$config->{$floor}->{root}/page/" . ($page_number+1) . "/" : '' ;
-          $page->{next}->{url} =~ s{^(.*?):/+}{/} if $page->{next}->{url};
+          $page->{next}->{url} =~ s{^(.*?):/+|/+}{/}g if ($page->{next}->{url});
           $page->{next}->{title} = ($page_number+1) if $vars->{next}->{url};
           delete $page->{next} unless $page->{next}->{url};
 
           $page->{prev}->{url} = $page_number == 1 ? '' : "$config->{$floor}->{root}/page/" . ($page_number-1) . "/" ;
           $page->{prev}->{url} = $config->{$floor}->{root} . "/" if $page_number == 2;
-          $page->{prev}->{url} =~ s{^(.*?):/+}{/} if $page->{prev}->{url};
+          $page->{prev}->{url} =~ s{^(.*?):/+|/+}{/}g if ($page->{prev}->{url});
           $page->{prev}->{title} = ($page_number-1) if $vars->{prev}->{url};
           delete $page->{prev} unless $page->{prev}->{url};
 
