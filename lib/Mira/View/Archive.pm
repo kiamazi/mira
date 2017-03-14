@@ -1,5 +1,5 @@
 package Mira::View::Archive;
-$Mira::View::Archive::VERSION = '00.07.26';
+$Mira::View::Archive::VERSION = '00.07.27';
 
 use strict;
 use warnings;

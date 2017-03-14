@@ -1,5 +1,5 @@
 package Mira::Control::Content;
-$Mira::Control::Content::VERSION = '00.07.26';
+$Mira::Control::Content::VERSION = '00.07.27';
 
 use strict;
 use warnings;
