@@ -102,7 +102,7 @@ sub _room {
   my @files;
   foreach my $path (@path)
   {
-    next if (-d $path && basename($path) =~ /^_static$/i);
+    next if (-d $path && basename($path) =~ /^_/);
     (-f $path) && (push @files, $path) && next;# if -f $path;
     if (-d $path)
     {
@@ -120,7 +120,7 @@ sub _static_rooms {
   foreach my $path (@path)
   {
     next if not -d $path;
-    (push @dirs, $path) && next if (-d $path && basename($path) =~ /^_static$/i);
+    (push @dirs, $path) && next if (-d $path && basename($path) =~ /^_/);
     my $glob = catfile($path , "*");
     my @paths = glob encode(locale_fs => $glob);
     @path = grep {-d} @path;

@@ -25,18 +25,22 @@ sub address {
     foreach my $static (@{ $statics->{$floor} })
     {
       my ($name, $dir) = fileparse($static);
+      $name =~ s{^_}{};
+      $name = lc $name;
       if ($dir =~ /$floor_path(.*)/)
       {
         my $target = $1;
-        my $address = catdir($source, 'public', $floor_static, $target);
+        my @root_path = split m{/|\\|::}, $config->{$floor}->{root};
+        my $address = catdir($source, 'public', @root_path, $target, $name);
         push @{$self->{$floor}}, {path => $static, address => $address} ;
       }
     }
   }
 
+  my @main_root_path = split m{/|\\|::}, $config->{_default}->{static};
   $self->{_default} = [{
     path => catdir($source, 'statics'),
-    address => catdir($source, 'public', $config->{_default}->{static})
+    address => catdir($source, 'public', @main_root_path)
   }];
   return $self;
 }
