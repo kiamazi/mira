@@ -27,7 +27,7 @@ sub address {
       my ($name, $dir) = fileparse($static);
       $name =~ s{^_}{};
       $name = lc $name;
-      if ($dir =~ /$floor_path(.*)/)
+      if ($dir =~ /\Q$floor_path\E(.*)/)
       {
         my $target = $1;
         my @root_path = split m{/|\\|::}, $config->{$floor}->{root};

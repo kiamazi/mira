@@ -12,6 +12,8 @@ use Cwd;
 use File::Spec;
 use File::Spec::Functions;
 use File::Path qw(make_path);
+use Encode;
+use Encode::Locale;
 
 use utf8;
 binmode STDOUT, ":utf8";
@@ -68,7 +70,7 @@ sub execute {
   my %segments;
   $segments{utid} = $utid;
   $segments{date} = $now_date;
-  $segments{title} = $opt->{title};
+  $segments{title} = decode(locale_fs => $opt->{title});
   if ($config->{$floor}->{default_markup} and $config->{$floor}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
   {
   	$segments{markup} = $config->{$floor}->{default_markup};
@@ -107,7 +109,7 @@ END_CNTNT
   }
   chomp $content;
 
-my $title = $opt->{title};
+my $title = decode(locale_fs => $opt->{title});
 $title =~ s/[\W]+$//;
 $title =~ s/[\W]+/_/g;
 
