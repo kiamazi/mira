@@ -49,98 +49,97 @@ sub validate_args {
 }
 
 sub execute {
-  my ($self, $opt, $args) = @_;
-  my $pensource = $opt->{directory};
+    my ($self, $opt, $args) = @_;
+    my $source = $opt->{directory};
 
-  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-  $year += 1900;
-  $mon += 1;
-  my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
-  my $utid = sprintf "%04d%02d%02d%02d%02d%02d", $year, $mon, $mday, $hour, $min, $sec;
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+    $year += 1900;
+    $mon += 1;
+    my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
+    my $utid = sprintf "%04d%02d%02d%02d%02d%02d", $year, $mon, $mday, $hour, $min, $sec;
 
-  my $config = Mira::Config->new($pensource);
+    my $config = Mira::Config->new($source);
 
-  $opt->{floor} = $config->{_default}->{default_floor} unless $opt->{floor};
-  $opt->{floor} = lc($opt->{floor});
-  my $floor = $opt->{floor};
+    $opt->{floor} = $config->{_default}->{default_floor} unless $opt->{floor};
+    $opt->{floor} = lc($opt->{floor});
+    my $floor = $opt->{floor};
 
-  my $ext = $config->{$floor}->{default_extension} ? $config->{$floor}->{default_extension} : 'md';
-  $ext =~ s/\.+//;
+    my $ext = $config->{$floor}->{default_extension} ? $config->{$floor}->{default_extension} : 'md';
+    $ext =~ s/\.+//;
 
-  my %segments;
-  $segments{utid} = $utid;
-  $segments{date} = $now_date;
-  $segments{title} = decode(locale_fs => $opt->{title});
-  if ($config->{$floor}->{default_markup} and $config->{$floor}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
-  {
-  	$segments{markup} = $config->{$floor}->{default_markup};
-  } elsif ($config->{_default}->{default_markup} and $config->{_default}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
-  {
-  	$segments{markup} = $config->{_default}->{default_markup};
-  } else
-  {
-  	$segments{markup} = "markdown";
-  }
-  $segments{author} = $config->{$floor}->{author} ? $config->{$floor}->{author} : ($config->{_default}->{author} ? $config->{_default}->{author} : $ENV{USER});
+    my %segments;
+    $segments{utid} = $utid;
+    $segments{date} = $now_date;
+    $segments{title} = decode(locale_fs => $opt->{title});
+#    if ($config->{$floor}->{default_markup} and $config->{$floor}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+#    {
+#  	    $segments{markup} = $config->{$floor}->{default_markup};
+#    } elsif ($config->{_default}->{default_markup} and $config->{_default}->{default_markup} =~ /^(markdown|md|html|text|txt|bbcode|textile)$/i)
+#    {
+#  	    $segments{markup} = $config->{_default}->{default_markup};
+#    } else
+#    {
+#  	    $segments{markup} = "markdown";
+#    }
+#    $segments{author} = $config->{$floor}->{author} ? $config->{$floor}->{author} : ($config->{_default}->{author} ? $config->{_default}->{author} : $ENV{USER});
 
 
-  my $structure = (-f catfile($pensource, 'structure', 'default')) ? catfile($pensource, 'structure', 'default') : '' ;
-  $structure = (-f catfile($pensource, 'structure', $floor)) ? catfile($pensource, 'structure', $floor) : $structure ;
+    my $structure = (-f catfile($source, 'structure', 'default')) ? catfile($source, 'structure', 'default') : '' ;
+    $structure = (-f catfile($source, 'structure', $floor)) ? catfile($source, 'structure', $floor) : $structure ;
 
-  my $content;
-  if ($structure)
-  {
-  	{
-      open my $fh, '<:encoding(UTF-8)', $structure or die $!;
-      local $/ = undef;
-      $content = <$fh>;
-      close $fh;
+    my $content;
+    if ($structure)
+    {
+  	    {
+        open my $fh, '<:encoding(UTF-8)', $structure or die $!;
+        local $/ = undef;
+        $content = <$fh>;
+        close $fh;
+        }
+    } else
+    {
+        #$content =<<"END_CNTNT";
+        #categories:
+        # -
+        #tags:
+        # -
+        #END_CNTNT
+        $content = "_index: ";
     }
-  } else
-  {
-  	$content =<<"END_CNTNT";
-_permalink:
-author:
-categories:
-  -
-tags:
-  -
-END_CNTNT
-  }
-  chomp $content;
+    chomp $content;
 
-my $title = decode(locale_fs => $opt->{title});
-$title =~ s/[\W]+$//;
-$title =~ s/[\W]+/_/g;
+    my $title = decode(locale_fs => $opt->{title});
+    $title =~ s/[\W]+$//;
+    $title =~ s/[\W]+/-/g;
 
-  my $target_post_dir = catdir($pensource, 'content', $floor);
-  make_path $target_post_dir unless -d $target_post_dir;
+    my $target_post_dir = catdir($source, 'content', $floor);
+    make_path $target_post_dir unless -d $target_post_dir;
 
-  my $target_post_file;
-  if (! -f catfile($target_post_dir, "$year-$mon-$mday-$title.$ext")) {
-  	$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title.$ext");
-  } else {
-  	print "/$opt->{floor}/$year-$mon-$mday-$title.$ext already exist\n";
-  	while (1) {
-  		state $nfid = 2;
-  		$nfid = sprintf "%02d", $nfid;
-  		$target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title-$nfid.$ext");
-  		last unless (-e $target_post_file);
-  		$nfid++;
-  	}
-  }
-  open my $fh, '>:encoding(UTF-8)', $target_post_file or die $!;
-  print $fh "---\n";
-  print $fh "utid: $segments{utid}\n";
-  print $fh "date: $segments{date}\n";
-  print $fh "title: $segments{title}\n";
-  print $fh "_index:\n";
-  print $fh $content."\n";
-  print $fh "author: $segments{author}\n";
-  print $fh "_markup: $segments{markup}\n";
-  print $fh "---\n";
-  close $fh;
-  say "$target_post_file created";
+    my $target_post_file;
+    if (! -f catfile($target_post_dir, "$year-$mon-$mday-$title.$ext")) {
+  	    $target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title.$ext");
+    } else {
+  	    print "/$opt->{floor}/$year-$mon-$mday-$title.$ext already exist\n";
+  	    while (1) {
+            state $nfid = 2;
+            $nfid = sprintf "%02d", $nfid;
+            $target_post_file = catfile($target_post_dir, "$year-$mon-$mday-$title-$nfid.$ext");
+            last unless (-e $target_post_file);
+            $nfid++;
+  	    }
+    }
+    open my $fh, '>:encoding(UTF-8)', $target_post_file or die $!;
+    print $fh "---\n";
+    print $fh "utid: $segments{utid}\n";
+    print $fh "date: $segments{date}\n";
+    print $fh "title: $segments{title}\n";
+#   print $fh "_index:\n";
+    print $fh $content."\n";
+#   print $fh "author: $segments{author}\n";
+#   print $fh "_markup: $segments{markup}\n";
+    print $fh "---\n";
+    close $fh;
+    say "$target_post_file created";
 
 }
 
