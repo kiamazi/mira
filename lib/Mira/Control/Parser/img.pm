@@ -32,7 +32,7 @@ sub replace {
     $self =~ s/(?<!\\)\{\{\s+img\s+([^\s]*?)\s*(\[.*?\])?\s*(\[.*?\])?\s*\}\}/$addr/;
   }
 
-    $self =~ s/\\\{\{\s+img\s+/\{\{\ img\ /g;
+  $self =~ s/\\\{\{\s+img\s+/\{\{\ img\ /g;
   #$self =~ s/(?<!\\){{\s+img\s+(.*?)\s+(.*?)\s+}}/$imgurl/g;
 
   return $self;

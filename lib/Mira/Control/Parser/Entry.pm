@@ -80,7 +80,7 @@ sub parse {
         }
     }
 
-  return $self;
+    return $self;
 }
 
 
