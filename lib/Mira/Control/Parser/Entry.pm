@@ -1,5 +1,5 @@
 package Mira::Control::Parser::Entry;
-$Mira::Control::Parser::Entry::VERSION = '00.07.28';
+$Mira::Control::Parser::Entry::VERSION = '00.07.29';
 
 use strict;
 use warnings;
