@@ -1,17 +1,11 @@
 
 {{ INCLUDE header }}
 
-
-  <header id="header">
+<header id="header">
     <img id="header_img" src="{{ MainSTATIC }}/default-theme/img/mira-c.png">
-		<h1>
-      {{ TITLE }}
-		</h1>
-		<h5>
-			{{ DESCRIPTION }}
-		</h5>
-	</header>
-
+	<h1>{{ TITLE }}</h1>
+	<h5>{{ DESCRIPTION }}</h5>
+</header>
 
 {{ INCLUDE navbar }}
 
@@ -20,73 +14,69 @@
 <section id="content">
   {{ FOREACH POSTS }}
   <article class="post" id="{{ slug }}">
-		<div class="header">
+	<div class="header">
 
-      <h2 class="title">
-				<a href="{{ url }}">{{ title }}</a>
-      </h2>
+        <h2 class="title"><a href="{{ url }}">{{ title }}</a></h2>
 
-      <h6 class="date">
-	      <i class="fa fa-calendar-o" aria-hidden="true"></i>
-        {{ CALENDAR.day }}&nbsp;{{ CALENDAR.month_name }}&nbsp;{{ CALENDAR.year }}
-        <!-- {{ date }} -->
+        <h6 class="date">
+	       <i class="fa fa-calendar-o" aria-hidden="true"></i>
+           {{ CALENDAR.day }}&nbsp;{{ CALENDAR.month_name }}&nbsp;{{ CALENDAR.year }}
+           <!-- {{ date }} -->
   		</h6>
 
-      {{ IF author }}
-      <h6 class="by">
-        <i class="fa fa-pencil" aria-hidden="true"></i>
-        {{ IF author.values }}
-          {{ FOREACH author.values }}
+        {{ IF author }}
+        <h6 class="by">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            {{ IF author.values }}
+                {{ FOREACH author.values }}
 				    <a href="{{ url }}">{{ name }}</a>
-          {{- END }}
-        {{ ELSE }}
-          {{ author }}
+                {{- END }}
+            {{ ELSE }}
+                {{ author }}
+            {{- END }}
+		</h6>
         {{- END }}
-			</h6>
-      {{- END }}
 
-      {{ IF categories }}
-      <h6 class="cat">
-				<i class="fa fa-file-text-o" aria-hidden="true"></i>
+        {{ IF categories }}
+        <h6 class="cat">
+			<i class="fa fa-file-text-o" aria-hidden="true"></i>
             {{ FOREACH categories.values }}
-            <a href="{{ url }}">@{{ name }}</a>
-      {{- END }}
-			</h6>
-      {{- END }}
+                <a href="{{ url }}">@{{ name }}</a>
+            {{- END }}
+		</h6>
+        {{- END }}
 
-      {{ IF tags }}
-      <h6 class="tags">
-				<i class="fa fa-tags" aria-hidden="true"></i>
-				{{ FOREACH tags }}
-					<a href="{{ value.url }}">#{{ value.name }}</a>
-				{{- END }}
-			</h6>
-      {{- END }}
+        {{ IF tags }}
+        <h6 class="tags">
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			{{ FOREACH tags }}
+				<a href="{{ value.url }}">#{{ value.name }}</a>
+			{{- END }}
+		</h6>
+        {{- END }}
 
-      <div class="clear-both"></div>
+        <div class="clear-both"></div>
 
-      <div class="body">
-        <p>{{ body.less }}</p>
-        <a class="read-more" href="{{ url }}#more">Continue...</a>
-      </div>
+        <div class="body">
+            <p>{{ body.less }}</p>
+            <a class="read-more" href="{{ url }}#more">Continue...</a>
+        </div>
 
 
 
-		</div>
-	</article>
+	</div>
+  </article>
   {{ END }}
 
 
   <div class="pagination">
-
     {{ IF PAGE.prev }}
       <a class="newerpage" href="{{ PAGE.prev.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Newer Posts</a>
     {{- END }}
-| page {{ PAGE.number }} of {{PAGE.total}} |
+    | page {{ PAGE.number }} of {{PAGE.total}} |
     {{ IF PAGE.next }}
       <a class="olderpage" href="{{ PAGE.next.url }}">Older Posts <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
     {{- END }}
-
   </div>
 
 </section>

@@ -119,13 +119,14 @@ sub execute {
         my @entries = reverse sort @{ $floors_base->{$floor} };
         @entries = grep {
             not $data_base->{$_}->{_type}
-              or $data_base->{$_}->{_type} !~ m/^page$/i
+             or $data_base->{$_}->{_type} !~ m/^page$/i
         } @entries;
         splice @entries, $config->{_default}->{post_num}
           if ( $config->{_default}->{post_num} ne 'all' );
         $floor_data->{$floor}->{name}        = $config->{$floor}->{title};
         $floor_data->{$floor}->{description} = $config->{$floor}->{description};
         $floor_data->{$floor}->{url}         = $config->{$floor}->{url};
+        $floor_data->{$floor}->{root}        = $config->{$floor}->{root};
         foreach my $utid (@entries) {
             push @{ $floor_data->{$floor}->{posts} }, $data_base->{$utid};
         }

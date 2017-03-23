@@ -5,12 +5,12 @@
     <description>{{ DESCRIPTION }}</description>
     <link>{{ URL }}</link>
     <atom:link href="{{ URL }}/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>{{ BUILD.date }}</pubDate>
-    <lastBuildDate>{{ BUILD.date }}</lastBuildDate>
+    <pubDate>{{ DATE }}</pubDate>
+    <lastBuildDate>{{ DATE }}</lastBuildDate>
     <generator>mira</generator>
 
 
-      {{ FOREACH POSTS }}
+    {{ FOREACH POSTS }}
         <item>
           <title>{{ title }}</title>
           <description>{{ body.more | html }}</description>
@@ -26,8 +26,8 @@
           {{- END }}
         </category>
         </item>
-      {{ END }}
+    {{ END }}
 
 
-    </channel>
+  </channel>
 </rss>

@@ -2,19 +2,15 @@
 
   <!-- another way -->
   <!--
-  {{ IF CATEGORIES_ARCHIVE }}
   <h3>cat</h3>
   {{ FOREACH CATEGORIES_ARCHIVE }}
     <a href="{{ url }}">{{ name }}</a> - <small>{{ posts.size }}</small><br>
   {{ END }}
-  {{ END }}
   <hr>
 
-  {{ IF TAGS_ARCHIVE }}
   <h3>tags</h3>
-  {{ FOREACH TAGS_ARCHIVE.sort('name') }}
+  {{ FOREACH TAGE_ARCHIVE.sort('name') }}
     &nbsp;<a href="{{ url }}">{{ name }}(<small>{{ posts.size }}</small>)</a>&nbsp;
-  {{ END }}
   {{ END }}
   <hr>
 
@@ -23,13 +19,12 @@
   {{ FOREACH DATE_ARCHIVE }}
     <a href="{{ url }}">{{ name }}(<small>{{ posts.size }}</small>)</a><br>
   {{ END }}
-  {{ END }}
   <hr>
-
+  {{ END }}
   -->
 
   {{ FOREACH archive IN ARCHIVES.pairs }}
-    <h5>{{ archive.key }}</h5><!-- archive name, like tags or dates ... -->
+    <h5>{{ archive.key }}</h5>
     <hr>
     {{ FOREACH item IN archive.value.values.sort('name').sort('number') }}
       <a href="{{ item.url }}">{{ item.name }}</a>
@@ -41,13 +36,13 @@
     <br>
   {{- END }}
 
-<!-- OR
+<!-- one more way
   {{ IF ARCHIVES.date }}
     <h5>+ date +</h5>
-    {{ FOREACH ARCHIVES.date.values.sort('url').reverse }}
+    {{ FOREACH Archives.date.values.sort('url').reverse }}
       <a href="{{ url }}">{{ name }}</a><br>
     {{ END }}
   {{ END }}
- or sort('number') -->
+-->
 
 </div>

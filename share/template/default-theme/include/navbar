@@ -1,10 +1,10 @@
-<section id="menu">
-		<ul>
-                <li><a href="{{ MainROOT }}">Main Page</a>
-            {{ FOREACH FLOORS.values.sort('url') }}
-                 <li>
-                     <a href="{{ url }}" name="{{ description }}">{{ name }}</a>
-                 </li>
-            {{ END }}
-		</ul>
-	</section>
+   <section id="menu">
+	<ul>
+	<li><a href="{{ MainROOT }}">Main Page</a>
+	   {{ FOREACH FLOORS.values.sort('url') }}
+	   <li>
+		<a href="{{ root }}" name="{{ description }}">{{ name }}</a>
+	   </li>
+	   {{ END }}
+	</ul>
+   </section>

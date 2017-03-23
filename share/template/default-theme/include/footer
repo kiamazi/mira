@@ -1,34 +1,21 @@
 
     <!-- Footer -->
     <footer>
-      <a href="mailto:{{ EMAIL }}">
+      <a href="maitlto: {{ MAIN.email }}">
          <span class="fa-stack fa-lg">
          <i class="fa fa-circle fa-stack-2x"></i>
          <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
           </span>
       </a>
-
-<!-- if conf/FLOORNAME.yml have twitter field -->
-      {{ IF SITE.twitter }}
-      <a href="{{ SITE.twitter }}">
+      <a href="{{ MainROOT }}">
         <span class="fa-stack fa-lg">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
         </span>
       </a>
-<!-- elsif config.yml have twitter field -->
-      {{ ELSIF MAIN.twitter }}
-      <a href="{{ MAIN.twitter }}">
-        <span class="fa-stack fa-lg">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-        </span>
-      </a>
-      {{ END }}
 
-<!-- main.tt2 haven't TITLE and feed -->
-      {{ IF TITLE }}
-      <a href="{{ ROOT }}/feed.xml">
+      {{ IF FloorROOT }}
+      <a href="{{ FloorROOT }}/feed.xml">
         <span class="fa-stack fa-lg">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-rss fa-stack-1x fa-inverse" ></i>

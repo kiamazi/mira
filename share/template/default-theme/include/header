@@ -6,20 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- if floor's header -->
-    {{ IF TITLE }}
-      <meta name="description" content="{{ DESCRIPTION }}">
-<!-- else main header -->
-    {{ ELSE }}
-      <meta name="description" content="{{ MainDESCRIPTION }}">
-    {{ END }}
-
-    {{ IF TITLE }}
-      <meta name="author" content="{{ AUTHOR }}">
-    {{ ELSE }}
-      <meta name="author" content="{{ MainAUTHOR }}">
-    {{ END }}
+    <meta name="description" content="{{ DESCRIPTION }}">
+    <meta name="author" content="{{ AUTHOR }}">
 
     <title>{{ PageTITLE }}</title>
 
