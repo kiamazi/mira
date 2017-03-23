@@ -1,4 +1,4 @@
-# PenomatiK general configs
+# Mira general configs
 #
 
 ## Site settings
@@ -8,29 +8,15 @@ description: YOUR BLOG DESCRIPTIONS
 author: YOUR NAME
 email: your-email@domain.com
 
-# each field you make here, like twitter and...
-# is available in template: {{ SITE.twitter }}
-twitter: https://www.twitter.com/Your_Twitter_NAME
-
-
  # the base hostname & protocol for your site
 url: http://localhost:80/blog
-root: /blog/
-# if fill static and imageurl, they will be cretaed in your root
-# change from /MAIN_ROOT/YOUR_MAIN_STATIC_PATH to-> /MAIN_ROOT/FLOOR_ROOT/YOUR_STATIC_PATH
-# and
-# change from /MAIN_ROOT/YOUR_MAIN_Image_PATH to-> /MAIN_ROOT/FLOOR_ROOT/YOUR_Image_PATH
-# static: /static
-# imageurl: /static/img
+root: /blog
+
+static: /blog/static
+imageurl: /blog/static/img
 
 ## default post permanent link
 permalink: :year/:month/:day/:title/
-
-##date format default is gregorian, but you can change it to jalali
-#date_format: jalali
-
-## Your local Time Zone
-TimeZone: +00:00
 
 ## Build settings
 default_markup: markdown
@@ -45,7 +31,7 @@ archive_post_num: 20
 ## if you want use a custom template for examle in penurlPATH/template/CustomThEM
 ## just type custom template folder name
 #> template: Custom_Template_Folde_Name
-template: mira-theme
+template: default-theme
 
 ## the fields you want use for archive, like category, tag and ...
 ## by default Mira archive date field dont need type it here
@@ -87,3 +73,7 @@ social:
     share_url:
     share_title:
     share_link:
+
+# each field you make here, like twitter and...
+# is available in template: {{ SITE.twitter }}
+twitter: https://www.twitter.com/Your_Twitter_NAME
