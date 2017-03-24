@@ -73,7 +73,7 @@ sub plug {
             /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/ )
         {
             my ( $year, $month, $day ) = ( $+{year}, $+{month}, $+{day} );
-            my $date = Mira::Date::Jalali->new(
+            my $date = Mira::Plugin::Date::Jalali->new(
                 year  => $year,
                 month => $month,
                 day   => $day
