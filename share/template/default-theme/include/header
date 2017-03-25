@@ -11,7 +11,11 @@
 
     <title>{{ PageTITLE }}</title>
 
+   {{ IF SITE.lang != 'en' }}
+    <link href="{{ MainSTATIC }}/default-theme/style-rtl.css" rel="stylesheet">
+   {{ ELSE }}
     <link href="{{ MainSTATIC }}/default-theme/style.css" rel="stylesheet">
+   {{ END }}
 
     <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/vazir-font/v7.0.0/dist/font-face.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/samim-font/v1.0.2/dist/font-face.css">

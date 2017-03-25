@@ -53,6 +53,16 @@ a{
 	padding: 10px;
 }
 
+code, pre {
+	direction: ltr;
+	background: #DDD;
+}
+
+pre {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
 button, .likebutton{
 	display: inline-block;
 	min-width: 80px;
