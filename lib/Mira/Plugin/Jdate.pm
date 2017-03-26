@@ -67,8 +67,7 @@ sub plug {
                   . $data->{$utid}->{_spec}->{jmonth} . "-"
                   . $data->{$utid}->{_spec}->{jday};
             }
-        }
-        elsif ( exists $data->{$utid}->{jdate}
+        } elsif ( exists $data->{$utid}->{jdate}
             and $data->{$utid}->{jdate} =~
             /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/ )
         {
@@ -98,6 +97,24 @@ sub plug {
             $data->{$utid}->{CALENDAR}->{jday} =
               $data->{$utid}->{_spec}->{jday};
             $data->{$utid}->{CALENDAR}->{jday_name} = $jday_names[ $dow - 1 ];
+
+            if (not exists $data->{$utid}->{date}) {
+                my $month_name  = $date_time->month_name;
+                my $month_abbr  = $date_time->month_abbr;
+                my $day_name    = $date_time->day_name;
+                my $day_abbr    = $date_time->day_abbr;
+
+                $data->{$utid}->{CALENDAR}->{year} =
+                    sprintf "%04d", $date->gregorian->{year};
+                $data->{$utid}->{CALENDAR}->{month} =
+                    sprintf "%02d", $date->gregorian->{month};
+                $data->{$utid}->{CALENDAR}->{month_name} = $month_name;
+                $data->{$utid}->{CALENDAR}->{month_abbr} = $month_abbr;
+                $data->{$utid}->{CALENDAR}->{day} =
+                    sprintf "%02d", $date->gregorian->{day};
+                $data->{$utid}->{CALENDAR}->{day_name} = $day_name;
+                $data->{$utid}->{CALENDAR}->{day_abbr} = $day_abbr;
+            }
         }
 
         my $list_test;
