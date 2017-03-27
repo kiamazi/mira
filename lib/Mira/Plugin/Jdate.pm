@@ -114,6 +114,10 @@ sub plug {
                     sprintf "%02d", $date->gregorian->{day};
                 $data->{$utid}->{CALENDAR}->{day_name} = $day_name;
                 $data->{$utid}->{CALENDAR}->{day_abbr} = $day_abbr;
+                $data->{$utid}->{date} =
+                    $data->{$utid}->{CALENDAR}->{year} . "-"
+                  . $data->{$utid}->{CALENDAR}->{month} . "-"
+                  . $data->{$utid}->{CALENDAR}->{day};
             }
         }
 

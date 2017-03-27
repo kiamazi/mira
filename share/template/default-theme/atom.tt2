@@ -5,29 +5,27 @@
     <description>{{ DESCRIPTION }}</description>
     <link>{{ URL }}</link>
     <atom:link href="{{ URL }}/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>{{ DATE }}</pubDate>
-    <lastBuildDate>{{ DATE }}</lastBuildDate>
+    <pubDate>{{ Build.date }}</pubDate>
+    <lastBuildDate>{{ Build.date }}</lastBuildDate>
     <generator>mira</generator>
-
-
-    {{ FOREACH POSTS }}
+    {{ FOREACH post IN POSTS }}
         <item>
-          <title>{{ title }}</title>
-          <description>{{ body.more | html }}</description>
-          <pubDate>{{ date }}</pubDate>
-          <link>{{ url }}</link>
-          <guid isPermaLink="true">{{ url }}</guid>
-
-
-        <category>
-          {{ FOREACH categories.values }}
-            {{ name }}
-            {{ IF (loop.index != loop.max) }},{{- END }}
-          {{- END }}
-        </category>
+          <title>{{ post.title }}</title>
+          <description>{{ post.body.more | html }}</description>
+          <pubDate>{{ post.date }}</pubDate>
+          <link>{{ post.url }}</link>
+          <guid isPermaLink="true">{{ post.url }}</guid>
+	{{- FOREACH list IN SITE.lists -}}
+		{{ IF post.$list }}
+		<{{ list }}>
+		   {{- FOREACH arch IN post.$list.values -}}
+			{{- arch.name -}}
+			{{- IF (loop.index != loop.max) -}},{{- END -}}
+		   {{- END -}}
+		</{{ list }}>
+		{{ END }}
+	{{- END -}}
         </item>
     {{ END }}
-
-
   </channel>
 </rss>
