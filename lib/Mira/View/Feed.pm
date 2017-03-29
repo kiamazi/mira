@@ -129,7 +129,7 @@ sub template {
             or
             $a->{_number} <=> $b->{_number}
           }
-          (values %{ $archives->{$floor}->{date} })
+          (values %{ $archives->{$floor}->{date}->{$field} })
           ];
         }
 

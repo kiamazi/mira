@@ -127,6 +127,7 @@ sub execute {
         $floor_data->{$floor}->{description} = $config->{$floor}->{description};
         $floor_data->{$floor}->{url}         = $config->{$floor}->{url};
         $floor_data->{$floor}->{root}        = $config->{$floor}->{root};
+        $floor_data->{$floor}->{SITE}        = $config->{$floor};
         foreach my $utid (@entries) {
             push @{ $floor_data->{$floor}->{posts} }, $data_base->{$utid};
         }
