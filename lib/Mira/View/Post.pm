@@ -189,7 +189,7 @@ sub template {
        }
 
        #my @target = split (m:/:, $allentries->{$utid}->{_spec}->{address});
-       my $index = catfile($pensource, 'public', $allentries->{$utid}->{_spec}->{address});
+       my $index = catfile($pensource, $config->{_default}->{publishDIR}, $allentries->{$utid}->{_spec}->{address});
 
   	   $post_index->process($post_layout, $vars, $index, { binmode => ':utf8' })
   		   || die $post_index->error(), "\n";

@@ -44,6 +44,7 @@ sub new {
     $self->{_default}->{root} =~ s{/+}{/}g;
     $self->{_default}->{url} = "/" unless (exists $self->{_default}->{url} and $self->{_default}->{url});
     $self->{_default}->{url} =~ s{(?<!:)/+}{/}g;
+    $self->{_default}->{publishDIR} = 'public' unless (exists $self->{_default}->{publishDIR} and $self->{_default}->{publishDIR});
 
     $self->{_default}->{post_num} = "5" unless (exists $self->{_default}->{post_num} and $self->{_default}->{post_num});
     $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});

@@ -170,7 +170,7 @@ sub template {
           my $ext = $config->{$floor}->{output_extension} || 'html';
           $ext =~ s{^\.+}{};
           my $target = $page_number == 1 ? "index.$ext" : "/page/$page_number/index.$ext";
-          my $index = catfile($pensource, 'public', @show_list_address, $target);
+          my $index = catfile($pensource, $config->{_default}->{publishDIR}, @show_list_address, $target);
 
           $page->{next}->{url} = @utids ? "$show_list_url/page/" . ($page_number+1) . "/index.$ext" : '' ;
           $page->{next}->{url} =~ s{^(.*?):/+|/+}{/}g if $page->{next}->{url};

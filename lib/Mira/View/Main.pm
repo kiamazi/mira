@@ -75,7 +75,7 @@ sub template {
 
   my $ext = $config->{_default}->{output_extension} || 'html';
   $ext =~ s{^\.+}{};
-  my $index = catfile($pensource, 'public', $config->{_default}->{root}, "index.$ext");
+  my $index = catfile($pensource, $config->{_default}->{publishDIR}, $config->{_default}->{root}, "index.$ext");
   $root_index->process('main.tt2', $vars, $index, { binmode => ':utf8' })
       || die $root_index->error(), "\n";
 

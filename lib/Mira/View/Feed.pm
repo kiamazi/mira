@@ -139,7 +139,7 @@ sub template {
           push @$posts, $allentries->{$utid};
         }
         $vars->{POSTS} = $posts;
-        my $feedindex = catfile($pensource, 'public', $config->{$floor}->{root}, 'feed.xml');
+        my $feedindex = catfile($pensource, $config->{_default}->{publishDIR}, $config->{$floor}->{root}, 'feed.xml');
         $floor_index->process('atom.tt2', $vars, $feedindex, { binmode => ':utf8' })
             || die $floor_index->error(), "\n";
 

@@ -164,7 +164,7 @@ sub template {
           my $ext = $config->{$floor}->{output_extension} || 'html';
           $ext =~ s{^\.+}{};
           my $target = $page_number == 1 ? "index.$ext" : "/page/$page_number/index.$ext";
-          my $index = catfile($pensource, 'public', $config->{$floor}->{root}, $target);
+          my $index = catfile($pensource, $config->{_default}->{publishDIR}, $config->{$floor}->{root}, $target);
 
           $page->{next}->{url} = @utids ? "$config->{$floor}->{root}/page/" . ($page_number+1) . "/" : '' ;
           $page->{next}->{url} =~ s{^(.*?):/+|/+}{/}g if ($page->{next}->{url});
