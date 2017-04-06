@@ -1,5 +1,5 @@
 package Mira::Control::Static;
-$Mira::Control::Static::VERSION = '00.07.32';
+$Mira::Control::Static::VERSION = '00.07.33';
 
 use strict;
 use warnings;
@@ -15,6 +15,7 @@ sub address {
   my $statics = shift;
   my $config = shift;
   my $source = shift;
+  my $publishdir = shift;
   my $self = {};
 
   foreach my $floor (keys %{$config}) {
@@ -31,7 +32,7 @@ sub address {
       {
         my $target = $1;
         my @root_path = split m{/|\\|::}, $config->{$floor}->{root};
-        my $address = catdir($source, 'public', @root_path, $target, $name);
+        my $address = catdir($source, $publishdir, @root_path, $target, $name);
         push @{$self->{$floor}}, {path => $static, address => $address} ;
       }
     }
@@ -40,7 +41,7 @@ sub address {
   my @main_root_path = split m{/|\\|::}, $config->{_default}->{static};
   $self->{_default} = [{
     path => catdir($source, 'statics'),
-    address => catdir($source, 'public', @main_root_path)
+    address => catdir($source, $publishdir, @main_root_path)
   }];
   return $self;
 }

@@ -1,5 +1,5 @@
 package Mira::CLI::Command::build;
-$Mira::CLI::Command::build::VERSION = '00.07.32';
+$Mira::CLI::Command::build::VERSION = '00.07.33';
 
 use strict;
 use warnings;
@@ -98,9 +98,10 @@ sub execute {
     print "pluging: $diff\n";
 
     ######################
+    my $publishdir = $config->{_default}->{publishDIR};
     use Mira::Control::Static;
     my $static_path =
-      Mira::Control::Static->address( $statics, $config, $source );
+      Mira::Control::Static->address( $statics, $config, $source, $publishdir );
     my $total_statics = Mira::Control::Static->copy($static_path);
 
     say $total_statics . " files and directories copied to static folders";

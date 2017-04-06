@@ -1,5 +1,5 @@
 package Mira::Control::Parser::Entry;
-$Mira::Control::Parser::Entry::VERSION = '00.07.32';
+$Mira::Control::Parser::Entry::VERSION = '00.07.33';
 
 use strict;
 use warnings;
@@ -45,7 +45,7 @@ sub parse {
         $detail =~ s/(?<!\\)\\#/#/g;
         $detail =~ s/\\\\#/\\#/g;
         $body =~ s/\n\s*$//;
-        if ($detail =~ /^\s*utid\s*:(?<utid>.*)$/m)
+        if ($detail =~ /^utid\s*:(?<utid>.*)$/m)
         {
             my $top;
             eval
@@ -57,7 +57,8 @@ sub parse {
                 $entry\n";
                 return;
             }
-            $utid = delete $top->{utid};
+            #$utid = delete $top->{utid};
+            $utid = $top->{utid};
             $utid =~ s/[^\d]//g;
             $self->{utid} = $utid;
 

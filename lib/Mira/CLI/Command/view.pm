@@ -1,5 +1,5 @@
 package Mira::CLI::Command::view;
-$Mira::CLI::Command::new::VERSION = '00.07.32';
+$Mira::CLI::Command::new::VERSION = '00.07.33';
 
 use strict;
 use warnings;
@@ -18,7 +18,7 @@ my $cwd = cwd;
 
 sub abstract { 'preview server runer' }
 
-sub description { 'start a server with public folder content' }
+sub description { 'start a server with publishDIR folder content' }
 
 sub opt_spec {
     return (
@@ -41,11 +41,16 @@ sub validate_args {
 
 sub execute {
   my ($self, $opt, $args) = @_;
-  my $pensource = -d $opt->{directory} ? $opt->{directory} : $cwd;
+  my $source = -d $opt->{directory} ? $opt->{directory} : $cwd;
 
-  print "no public floder in $pensource\n" and exit if not -d "$pensource/public";
+  my $config = Mira::Config->new($source);
+  my $publishDIR = $config->{_default}->{publishDIR};
 
-  my $app    = Plack::App::IndexFile->new({ root => "$pensource/public" })->to_app;
+  my $localdir = catdir($source, $publishDIR);
+say $localdir;
+  print "no publish floder in $localdir\n" and exit if not -d $localdir;
+
+  my $app    = Plack::App::IndexFile->new({ root => $localdir })->to_app;
   my $runner = Plack::Runner->new;
   $runner->parse_options( '--access-log' => '/dev/null', @ARGV );
   $runner->run( $app );

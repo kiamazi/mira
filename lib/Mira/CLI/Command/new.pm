@@ -1,5 +1,5 @@
 package Mira::CLI::Command::new;
-$Mira::CLI::Command::new::VERSION = '00.07.32';
+$Mira::CLI::Command::new::VERSION = '00.07.33';
 
 use strict;
 use warnings;
@@ -140,6 +140,7 @@ sub execute {
     print $fh "---\n";
     close $fh;
     say "$target_post_file created";
+    #system ("gedit $target_post_file&");
 
 }
 
