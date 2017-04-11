@@ -62,7 +62,7 @@ email: your-email\@domain.com
 github: https://www.github.com/Your_GitHub_NAME
 
 
- # the base hostname & protocol for your site
+# the base hostname & protocol for your site
 url: http://localhost:80
 root: /
 static: /static
@@ -70,9 +70,6 @@ imageurl: /static/img
 
 ## default post permanent link
 permalink: :year/:month/:day/:title/
-
-## Your local Time Zone
-#TimeZone: +00:00
 
 ## Build settings
 default_markup: markdown
@@ -83,30 +80,23 @@ post_num: 3
 ## number of posts will be show in archives index page
 archive_post_num: 10
 
-## if create new entry without --floor switch, mira use this field
+## if create new entry without --floor switch with 'mira new', mira use this field
 default_floor: blog
 
 
-## template path by root is penurlPATH/template
-## if you want use a custom template for examle in penurlPATH/template/CustomThEM
-## just type custom template folder name
+## template path root is /template
+## if you want use a custom template for examle in /template/Custom_Template_Folde_Name
 #> template: Custom_Template_Folde_Name
 template: default-theme
 
-## the fields you want use for archive, like category, tag and ...
-## by default Mira archive date field dont need type it here
-## Mira use this fields by default for the floors which haven't field section
-## in FloorName.yaml, or haven't FloorName.yaml file
-
-#this fields are not allowed: archives, static
+# default archive fields, like category, tag and ...
+# use for floors which haven't /config/FLOOR.yml or haven't filled or empty lists
 lists:
   - date
   - categories
   - tags
   - author
 
-#url address for long keys or unicode which you want make latin addres for'em
-# for example if you have 'longcategoryname' you can make /category/lcn
 #namespace:
 #  veryverylongarchivename : vlan
 #  learnsections: learn
@@ -117,6 +107,7 @@ lists:
 
 social:
  -  icon: twitter
+    name: twitter
     url: https://twitter.com/Twitter_UserName
     desc: Follow me on twitter
     share_url: http://twitter.com/share
@@ -124,6 +115,7 @@ social:
     share_link: "&amp;url="
 
  -  icon: github
+    name: github
     url: https://github.com/GitHub_UserName
     desc: Fork me on github
     share_url:
@@ -131,7 +123,16 @@ social:
     share_link:
 
  -  icon: instagram
+    name: instagram
     url: https://instagram.com/NAME
+    desc: Follow me
+    share_url:
+    share_title:
+    share_link:
+
+ -  icon: facebook-square
+    name: facebook
+    url: https://facebook.com/NAME
     desc: Follow me
     share_url:
     share_title:

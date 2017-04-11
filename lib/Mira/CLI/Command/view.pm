@@ -47,7 +47,6 @@ sub execute {
   my $publishDIR = $config->{_default}->{publishDIR};
 
   my $localdir = catdir($source, $publishDIR);
-say $localdir;
   print "no publish floder in $localdir\n" and exit if not -d $localdir;
 
   my $app    = Plack::App::IndexFile->new({ root => $localdir })->to_app;
