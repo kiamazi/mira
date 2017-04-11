@@ -177,6 +177,7 @@ EOCF
       catdir($pensource,"statics")
     ) or die $!;
 
+  say "...done!";
 }
 
 
