@@ -1,5 +1,5 @@
 package Mira::View::Main;
-$Mira::View::Main::VERSION = '00.07.33';
+$Mira::View::Main::VERSION = '00.07.34';
 
 use strict;
 use warnings;
