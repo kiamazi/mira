@@ -1,5 +1,5 @@
 package Mira::Model::Archive;
-$Mira::Model::Archive::VERSION = '00.07.34';
+$Mira::Model::Archive::VERSION = '00.07.35';
 
 use strict;
 use warnings;
@@ -91,6 +91,8 @@ sub lists {
           push @{$archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{posts}}, $utid;
           if ($config->{$floor}->{namespace}->{$list_items[$i]})
           {
+            $self->{$utid}->{$field}->{$list_items[$i]}->{showname} = $config->{$floor}->{namespace}->{$list_items[$i]};
+            $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{showname} = $config->{$floor}->{namespace}->{$list_items[$i]};
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} = $config->{$floor}->{namespace}->{$list_items[$i]};
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =~ s:[^\w]:-:g;
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =
@@ -99,7 +101,10 @@ sub lists {
             $self->{$utid}->{$field}->{$list_items[$i]}->{url}."/";
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =~ s{(?<!http:)/+}{/}g;
             $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{url} = $self->{$utid}->{$field}->{$list_items[$i]}->{url};
-          } else {
+          } else
+          {
+            $self->{$utid}->{$field}->{$list_items[$i]}->{showname} = $list_items[$i];
+            $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{showname} = $list_items[$i];
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =
             "$config->{$floor}->{root}/".
             "$field/".
