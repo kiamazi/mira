@@ -11,8 +11,7 @@ use 5.012;
 use Cwd;
 use File::Spec;
 use File::Spec::Functions;
-use Plack::Runner;
-
+#use Plack::Runner;
 
 my $cwd = cwd;
 
@@ -23,8 +22,8 @@ sub description { 'start a server with publishDIR folder content' }
 sub opt_spec {
     return (
 	[ 'directory|d=s', 'application path (default: current directory)', { default => $cwd } ],
-        [ 'port|p=s',      'port'             ],
-        [ 'host|o=s',      'host'             ],
+        [ 'port|p=s',      'port', { default => '5000' }             ],
+        [ 'host|o=s',      'host', { default => '127.0.0.1' }        ],
         [ 'help|h',        'this help'        ],
 
     );
@@ -46,27 +45,61 @@ sub execute {
   my $config = Mira::Config->new($source);
   my $publishDIR = $config->{_default}->{publishDIR};
 
-  my $localdir = catdir($source, $publishDIR);
+  our $localdir = catdir($source, $publishDIR);
   print "no publish floder in $localdir\n" and exit if not -d $localdir;
 
-  my $app    = Plack::App::IndexFile->new({ root => $localdir })->to_app;
-  my $runner = Plack::Runner->new;
-  $runner->parse_options( '--access-log' => '/dev/null', @ARGV );
-  $runner->run( $app );
+  my $server = MiraStaticServer->new();
+  $server->port($opt->{port});
+  $server->host($opt->{host});
+  $server->run();
 
-  package Plack::App::IndexFile;
+  package MiraStaticServer;
 
-  use parent 'Plack::App::File';
+  use base qw(HTTP::Server::Simple::CGI);
+  use Mira::Server::Static;
 
-  sub locate_file
-  {
-      my ($self, $env) = @_;
-      my $path         = $env->{PATH_INFO} || '';
+  sub handle_request {
+      my ( $self, $cgi ) = @_;
 
-      return $self->SUPER::locate_file( $env ) unless $path && $path =~ m{/$};
-      $env->{PATH_INFO} .= 'index.html';
-      return $self->SUPER::locate_file( $env );
+      if ( !$self->serve_static( $cgi, $localdir ) ) {
+          print "HTTP/1.0 404 Not found\r\n";
+          print $cgi->header,
+                $cgi->start_html('Not found'),
+                $cgi->h1('Not found'),
+                $cgi->end_html;
+      }
   }
+
+  sub print_banner {
+    my $self = shift;
+
+    print( ref($self)
+            . ": You can connect to your server at "
+            . "http://"
+            . $self->host
+            . ":"
+            . $self->port
+            . "/\n" );
+  }
+
+#  my $app    = Plack::App::IndexFile->new({ root => $localdir })->to_app;
+#  my $runner = Plack::Runner->new;
+#  $runner->parse_options( '--access-log' => '/dev/null', @ARGV );
+#  $runner->run( $app );
+#
+#  package Plack::App::IndexFile;
+#
+#  use parent 'Plack::App::File';
+#
+#  sub locate_file
+#  {
+#      my ($self, $env) = @_;
+#      my $path         = $env->{PATH_INFO} || '';
+#
+#      return $self->SUPER::locate_file( $env ) unless $path && $path =~ m{/$};
+#      $env->{PATH_INFO} .= 'index.html';
+#      return $self->SUPER::locate_file( $env );
+#  }
 
 }
 

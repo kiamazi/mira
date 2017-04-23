@@ -228,9 +228,7 @@ separate methods
 
 =head1 AUTHOR
 
-Kiavash
-
-Ahmad Anvari <http://www.anvari.org/bio/>
+kiamazi C<kiavash@cpan.org>
 
 Redistributed by : Ehsan Golpayegani <http://www.golpayegani.com>
 

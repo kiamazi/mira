@@ -35,6 +35,7 @@ lib/Mira/Parser/Markup.pm
 lib/Mira/Plugin.pm
 lib/Mira/Plugin/Date/Jalali.pm
 lib/Mira/Plugin/Jdate.pm
+lib/Mira/Server/Static.pm
 lib/Mira/View.pm
 lib/Mira/View/Archive.pm
 lib/Mira/View/Feed.pm
