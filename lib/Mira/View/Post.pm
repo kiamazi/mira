@@ -163,6 +163,8 @@ sub template {
        $vars->{POSTS} = $posts;
        $vars->{post} = $allentries->{$utid};
 
+       $vars->{IS_PAGE} = 'true' if ($allentries->{$utid}->{_type} and $allentries->{$utid}->{_type} eq 'page');
+
        foreach my $field (keys %{$archives->{$floor}->{list}})
        {
          $vars->{uc($field)."_ARCHIVE"} = [
