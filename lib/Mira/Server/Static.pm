@@ -21,6 +21,7 @@ my $magic;
 
 my @mime_types = (
     [ qr/\.htm(l)?$/ => 'text/html'  ],
+    [ qr/\.xml$/     => 'application/xml'  ],
     [ qr/\.txt$/     => 'text/plain' ],
     [ qr/\.css$/     => 'text/css'   ],
     [ qr/\.js$/      => 'application/javascript' ],
