@@ -82,6 +82,7 @@ sub template {
           EMAIL           => $config->{$floor}->{email},
 
           PageTITLE       => $config->{$floor}->{title},
+          IS_FEED         => 'true',
 
           ENTRIES         => $allentries,
           FLOORS          => $floor_data,

@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
+<feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ TITLE }}</title>
-    <description>{{ DESCRIPTION }}</description>
-    <link>{{ URL }}</link>
-    <atom:link href="{{ URL }}/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>{{ Build.date }}</pubDate>
-    <lastBuildDate>{{ Build.date }}</lastBuildDate>
-    <generator>mira</generator>
-    {{ FOREACH post IN POSTS }}
-        <item>
-          <title>{{ post.title }}</title>
-          <description>{{ post.body.more | html }}</description>
-          <pubDate>{{ post.date }}</pubDate>
-          <link>{{ post.url }}</link>
-          <guid isPermaLink="true">{{ post.url }}</guid>
-	{{- FOREACH list IN SITE.lists -}}
-		{{ IF post.$list }}
-		<{{ list }}>
-		   {{- FOREACH arch IN post.$list.values -}}
-			{{- arch.name -}}
-			{{- IF (loop.index != loop.max) -}},{{- END -}}
-		   {{- END -}}
-		</{{ list }}>
-		{{ END }}
-	{{- END -}}
-        </item>
-    {{ END }}
-  </channel>
-</rss>
+    <link href="{{ URL }}/feed.xml" rel="self"/>
+    <link href="{{ URL }}"/>
+    <updated>{{ BUILD.date | replace(' ', 'T')  }}{{ MAIN.timezone | remove(':') }}</updated>
+    <id>{{ URL }}</id>
+    <author>
+    	<name>{{ AUTHOR }}</name>
+        <email>{{ EMAIL }}</email>
+    </author>
+	<generator>mira</generator>
+
+	{{ FOREACH post IN POSTS }}
+	<entry>
+		<title>{{ post.title }}</title>
+		<link href="{{ post.furl }}"/>
+		<id>{{ post.furl }}</id>
+		<published>{{ post.date | replace(' ', 'T') }}{{ MAIN.timezone | remove(':') }}</published>
+		<updated>{{ post.date | replace(' ', 'T')  }}{{ MAIN.timezone | remove(':') }}</updated>
+		<content type="html"><![CDATA[{{ post.body.more }}]]></content>
+		<summary>
+		{{ post.body.less | html }}
+		</summary>
+		{{- FOREACH list IN SITE.lists -}}
+			{{ IF post.$list }}
+				{{ FOREACH arch IN post.$list.values }}
+	   	<{{ list }} term="{{ arch.name }}" scheme="{{ URL }}{{ arch.url }}" />
+				{{ END }}
+			{{ END }}
+		{{- END -}}
+	</entry>
+	{{ END }}
+
+</feed>

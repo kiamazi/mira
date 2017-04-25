@@ -24,7 +24,7 @@ sub template {
 
   my $template_root;
 
-  if ( -f catfile($pensource,'template', $config->{_default}->{template}, 'main.tt2') )
+  if (defined $config->{_default}->{template} and -f catfile($pensource,'template', $config->{_default}->{template}, 'main.tt2') )
   {
     $template_root = catdir($pensource,'template', $config->{_default}->{template});
   } else
@@ -55,6 +55,7 @@ sub template {
      UTIDS => $allposts,
      MAIN => $config->{_default},
      BUILD => $build,
+     IS_MAIN => 'true',
      FarsiNum => bless(\&farsinum, 'mira'),
    };
 

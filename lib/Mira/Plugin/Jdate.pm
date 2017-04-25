@@ -153,6 +153,8 @@ sub plug {
                   = $month;
                 $date_archives->{jdate}->{"$year$month"}->{month} =
                   $month;
+                $date_archives->{jdate}->{"$year$month"}->{month_name} =
+                  $jmonth_names[$month-1];
                 $date_archives->{jdate}->{"$year$month"}->{number}
                   = "$year - $month";
                 $date_archives->{jdate}->{"$year$month"}->{_number}

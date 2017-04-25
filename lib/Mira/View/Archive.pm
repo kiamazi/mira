@@ -53,18 +53,18 @@ sub template {
 
   		foreach my $list ( keys %{ $arch_stct->{$archive} } ) {
   			my $show_list_url = $arch_stct->{$archive}->{$list}->{url};
-        my @show_list_address = split (m:/:, $show_list_url);
+            my @show_list_address = split (m:/:, $show_list_url);
   			my @utids = @{$arch_stct->{$archive}->{$list}->{posts}};
   			@utids = reverse sort @utids;
 
   			my $archive_index = Template->new({
   		    	INCLUDE_PATH => [ $archive_template_root, catdir($archive_template_root, 'include') ],
   		    	INTERPOLATE  => 1,
-            ENCODING => 'utf8',
-            START_TAG => quotemeta('{{'),
-            END_TAG   => quotemeta('}}'),
-            OUTLINE_TAG => '{%',
-  				}) || die "$Template::ERROR\n";
+                ENCODING => 'utf8',
+                START_TAG => quotemeta('{{'),
+                END_TAG   => quotemeta('}}'),
+                OUTLINE_TAG => '{%',
+  			}) || die "$Template::ERROR\n";
 
         my $vars = {
           MainTITLE       => $config->{_default}->{title},
@@ -84,12 +84,14 @@ sub template {
           AUTHOR          => $config->{$floor}->{author},
           EMAIL           => $config->{$floor}->{email},
 
-          ArchiveTITLE => $list,
-          PageTITLE => "$config->{$floor}->{title} - $list",
+          ArchiveTITLE    => $list,
+          PageTITLE       => "$config->{$floor}->{title} - $list",
 
           ENTRIES         => $allentries,
           FLOORS          => $floor_data,
           ARCHIVES        => {%{$archives->{$floor}->{list}}, %{$archives->{$floor}->{date}}}, #$archives->{$floor}->{list},
+
+          ARCH            => $arch_stct->{$archive}->{$list},
 
           MAIN            => $config->{_default},
           SITE            => $config->{$floor},
@@ -121,6 +123,16 @@ sub template {
         $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
         $vars->{ROOT} =~ s{/+}{/}g;
         $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";
+
+        if ($arch_stct->{$archive}->{$list}->{year})
+        {
+            $vars->{ArchiveTITLE} = "$arch_stct->{$archive}->{$list}->{year}/$arch_stct->{$archive}->{$list}->{month}";
+            $vars->{PageTITLE} = "$config->{$floor}->{title} - $arch_stct->{$archive}->{$list}->{year}/$arch_stct->{$archive}->{$list}->{month}";
+            $vars->{IS_DATE_ARCHIVE} = 'true';
+        } else
+        {
+            $vars->{IS_ARCHIVE} = 'true';
+        }
 
         foreach my $field (keys %{$archives->{$floor}->{list}})
         {

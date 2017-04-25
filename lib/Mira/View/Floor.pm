@@ -79,6 +79,7 @@ sub template {
           EMAIL           => $config->{$floor}->{email},
 
           PageTITLE       => $config->{$floor}->{title},
+          IS_INDEX        => 'true',
 
           ENTRIES         => $allentries,
           FLOORS          => $floor_data,

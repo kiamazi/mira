@@ -6,6 +6,8 @@ use warnings;
 use 5.012;
 use utf8;
 
+use DateTime;
+
 sub lists {
   my $class= shift;
   my $self = shift;
@@ -28,7 +30,7 @@ sub lists {
   my $archive = {};
 
   my @month_names = qw(January February March April May June July August September October November December);
-  my @jmonth_names = qw(فروردین اردیبهشت خرداد تیر مرداد شهریور مهر آبان آذر دی بهمن اسفند);
+  #my @jmonth_names = qw(فروردین اردیبهشت خرداد تیر مرداد شهریور مهر آبان آذر دی بهمن اسفند);
 
   foreach my $utid (keys %$self)
   {
@@ -53,12 +55,19 @@ sub lists {
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{year} = $year;
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{_month} = $month;
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{month} = $month;
+        $archive->{$floor}->{date}->{date}->{"$year$month"}->{month_name} = $month_names[$month-1];
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{number} = "$year - $month";
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{_number} = "$year$month";
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{url} =
-        "$config->{$floor}->{root}/archive/".
-        "$year/$month/";
+            "$config->{$floor}->{root}/archive/".
+            "$year/$month/";
         $archive->{$floor}->{date}->{date}->{"$year$month"}->{url} =~ s{(?<!http:)/+}{/}g;
+
+        $archive->{$floor}->{date}->{date}->{"$year$month"}->{furl} =
+            "$config->{$floor}->{url}/archive/".
+            "$year/$month/";
+        $archive->{$floor}->{date}->{date}->{"$year$month"}->{furl} =~ s{(?<!http:)/+}{/}g;
+
       }
     }
 
@@ -80,7 +89,7 @@ sub lists {
         }
 
         $self->{$utid}->{$field} = {} if ($self->{$utid}->{$field});
-	      @list_items = grep {$_} @list_items;
+	    @list_items = grep {$_} @list_items;
         @list_items_url = @list_items;
         @list_items_url = map {$_ =~ s/[^\w]/-/g; $_} @list_items_url;
         foreach my $i (0 .. $#list_items)
@@ -96,22 +105,28 @@ sub lists {
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} = $config->{$floor}->{namespace}->{$list_items[$i]};
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =~ s:[^\w]:-:g;
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =
-            "$config->{$floor}->{root}/".
-            "$field/".
-            $self->{$utid}->{$field}->{$list_items[$i]}->{url}."/";
+                "$config->{$floor}->{root}/".
+                "$field/".
+                $self->{$utid}->{$field}->{$list_items[$i]}->{url}."/";
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =~ s{(?<!http:)/+}{/}g;
-            $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{url} = $self->{$utid}->{$field}->{$list_items[$i]}->{url};
           } else
           {
             $self->{$utid}->{$field}->{$list_items[$i]}->{showname} = $list_items[$i];
             $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{showname} = $list_items[$i];
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =
-            "$config->{$floor}->{root}/".
-            "$field/".
-            $list_items_url[$i]."/";
+                "$config->{$floor}->{root}/".
+                "$field/".
+                $list_items_url[$i]."/";
             $self->{$utid}->{$field}->{$list_items[$i]}->{url} =~ s{(?<!http:)/+}{/}g;
-            $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{url} = $self->{$utid}->{$field}->{$list_items[$i]}->{url};
           }
+          $self->{$utid}->{$field}->{$list_items[$i]}->{furl} = $self->{$utid}->{$field}->{$list_items[$i]}->{url};
+          my $baseurl = $config->{$floor}->{root};
+          my $furl =qr{^$baseurl};
+          my $fpath = $config->{$floor}->{url};
+          $self->{$utid}->{$field}->{$list_items[$i]}->{furl} =~ s/$furl/$fpath/ if $config->{$floor}->{root};
+
+          $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{url} = $self->{$utid}->{$field}->{$list_items[$i]}->{url};
+          $archive->{$floor}->{list}->{$field}->{$list_items[$i]}->{furl} = $self->{$utid}->{$field}->{$list_items[$i]}->{furl};
         }
       }
     }

@@ -57,10 +57,7 @@ description: Description of your site
 author: $user
 email: your-email\@domain.com
 
-# each field you make here, like github and...
-# is available in template: {{ MAIN.github }}
-github: https://www.github.com/Your_GitHub_NAME
-
+timezone: +00:00
 
 # the base hostname & protocol for your site
 url: http://localhost:80
@@ -71,11 +68,11 @@ imageurl: /static/img
 ## default post permanent link
 permalink: :year/:month/:day/:title/
 
-## Build settings
+
 default_markup: markdown
 
 ## number of posts will be show in main index page
-post_num: 3
+post_num: 5
 
 ## number of posts will be show in archives index page
 archive_post_num: 10
@@ -95,7 +92,6 @@ lists:
   - date
   - categories
   - tags
-  - author
 
 #namespace:
 #  veryverylongarchivename : vlan

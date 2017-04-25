@@ -117,6 +117,7 @@ sub template {
 
          PageTITLE       => "$allentries->{$utid}->{title} - $config->{$floor}->{title}",
          PostTITLE       => $allentries->{$utid}->{title},
+         IS_POST         => 'true',
 
          ENTRIES         => $allentries,
          FLOORS          => $floor_data,

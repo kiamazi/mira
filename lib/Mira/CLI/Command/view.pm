@@ -96,8 +96,9 @@ sub execute {
 #      my ($self, $env) = @_;
 #      my $path         = $env->{PATH_INFO} || '';
 #
-#      return $self->SUPER::locate_file( $env ) unless $path && $path =~ m{/$};
-#      $env->{PATH_INFO} .= 'index.html';
+#      #return $self->SUPER::locate_file( $env ) unless $path && $path =~ m{/$};
+#      $env->{PATH_INFO} .= 'index.html' if $env->{PATH_INFO} =~ m{/$};
+#      $env->{PATH_INFO} .= '/index.html' unless $env->{PATH_INFO} =~ m{\..*?$};
 #      return $self->SUPER::locate_file( $env );
 #  }
 

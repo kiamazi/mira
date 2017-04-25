@@ -131,6 +131,11 @@ sub address {
         $self->{$utid}->{url} = $permalink;
         $self->{$utid}->{url} =~ s{(?<!:)/+}{/}g;
 
+        $self->{$utid}->{furl} = $self->{$utid}->{url};
+        my $furl = qr{^$baseurl};
+        my $fpath = $config->{$floor}->{url};
+        $self->{$utid}->{furl} =~ s/$furl/$fpath/ if $config->{$floor}->{root};
+
     }    #end foreach utid;
 
 }

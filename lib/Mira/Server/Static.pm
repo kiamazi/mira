@@ -24,6 +24,7 @@ my @mime_types = (
     [ qr/\.txt$/     => 'text/plain' ],
     [ qr/\.css$/     => 'text/css'   ],
     [ qr/\.js$/      => 'application/javascript' ],
+    [ qr/\.svg$/     => 'image/svg+xml' ],
 );
 
 sub get_mimetype {
