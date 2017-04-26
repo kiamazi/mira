@@ -89,12 +89,12 @@ sub template {
 
 
   	   my $post_index = Template->new({
-  		   INCLUDE_PATH => [ $post_template_root, catdir($post_template_root, 'include') ],
-         INTERPOLATE  => 1,
-         ENCODING => 'utf8',
-         START_TAG => quotemeta('{{'),
-         END_TAG   => quotemeta('}}'),
-         OUTLINE_TAG => '{%',
+  	        INCLUDE_PATH => [ $post_template_root, catdir($post_template_root, 'include') ],
+            INTERPOLATE  => 1,
+            ENCODING => 'utf8',
+            START_TAG => quotemeta($config->{$floor}->{t_start_tag}),
+            END_TAG   => quotemeta($config->{$floor}->{t_end_tag}),
+            OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
   	   }) || die "$Template::ERROR\n";
 
   	   my $vars = {

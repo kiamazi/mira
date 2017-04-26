@@ -36,8 +36,9 @@ sub template {
       INCLUDE_PATH => [$template_root, catdir($template_root, 'include') ],
       INTERPOLATE  => 1,
       ENCODING => 'utf8',
-      START_TAG => quotemeta('{{'),
-      END_TAG   => quotemeta('}}'),
+      START_TAG => quotemeta($config->{_default}->{t_start_tag}),
+      END_TAG   => quotemeta($config->{_default}->{t_end_tag}),
+      OUTLINE_TAG => quotemeta( $config->{_default}->{t_outline_tag} ),
   }) || die "$Template::ERROR\n";
 
   my $vars = {

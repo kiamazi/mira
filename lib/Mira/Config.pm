@@ -56,6 +56,10 @@ sub new {
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
     $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
     $self->{_default}->{imageurl} = "/static/images" unless (exists $self->{_default}->{imageurl} and $self->{_default}->{imageurl});
+    $self->{_default}->{timezone} = "+00:00" unless (exists $self->{_default}->{timezone} and $self->{_default}->{timezone});
+    $self->{_default}->{t_start_tag} = "{{" unless (exists $self->{_default}->{t_start_tag} and $self->{_default}->{t_start_tag});
+    $self->{_default}->{t_end_tag} = "}}" unless (exists $self->{_default}->{t_end_tag} and $self->{_default}->{t_end_tag});
+    $self->{_default}->{t_outline_tag} = "{%" unless (exists $self->{_default}->{t_outline_tag} and $self->{_default}->{t_outline_tag});
 
     my $glob = catfile($source, 'content', '*');
 
