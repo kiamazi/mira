@@ -1,8 +1,19 @@
+0.0740
+===
+- support github flavored markdown
+
+0.0739
+===
+- customizable template tags, can change {{ }} to [% %] or anything else
+- add more template variables
+- bug fix
+
+
 0.0721
 ===
-plugin support
-restructure modules
-bug fix
+- plugin support
+- restructure modules
+- bug fix
 
 
 0.0712

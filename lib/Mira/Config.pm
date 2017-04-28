@@ -59,7 +59,7 @@ sub new {
     $self->{_default}->{timezone} = "+00:00" unless (exists $self->{_default}->{timezone} and $self->{_default}->{timezone});
     $self->{_default}->{t_start_tag} = "{{" unless (exists $self->{_default}->{t_start_tag} and $self->{_default}->{t_start_tag});
     $self->{_default}->{t_end_tag} = "}}" unless (exists $self->{_default}->{t_end_tag} and $self->{_default}->{t_end_tag});
-    $self->{_default}->{t_outline_tag} = "{%" unless (exists $self->{_default}->{t_outline_tag} and $self->{_default}->{t_outline_tag});
+    $self->{_default}->{t_outline_tag} = "%%" unless (exists $self->{_default}->{t_outline_tag} and $self->{_default}->{t_outline_tag});
 
     my $glob = catfile($source, 'content', '*');
 

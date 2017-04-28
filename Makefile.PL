@@ -41,6 +41,7 @@ WriteMakefile
         'Text::Textile'         => "2.12",
         'Text::Markdown'        => "1.0.25",
         'HTML::BBCode'          => "2.06",
+        'Markdent'              => "0.26",
 },
   TEST_REQUIRES => {
         'Test::More'            => 0,

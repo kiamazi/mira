@@ -23,8 +23,12 @@ sub template {
   my $build = $switches{build};
 
   my $template_root;
-
-  if (defined $config->{_default}->{template} and -f catfile($pensource,'template', $config->{_default}->{template}, 'main.tt2') )
+  if
+  (
+  (exists $config->{_default}->{template})
+   and
+  ( -f catfile($pensource,'template', $config->{_default}->{template}, 'main.tt2') )
+  )
   {
     $template_root = catdir($pensource,'template', $config->{_default}->{template});
   } else
