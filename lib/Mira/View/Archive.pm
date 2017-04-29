@@ -24,46 +24,56 @@ sub template {
     my $floor_data = $switches{floor_data};
     my $build      = $switches{build};
 
-    foreach my $floor ( keys %$archives ) {
-        my $arch_stct = { %{ $archives->{$floor}->{list} },
-            %{ $archives->{$floor}->{date} } };
-        foreach my $archive ( keys %$arch_stct ) {
+    foreach my $floor ( keys %$archives )
+    {
+        my $arch_stct = {
+            %{ $archives->{$floor}->{list} },
+            %{ $archives->{$floor}->{date} }
+        };
+        foreach my $archive ( keys %$arch_stct )
+        {
             my $archive_template_root;
             if (
                 -f catfile(
                     $pensource,                    'template',
                     $config->{$floor}->{template}, 'archive.tt2'
                 )
-                or -f catfile(
+                or
+                -f catfile(
                     $pensource,                    'template',
                     $config->{$floor}->{template}, "$archive.tt2"
                 )
               )
             {
-                $archive_template_root =
-                  catdir( $pensource, 'template',
-                    $config->{$floor}->{template} );
+                $archive_template_root = catdir(
+                    $pensource, 'template',
+                    $config->{$floor}->{template}
+                );
             }
             elsif (
                 -f catfile(
                     $pensource,                    'template',
                     $config->{$floor}->{template}, 'archive.tt2'
                 )
-                or -f catfile(
+                or
+                -f catfile(
                     $pensource,                    'template',
                     $config->{$floor}->{template}, "$archive.tt2"
                 )
               )
             {
-                $archive_template_root =
-                  catdir( $pensource, 'template',
-                    $config->{_default}->{template} );
+                $archive_template_root = catdir(
+                    $pensource, 'template',
+                    $config->{_default}->{template}
+                );
             }
-            else {
+            else
+            {
                 next;
             }
 
-            foreach my $list ( keys %{ $arch_stct->{$archive} } ) {
+            foreach my $list ( keys %{ $arch_stct->{$archive} } )
+            {
                 my $show_list_url = $arch_stct->{$archive}->{$list}->{url};
                 my @show_list_address = split( m:/:, $show_list_url );
                 my @utids = @{ $arch_stct->{$archive}->{$list}->{posts} };
@@ -80,8 +90,7 @@ sub template {
                     START_TAG   => quotemeta( $config->{$floor}->{t_start_tag} ),
                     END_TAG     => quotemeta( $config->{$floor}->{t_end_tag} ),
                     OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
-                }
-                ) || die "$Template::ERROR\n";
+                }) || die "$Template::ERROR\n";
 
                 my $vars = {
                     MainTITLE       => $config->{_default}->{title},
@@ -145,7 +154,8 @@ sub template {
                 $vars->{ROOT} =~ s{/+}{/}g;
                 $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";
 
-                if ( $arch_stct->{$archive}->{$list}->{year} ) {
+                if ( $arch_stct->{$archive}->{$list}->{year} )
+                {
                     $vars->{ArchiveTITLE} =
                         $arch_stct->{$archive}->{$list}->{year}
                         ."/"
@@ -158,17 +168,18 @@ sub template {
                         .$arch_stct->{$archive}->{$list}->{month};
                     $vars->{IS_DATE_ARCHIVE} = 'true';
                 }
-                else {
+                else
+                {
                     $vars->{IS_ARCHIVE} = 'true';
                 }
 
-                foreach my $field ( keys %{ $archives->{$floor}->{list} } ) {
+                foreach my $field ( keys %{ $archives->{$floor}->{list} } )
+                {
                     $vars->{ uc($field) . "_ARCHIVE" } = [
                         reverse sort {
-                                 $#{ $a->{posts} } <=> $#{ $b->{posts} }
-                              or $a->{name} cmp $b->{name}
-                          } (
-                            values %{ $archives->{$floor}->{list}->{$field} } )
+                            $#{ $a->{posts} } <=> $#{ $b->{posts} }
+                            or $a->{name} cmp $b->{name}
+                        } ( values %{ $archives->{$floor}->{list}->{$field} } )
                     ];
                 }
 
@@ -188,17 +199,20 @@ sub template {
                   : $config->{$floor}->{archive_post_num};
                 my $page_number = 1;
                 my $page_total;
-                if ( ( scalar @utids ) % ($archive_post_num) == 0 ) {
+                if ( ( scalar @utids ) % ($archive_post_num) == 0 )
+                {
                     $page_total = ( scalar @utids ) / ($archive_post_num);
-                }
-                else {
+                } else
+                {
                     $page_total =
-                      int( ( scalar @utids ) / ($archive_post_num) ) + 1;
+                        int( ( scalar @utids ) / ($archive_post_num) ) + 1;
                 }
-                while ( my @pagepost = splice @utids, 0, $archive_post_num ) {
+                while ( my @pagepost = splice @utids, 0, $archive_post_num )
+                {
                     my $page  = {};
                     my $posts = [];
-                    foreach my $utid (@pagepost) {
+                    foreach my $utid (@pagepost)
+                    {
                         push @$posts, $allentries->{$utid};
                     }
                     $vars->{POSTS} = $posts;
@@ -206,37 +220,37 @@ sub template {
                     my $ext = $config->{$floor}->{output_extension} || 'html';
                     $ext =~ s{^\.+}{};
                     my $target =
-                      $page_number == 1
-                      ? "index.$ext"
-                      : "/page/$page_number/index.$ext";
+                        $page_number == 1
+                        ? "index.$ext"
+                        : "/page/$page_number/index.$ext";
                     my $index =
-                      catfile( $pensource, $config->{_default}->{publishDIR},
+                        catfile( $pensource, $config->{_default}->{publishDIR},
                         @show_list_address, $target );
 
                     $page->{next}->{url} =
-                      @utids
-                      ? "$show_list_url/page/"
-                      . ( $page_number + 1 )
-                      . "/index.$ext"
-                      : '';
+                        @utids
+                        ?   "$show_list_url/page/"
+                            . ( $page_number + 1 )
+                            . "/index.$ext"
+                        : '';
                     $page->{next}->{url} =~ s{^(.*?):/+|/+}{/}g
-                      if $page->{next}->{url};
+                        if $page->{next}->{url};
                     $page->{next}->{title} = ( $page_number + 1 )
-                      if $vars->{next}->{url};
+                        if $vars->{next}->{url};
                     delete $page->{next} unless $page->{next}->{url};
 
                     $page->{prev}->{url} =
-                      $page_number == 1
-                      ? ''
-                      : "$show_list_url/page/"
-                      . ( $page_number - 1 )
-                      . "/index.$ext";
+                        $page_number == 1
+                        ? ''
+                        :   "$show_list_url/page/"
+                            . ( $page_number - 1 )
+                            . "/index.$ext";
                     $page->{prev}->{url} = "$show_list_url/index.$ext"
-                      if $page_number == 2;
+                        if $page_number == 2;
                     $page->{prev}->{url} =~ s{^(.*?):/+|/+}{/}g
-                      if $page->{prev}->{url};
+                        if $page->{prev}->{url};
                     $page->{prev}->{title} = ( $page_number - 1 )
-                      if $vars->{prev}->{url};
+                        if $vars->{prev}->{url};
                     delete $page->{prev} unless $page->{prev}->{url};
 
                     $page->{number} = $page_number;

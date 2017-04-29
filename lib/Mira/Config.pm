@@ -50,7 +50,7 @@ sub new {
     $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
     $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
     $self->{_default}->{default_floor} = "blog" unless (exists $self->{_default}->{default_floor} and $self->{_default}->{default_floor});
-    $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
+#    $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
     $self->{_default}->{permalink} = ":year/:month/:day/:title/" unless (exists $self->{_default}->{permalink} and $self->{_default}->{permalink});
     $self->{_default}->{default_markup} = "markdown" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
