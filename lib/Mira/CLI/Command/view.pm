@@ -21,7 +21,7 @@ sub description { 'start a server with publishDIR folder content' }
 
 sub opt_spec {
     return (
-	[ 'directory|d=s', 'application path (default: current directory)', { default => $cwd } ],
+        [ 'directory|d=s', 'application path (default: current directory)', { default => $cwd } ],
         [ 'port|p=s',      'port', { default => '5000' }             ],
         [ 'host|o=s',      'host', { default => '127.0.0.1' }        ],
         [ 'help|h',        'this help'        ],

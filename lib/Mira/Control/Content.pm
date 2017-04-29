@@ -7,71 +7,76 @@ use 5.012;
 
 
 sub preparator {
-  my $class = shift;
-  my %switches = @_;
+    my $class = shift;
+    my %switches = @_;
 
-  my $source = $switches{source};
-  my $ext = $switches{ext} ? $switches{ext} : '.draft';
-  my $config = $switches{config};
-
-
-  ######################
-  use Mira::Model::Base;
-  my $data = Mira::Model::Base->new;
-  ######################
-  use Mira::Model::Floor;
-  my $floors_data = Mira::Model::Floor->new;
+    my $source = $switches{source};
+    my $floorsource = $switches{floorsource};
+    my $ext = $switches{ext} ? $switches{ext} : '.draft';
+    my $config = $switches{config};
 
 
-  ######################
-  use Mira::Control::Content::Load;
+    ######################
+    use Mira::Model::Base;
+    my $data = Mira::Model::Base->new;
+    ######################
+    use Mira::Model::Floor;
+    my $floors_data = Mira::Model::Floor->new;
 
-  my $content = Mira::Control::Content::Load->new(source => $source, ext => $ext);
-  my $floors = $content->floors;
-  my $files = $content->files($floors);
-  my $statics = $content->statics($floors);
+
+    ######################
+    use Mira::Control::Content::Load;
+
+    my $content = Mira::Control::Content::Load->new(
+        source      => $source,
+        ext         => $ext,
+        floorsource => $floorsource,
+    );
+    my $floors = $content->floors;
+    my $files = $content->files($floors);
+    my $statics = $content->statics($floors);
 
 
-  ######################
-  use Mira::Control::Parser::Entry;
-  use Mira::Control::Parser::Markup;
-  use Mira::Control::Parser::img;
-  use Mira::Control::Content::Date;
+    ######################
+    use Mira::Control::Parser::Entry;
+    use Mira::Control::Parser::Markup;
+    use Mira::Control::Parser::img;
+    use Mira::Control::Content::Date;
 
-  foreach my $floor (@$floors)
-  {
-    foreach my $file (@{$files->{$floor}})
+    foreach my $floor (@$floors)
     {
-      my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
-      next unless $parser;
+        foreach my $file (@{$files->{$floor}})
+        {
+            my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
+            next unless $parser;
 
-      my $utid = $parser->{utid};
-      my $values = $parser->{values};
-      if (not exists $data->{$utid})
-      {
-        Mira::Control::Content::Date->date($values);
+            my $utid = $parser->{utid};
+            my $values = $parser->{values};
+            if (not exists $data->{$utid})
+            {
+                Mira::Control::Content::Date->date($values);
 
-        $values->{body} = Mira::Control::Parser::img->replace(
-                                  $values->{body},
-                                  _img_url($floor, $config),
-                                  $config,
-                                  );
-        $values->{body} = Mira::Control::Parser::Markup->markup(
-                                  $values->{body},
-                                  _markup_lang($values, $config),
-                                  $config,
-                                  );
-        $data->add($utid, $values);
-        $floors_data->add($floor, $utid);
-      } else
-      {
-        say "this files have same utid, plz fix it :\n"
-        .">". $file
-        .">". $data->{$utid}->{_spec}->{file_address} ."\n";
-      }
-
+                $values->{body} = Mira::Control::Parser::img->replace(
+                    $values->{body},
+                    _img_url($floor, $config),
+                    $config,
+                );
+                $values->{body} = Mira::Control::Parser::Markup->markup(
+                    $values->{body},
+                    _markup_lang($values, $config),
+                    $config,
+                );
+                $data->add($utid, $values);
+                $floors_data->add($floor, $utid);
+            } else
+            {
+                say "this files have same utid, plz fix it :\n"
+                    .">". $file
+                    .">". $data->{$utid}->{_spec}->{file_address}
+                ."\n";
+            }
+        }
     }
-  }
 
 
   ######################

@@ -26,11 +26,8 @@ sub description { 'builder script for Mira static site generator' }
 
 sub opt_spec {
     return (
-        [
-            'directory|d=s',
-            'application path (default: current directory)',
-            { default => $cwd }
-        ],
+        ['directory|d=s','application path (default: current directory)',{ default => $cwd }],
+        ['floor|f=s', 'floor you want build'],
         [ 'help|h', 'this help' ],
     );
 }
@@ -39,17 +36,25 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
     my $path = $opt->{directory};
     -d $path or $self->usage_error("directory '$path' does not exist");
-    -f catfile( $path, 'config.yml' )
-      or _usage_error(
-        "directory '$path' does not valid address.\ncant't find config.yml");
-    -d catdir( $path, 'content' )
-      or _usage_error(
-        "directory '$path' does not valid address.\ncant't find content folder"
-      );
-    -d catdir( $path, 'template' )
-      or _usage_error(
-        "directory '$path' does not valid address.\ncant't find template folder"
-      );
+    -f catfile( $path, 'config.yml' ) or _usage_error
+        (
+            "directory '$path' does not valid address.\ncant't find config.yml"
+        );
+    -d catdir( $path, 'content' ) or _usage_error
+        (
+            "directory '$path' does not valid address.\ncant't find content folder"
+        );
+    -d catdir( $path, 'template' ) or _usage_error
+        (
+            "directory '$path' does not valid address.\ncant't find template folder"
+        );
+    if ($opt->{floor})
+    {
+        -d catdir( $path, 'content', $opt->{floor} ) or _usage_error
+        (
+            "floor: '$opt->{floor}' does not exists"
+        );
+    }
 }
 
 sub execute {
@@ -58,14 +63,16 @@ sub execute {
 
     $source = $opt->{directory};
     $config = Mira::Config->new($source);
+    my $floorsource = $opt->{floor}? catdir($source, 'content', $opt->{floor}) : '';
 
     ######################
     use Mira::Control::Content;
 
     my $bases = Mira::Control::Content->preparator(
-        source => $source,
-        ext    => '.draft',
-        config => $config,
+        source       => $source,
+        ext          => '.draft',
+        config       => $config,
+        floorsource  => $floorsource,
     );
 
     my $statics      = $bases->{statics};
