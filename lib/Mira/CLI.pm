@@ -1,5 +1,5 @@
 package Mira::CLI;
-$Mira::CLI::VERSION = '00.07.41';
+$Mira::CLI::VERSION = '00.07.42';
 
 use strict;
 use warnings;
