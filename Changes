@@ -1,27 +1,29 @@
-0.0741
+00.07.41
 ===
 - add --floor switch to build command
 - change archive lists syntax in POSTS loop
 
-0.0740
+
+00.07.40
 ===
 - support github flavored markdown
 
-0.0739
+
+00.07.39
 ===
 - customizable template tags, can change {{ }} to [% %] or anything else
 - add more template variables
 - bug fix
 
 
-0.0721
+00.07.21
 ===
 - plugin support
 - restructure modules
 - bug fix
 
 
-0.0712
+00.07.12
 ===
 - bug fix
 - change {{ next }} in template's tags:
@@ -59,18 +61,18 @@
 		{{ BUILD.second }}
 
 ----------------------------------
-0.0712
+00.07.12
 ===
 change body labels
 
 ----------------------------------
-0.0703
+0.07.03
 ===
 change TT Start and End Tag to: {{ }}
 bug fix
 
 ----------------------------------
-0.07
+0.07.00
 ===
 bug fix
 add feed template
