@@ -1,5 +1,5 @@
 package Mira::Server::Static;
-$Mira::Server::Static::VERSION = '00.07.40';
+$Mira::Server::Static::VERSION = '00.07.41';
 
 use strict;
 use warnings;

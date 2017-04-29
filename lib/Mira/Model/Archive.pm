@@ -1,5 +1,5 @@
 package Mira::Model::Archive;
-$Mira::Model::Archive::VERSION = '00.07.40';
+$Mira::Model::Archive::VERSION = '00.07.41';
 
 use strict;
 use warnings;
