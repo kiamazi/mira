@@ -60,7 +60,7 @@ sub markup {
         $lessbody =~ s:^\s*$::mg;
         $lessbody =~ s/(.{0,600}).*/$1/s;
         $body->{less} = "<p>" . $lessbody . "</p>";
-        $body->{more} = "<a name=\"more\"></a><br>" . $fbody;
+        $body->{more} = "<a name=\"more\"></a>\n" . $fbody;
     }
 
     return $body;
