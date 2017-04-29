@@ -1,6 +1,7 @@
 0.0741
 ===
 - add --floor switch to build command
+- change archive lists syntax in POSTS loop
 
 0.0740
 ===
