@@ -36,6 +36,10 @@ sub markup {
         );
         if ($html =~ m"<body>([\w\W]*)</body>"m) {
             $body = $1;
+            my $markup = Markup::Unified->new();
+            $markup->format($body, 'markdown');
+            $markup->formatted;
+            $body = $markup->{fvalue};
         }
 
     }
