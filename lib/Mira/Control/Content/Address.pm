@@ -1,5 +1,5 @@
 package Mira::Control::Content::Address;
-$Mira::Control::Content::Address::VERSION = '00.07.43';
+$Mira::Control::Content::Address::VERSION = '00.07.44';
 
 use strict;
 use warnings;
