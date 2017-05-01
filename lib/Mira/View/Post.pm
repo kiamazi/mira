@@ -164,6 +164,7 @@ sub template {
        $vars->{post} = $allentries->{$utid};
 
        $vars->{IS_PAGE} = 'true' if ($allentries->{$utid}->{_type} and $allentries->{$utid}->{_type} eq 'page');
+       $vars->{IS_POST} = 0 if ($allentries->{$utid}->{_type} and $allentries->{$utid}->{_type} eq 'page');
 
        foreach my $field (keys %{$archives->{$floor}->{list}})
        {

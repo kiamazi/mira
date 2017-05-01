@@ -60,6 +60,8 @@ sub new {
     $self->{_default}->{t_start_tag} = "{{" unless (exists $self->{_default}->{t_start_tag} and $self->{_default}->{t_start_tag});
     $self->{_default}->{t_end_tag} = "}}" unless (exists $self->{_default}->{t_end_tag} and $self->{_default}->{t_end_tag});
     $self->{_default}->{t_outline_tag} = "%%" unless (exists $self->{_default}->{t_outline_tag} and $self->{_default}->{t_outline_tag});
+    $self->{_default}->{feed_output} = 'feed.xml' unless (exists $self->{_default}->{feed_output} and $self->{_default}->{feed_output});
+    $self->{_default}->{feed_template} = 'atom.tt2' unless (exists $self->{_default}->{feed_template} and $self->{_default}->{feed_template});
 
     my $glob = catfile($source, 'content', '*');
 
