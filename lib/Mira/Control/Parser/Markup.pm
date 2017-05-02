@@ -7,7 +7,7 @@ use utf8;
 use 5.012;
 
 use Markup::Unified;
-use Markdent::Simple::Document;
+use Mira::Control::Parser::MultiMarkdown 'mira_markdown';
 use Carp;
 
 sub markup {
@@ -26,22 +26,9 @@ sub markup {
         $body =~ s/(.*)\n$/$1/; #remove new line which make by text::markdown at end
     }
 
-    if ($markup_lang and $markup_lang =~ /^(github|ghmd|githubmarkdown)$/i)
+    if ($markup_lang and $markup_lang =~ /^(multimarkdown|mmd|githubmarkdown)$/i)
     {
-        my $markup = Markdent::Simple::Document->new();
-        my $html = $markup->markdown_to_html(
-            title    => 'Mira',
-            dialect  => 'GitHub',
-            markdown => $body,
-        );
-        if ($html =~ m"<body>([\w\W]*)</body>"m) {
-            $body = $1;
-            my $markup = Markup::Unified->new();
-            $markup->format($body, 'markdown');
-            $markup->formatted;
-            $body = $markup->{fvalue};
-        }
-
+        $body = mira_markdown($body);
     }
 
     if ($markup_lang and $markup_lang =~ /^(text|txt)$/i)

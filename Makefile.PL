@@ -39,9 +39,9 @@ WriteMakefile
         'HTTP::Server::Simple'  => 0,
         'URI::Escape'           => 0,
         'Text::Textile'         => "2.12",
-        'Text::Markdown'        => "1.0.25",
+        'Text::Markdown'        => "1.0.31",
+        'Text::MultiMarkdown'   => "1.0.34",
         'HTML::BBCode'          => "2.06",
-        'Markdent'              => "0.26",
 },
   TEST_REQUIRES => {
         'Test::More'            => 0,

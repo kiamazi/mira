@@ -18,6 +18,7 @@ lib/Mira/Control/Jdate.pm
 lib/Mira/Control/Parser/Entry.pm
 lib/Mira/Control/Parser/img.pm
 lib/Mira/Control/Parser/Markup.pm
+lib/Mira/Control/Parser/MultiMarkdown.pm
 lib/Mira/Control/Plugin/Load.pm
 lib/Mira/Control/Plugin/Plug.pm
 lib/Mira/Control/Static.pm
