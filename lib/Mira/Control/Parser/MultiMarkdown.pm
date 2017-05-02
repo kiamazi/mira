@@ -75,7 +75,7 @@ sub _code_block {
 		}
 		my $pre = "<pre><code";
 		$pre .= " class=\"$class\"" if $class;
-		$pre .= ">\n";
+		$pre .= ">";
 		$pre .= $code if $code;
 		$pre .= "\n</code></pre>\n";
 
