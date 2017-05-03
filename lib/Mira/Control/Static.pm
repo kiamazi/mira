@@ -1,5 +1,5 @@
 package Mira::Control::Static;
-$Mira::Control::Static::VERSION = '00.07.44';
+$Mira::Control::Static::VERSION = '00.07.45';
 
 use strict;
 use warnings;

@@ -1,5 +1,5 @@
 package Mira::Control::Parser::MultiMarkdown;
-$Mira::Control::Parser::MultiMarkdown::VERSION = '00.07.44';
+$Mira::Control::Parser::MultiMarkdown::VERSION = '00.07.45';
 
 require 5.008_000;
 use strict;
