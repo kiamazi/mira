@@ -1,5 +1,5 @@
 package Mira::CLI::Command::view;
-$Mira::CLI::Command::view::VERSION = '00.07.46';
+$Mira::CLI::Command::view::VERSION = '00.07.47';
 
 use strict;
 use warnings;

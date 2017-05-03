@@ -1,5 +1,5 @@
 package Mira::Control::Parser::MultiMarkdown;
-$Mira::Control::Parser::MultiMarkdown::VERSION = '00.07.46';
+$Mira::Control::Parser::MultiMarkdown::VERSION = '00.07.47';
 
 require 5.008_000;
 use strict;
@@ -68,7 +68,7 @@ sub _code_block {
 		if ($code)
 		{
 			$code =~ s{^\n|\n$}{}g;
-			$code = $self->_EncodeCode($self->_Outdent($code));
+			$code = $self->_EncodeCode($code);
         	$code = $self->_Detab($code);
         	$code =~ s/\A\n+//;  # trim leading newlines
 	        $code =~ s/\n+\z//;  # trim trailing newlines
