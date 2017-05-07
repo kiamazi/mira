@@ -33,6 +33,7 @@ lib/Mira/Parser.pm
 lib/Mira/Parser/Entry.pm
 lib/Mira/Parser/img.pm
 lib/Mira/Parser/Markup.pm
+lib/Mira/Parser/MiraMarkdown.pm
 lib/Mira/Plugin.pm
 lib/Mira/Plugin/Date/Jalali.pm
 lib/Mira/Plugin/Jdate.pm

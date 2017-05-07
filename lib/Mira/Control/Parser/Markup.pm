@@ -6,8 +6,6 @@ use warnings;
 use utf8;
 use 5.012;
 
-use Markup::Unified;
-use Mira::Control::Parser::MultiMarkdown 'mira_markdown';
 use Carp;
 
 sub markup {
@@ -17,6 +15,7 @@ sub markup {
 
     if ($markup_lang and $markup_lang =~ /^(markdown|md|bbcode|textile)$/i)
     {
+        use Markup::Unified;
         $markup_lang = 'markdown' if $markup_lang =~ /^md$/i;
         $markup_lang = lc($markup_lang);
         my $markup = Markup::Unified->new();
@@ -26,8 +25,9 @@ sub markup {
         $body =~ s/(.*)\n$/$1/; #remove new line which make by text::markdown at end
     }
 
-    if ($markup_lang and $markup_lang =~ /^(multimarkdown|mmd|githubmarkdown)$/i)
+    if ($markup_lang and $markup_lang =~ /^(miraMarkdown|mmd)$/i)
     {
+        use Mira::Control::Parser::MiraMarkdown 'mira_markdown';
         $body = mira_markdown($body);
     }
 

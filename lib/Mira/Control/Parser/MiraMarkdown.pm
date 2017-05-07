@@ -1,5 +1,5 @@
-package Mira::Control::Parser::MultiMarkdown;
-$Mira::Control::Parser::MultiMarkdown::VERSION = '00.07.47';
+package Mira::Control::Parser::MiraMarkdown;
+$Mira::Control::Parser::MiraMarkdown::VERSION = '00.07.47';
 
 require 5.008_000;
 use strict;
@@ -51,7 +51,7 @@ sub _code_block {
 	my $less_than_tab = $self->{tab_width} - 1;
 
     while ($text =~ m{
-    	^([ ]{0,$less_than_tab}```)
+    	^((?<spaces>[ \t]*)```)     # ^([ ]{0,$less_than_tab}```)
     	  [ \t]*(?<class>.*)?$
     	(?<code>[\w\W]*?)
     	(?:^\1|\Z)
@@ -59,6 +59,7 @@ sub _code_block {
     	}omx)
 	{
 		my $class = $+{class} if $+{class};
+        my $spaces = $+{spaces} if $+{spaces};
 		if ($class)
 		{
 			$class = "language-$class" if $class !~ m{^:};
@@ -72,15 +73,17 @@ sub _code_block {
         	$code = $self->_Detab($code);
         	$code =~ s/\A\n+//;  # trim leading newlines
 	        $code =~ s/\n+\z//;  # trim trailing newlines
+            $code =~ s/^$spaces// if $spaces;
 		}
-		my $pre = "<pre><code";
+		my $pre = $spaces ? $spaces : '';
+        $pre .= "<pre><code";
 		$pre .= " class=\"$class\"" if $class;
 		$pre .= ">";
 		$pre .= $code if $code;
 		$pre .= "\n</code></pre>\n";
 
 		$text =~ s{
-    	^([ ]{0,$less_than_tab}```)
+    	^(([ \t]*)```)     # ^([ ]{0,$less_than_tab}```)
     	  [ \t]*(?<class>.*)?$
     	(?<code>[\w\W]*?)
     	(?:^\1|\Z)
