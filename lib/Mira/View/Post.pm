@@ -91,6 +91,8 @@ sub template {
   	   my $post_index = Template->new({
   	        INCLUDE_PATH => [ $post_template_root, catdir($post_template_root, 'include') ],
             INTERPOLATE  => 1,
+            TRIM      => 1,
+            EVAL_PERL => 1,
             ENCODING => 'utf8',
             START_TAG => quotemeta($config->{$floor}->{t_start_tag}),
             END_TAG   => quotemeta($config->{$floor}->{t_end_tag}),

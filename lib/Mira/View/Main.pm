@@ -39,6 +39,8 @@ sub template {
     {
         INCLUDE_PATH => [$template_root, catdir($template_root, 'include') ],
         INTERPOLATE  => 1,
+        TRIM      => 1,
+        EVAL_PERL => 1,
         ENCODING => 'utf8',
         START_TAG => quotemeta($config->{_default}->{t_start_tag}),
         END_TAG   => quotemeta($config->{_default}->{t_end_tag}),
