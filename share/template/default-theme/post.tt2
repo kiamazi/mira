@@ -16,45 +16,45 @@
 <div class="container">
 <!-- Main Content -->
 <section id="content">
-  {{ FOREACH POSTS }}
+
   <article class="post">
 	<div class="header">
 
-        <h2 class="title"><a href="{{ url }}">{{ title }}</a></h2>
+        <h2 class="title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
 
         <h6 class="date">
 	       <i class="fa fa-calendar-o" aria-hidden="true"></i>
-           {{ CALENDAR.day }}&nbsp;{{ CALENDAR.month_name }}&nbsp;{{ CALENDAR.year }}
+           {{ post.CALENDAR.day }}&nbsp;{{ post.CALENDAR.month_name }}&nbsp;{{ post.CALENDAR.year }}
            <!-- {{ date }} -->
   		</h6>
 
-        {{ IF author }}
+        {{ IF post.author }}
         <h6 class="by">
             <i class="fa fa-pencil" aria-hidden="true"></i>
-            {{ IF author.values }}
-                {{ FOREACH author.values }}
+            {{ IF post.author.values }}
+                {{ FOREACH post.author }}
                     <a href="{{ url }}">{{ name }}</a>
                 {{- END }}
             {{ ELSE }}
-                {{ author }}
+                {{ post.author }}
             {{- END }}
 		</h6>
         {{- END }}
 
-        {{ IF categories }}
+        {{ IF post.categories }}
         <h6 class="cat">
 			<i class="fa fa-file-text-o" aria-hidden="true"></i>
-            {{ FOREACH categories.values }}
-                <a href="{{ url }}">@{{ name }}</a>
+            {{ FOREACH cat IN post.categories }}
+                <a href="{{ cat.url }}">@{{ cat.name }}</a>
             {{- END }}
 		</h6>
         {{- END }}
 
-        {{ IF tags }}
+        {{ IF post.tags }}
         <h6 class="tags">
 			<i class="fa fa-tags" aria-hidden="true"></i>
-			{{ FOREACH tags }}
-				<a href="{{ value.url }}">#{{ value.name }}</a>
+			{{ FOREACH tag IN post.tags }}
+				<a href="{{ tag.url }}">#{{ tag.name }}</a>
 			{{- END }}
 		</h6>
         {{- END }}
@@ -62,7 +62,7 @@
         <div class="clear-both"></div>
 
         <div class="body">
-            <p>{{ body.more }}</p>
+            <p>{{ post.body.more }}</p>
         </div>
 
         {{ IF SITE.social }}
