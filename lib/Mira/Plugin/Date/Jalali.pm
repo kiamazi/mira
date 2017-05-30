@@ -1,5 +1,5 @@
 package Mira::Plugin::Date::Jalali;
-$Mira::Plugin::Date::Jalali::VERSION = '00.07.47';
+$Mira::Plugin::Date::Jalali::VERSION = '00.07.48';
 
 use strict;
 use warnings;
