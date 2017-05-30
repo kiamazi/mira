@@ -9,7 +9,7 @@ use Mira;
 
 my $version = $Mira::VERSION;
 
-if (@ARGV && $ARGV[0] !~ m/^v$/) {
+if (@ARGV && $ARGV[0] =~ m/^-v$/) {
   say "Mira Version $version";
   exit 0;
 }
