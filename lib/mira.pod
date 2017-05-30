@@ -8,7 +8,7 @@ mira - static site generator
 
 =head1 VERSION
 
-This document describes L<mira> version B<00.07.47>.
+This document describes L<mira> version B<00.07.48>.
 
 
 =head1 Mira
@@ -927,3 +927,5 @@ mira is free software: you can redistribute it and/or modify it under the terms 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see LL<http://www.gnu.org/licenses/>.
+
+=cut
