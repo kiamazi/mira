@@ -6,6 +6,11 @@ use 5.012;
 
 use Mira::CLI;
 
+if (@ARGV && $ARGV[0] !~ m/^v$/) {
+  say "Mira Version 00.07.47";
+  exit 0;
+}
+
 if (@ARGV && $ARGV[0] !~ m/^(build|new|init|view)/) {
   usage();
 }
