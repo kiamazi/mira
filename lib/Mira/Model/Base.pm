@@ -1,5 +1,5 @@
 package Mira::Model::Base;
-$Mira::Model::Base::VERSION = '00.07.48';
+$Mira::Model::Base::VERSION = '00.07.49';
 
 use strict;
 use warnings;
