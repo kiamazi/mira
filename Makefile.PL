@@ -38,6 +38,7 @@ WriteMakefile
         'HTTP::Date'            => 0,
         'HTTP::Server::Simple'  => 0,
         'URI::Escape'           => 0,
+        'Test::Harness'         => 0,
         'Text::Textile'         => "2.12",
         'Text::Markdown'        => "1.0.31",
         'Text::MultiMarkdown'   => "1.0.34",

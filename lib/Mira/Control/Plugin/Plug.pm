@@ -1,5 +1,5 @@
 package Mira::Control::Plugin::Plug;
-$Mira::Control::Plugin::Plug::VERSION = '00.07.49';
+$Mira::Control::Plugin::Plug::VERSION = '00.07.50';
 
 use strict;
 use warnings;
@@ -14,21 +14,21 @@ use lib 'plugins/lib';
 
 
 sub plug {
-  my $class = shift;
-  my $source = shift;
-  my $plugins = shift;
-  my $apis = shift;
+    my $class = shift;
+    my $source = shift;
+    my $plugins = shift;
+    my $apis = shift;
 
-  foreach my $plugin (@$plugins)
-  {
-      #eval "require $plug->{lib}";
-      #$plugin->{lib} .= '.pm' if $plugin->{lib} !~ /\.pm$/;
-      load $plugin;
-      eval {$plugin->plug($apis)};
+    foreach my $plugin (@$plugins)
+    {
+        #eval "require $plug->{lib}";
+        #$plugin->{lib} .= '.pm' if $plugin->{lib} !~ /\.pm$/;
+        load $plugin;
+        eval {$plugin->plug($apis)};
 
-      ###### TODO need better checks and error messages ######
-#      say "! plugin error: " . $plug_yaml . " > " . $plug->{name} . " need plug method" if $@;
-  }
+        ###### TODO need better checks and error messages ######
+        #say "! plugin error: " . $plug_yaml . " > " . $plug->{name} . " need plug method" if $@;
+    }
 
 
 

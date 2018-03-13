@@ -1,5 +1,5 @@
 package Mira::Control::Plugin::Load;
-$Mira::Control::Plugin::Load::VERSION = '00.07.49';
+$Mira::Control::Plugin::Load::VERSION = '00.07.50';
 
 use strict;
 use warnings;
@@ -14,25 +14,28 @@ use lib 'plugins/lib';
 
 
 sub check {
-  my $class = shift;
-  my $source = shift;
-  my $config = shift;
-  my @check;
+    my $class = shift;
+    my $source = shift;
+    my $config = shift;
+    my @check;
 
-  if ($config->{plugins}){ foreach my $plugin (@{$config->{plugins}})
-  {
-    if (my $chkinst = check_install( module => "Mira::Plugin::$plugin"))
+    if ($config->{plugins})
     {
-      push @check, "Mira::Plugin::$plugin";
-      next;
+        foreach my $plugin (@{$config->{plugins}})
+        {
+            if (my $chkinst = check_install( module => "Mira::Plugin::$plugin"))
+            {
+                push @check, "Mira::Plugin::$plugin";
+                next;
+            }
+            if (my $chkinst = check_install( module => $plugin))
+            {
+                push @check, $plugin;
+                next;
+            }
+        }
     }
-    if (my $chkinst = check_install( module => $plugin))
-    {
-      push @check, $plugin;
-      next;
-    }
-  }}
-  return \@check;
+    return \@check;
 }
 
 
