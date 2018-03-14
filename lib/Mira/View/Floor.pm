@@ -153,7 +153,7 @@ sub template {
         if (@utids and (scalar @utids) % ($floor_post_num) == 0)
         {
             $page_total = (scalar @utids) / ($floor_post_num);
-        } elsif (@utids)
+        } elsif (@utids and (scalar @utids) % ($floor_post_num) != 0)
         {
             $page_total = int( (scalar @utids) / ($floor_post_num) ) + 1;
         }
