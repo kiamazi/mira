@@ -1,5 +1,5 @@
 package Mira::View::Floor;
-$Mira::View::Floor::VERSION = '00.07.50';
+$Mira::View::Floor::VERSION = '00.07.51';
 
 use strict;
 use warnings;
@@ -150,10 +150,10 @@ sub template {
         my $floor_post_num = ($config->{$floor}->{post_num} eq 'all') ? scalar @utids : $config->{$floor}->{post_num};
         my $page_number = 1;
         my $page_total;
-        if ((scalar @utids) % ($floor_post_num) == 0)
+        if (@utids and (scalar @utids) % ($floor_post_num) == 0)
         {
             $page_total = (scalar @utids) / ($floor_post_num);
-        } else
+        } elsif (@utids)
         {
             $page_total = int( (scalar @utids) / ($floor_post_num) ) + 1;
         }

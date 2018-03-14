@@ -1,5 +1,5 @@
 package Mira::Plugin::Jdate;
-$Mira::Plugin::Jdate::VERSION = '00.07.50';
+$Mira::Plugin::Jdate::VERSION = '00.07.51';
 
 use strict;
 use warnings;
