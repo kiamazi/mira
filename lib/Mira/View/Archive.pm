@@ -1,5 +1,5 @@
 package Mira::View::Archive;
-$Mira::View::Archive::VERSION = '00.07.51';
+$Mira::View::Archive::VERSION = '00.07.52';
 
 use strict;
 use warnings;
@@ -77,7 +77,10 @@ sub template {
                 my $show_list_url = $arch_stct->{$archive}->{$list}->{url};
                 my @show_list_address = split( m:/:, $show_list_url );
                 my @utids = @{ $arch_stct->{$archive}->{$list}->{posts} };
-                @utids = reverse sort @utids;
+                @utids = ($config->{$floor}->{post_sort} and $config->{$floor}->{post_sort} eq 'reverse') ? sort @utids : reverse sort @utids;
+                @utids = grep {
+                    not $allentries->{$_}->{_type} or $allentries->{$_}->{_type} !~ m/^(page|draft)$/
+                } @utids;
 
                 my $archive_index = Template->new(
                 {

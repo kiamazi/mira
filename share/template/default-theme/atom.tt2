@@ -24,7 +24,7 @@
 		</summary>
 		{{- FOREACH list IN SITE.lists -}}
 			{{ IF post.$list }}
-				{{ FOREACH arch IN post.$list.values }}
+				{{ FOREACH arch IN post.$list }}
 	   	<{{ list }} term="{{ arch.name }}" scheme="{{ URL }}{{ arch.url }}" />
 				{{ END }}
 			{{ END }}

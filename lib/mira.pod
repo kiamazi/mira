@@ -8,7 +8,7 @@ mira - static site generator
 
 =head1 VERSION
 
-This document describes L<mira> version B<00.07.51>.
+This document describes L<mira> version B<00.07.52>.
 
 
 =head1 Mira

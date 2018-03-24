@@ -1,5 +1,5 @@
 package Mira::Control::Parser::img;
-$Mira::Control::Parser::img::VERSION = '00.07.51';
+$Mira::Control::Parser::img::VERSION = '00.07.52';
 
 use strict;
 use warnings;

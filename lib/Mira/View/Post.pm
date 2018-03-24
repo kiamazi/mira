@@ -1,5 +1,5 @@
 package Mira::View::Post;
-$Mira::View::Post::VERSION = '00.07.51';
+$Mira::View::Post::VERSION = '00.07.52';
 
 use strict;
 use warnings;
@@ -31,57 +31,60 @@ sub template {
     my $pn = 0; #post_number > loop number
     foreach my $utid (@utids)
     {
-  	   #my $floor = $allentries->{$utid}->{floor};
-       my $page = {};
+  	  #my $floor = $allentries->{$utid}->{floor};
+      my $page = {};
 
-      unless ($allentries->{$utids[$pn]}->{_type} and $allentries->{$utids[$pn]}->{_type} eq "page")
+      unless ($allentries->{$utids[$pn]}->{_type} and $allentries->{$utids[$pn]}->{_type} !~ m/^(page|draft)$/)
       {
-       for (my $var = $pn+1; $var <= $max_post; $var++) {
-         if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} eq "page")
-         {
-           next;
-         } else
-         {
-           $page->{next}->{url} = $allentries->{$utids[$var]}->{url};
-           $page->{next}->{title} = $allentries->{$utids[$var]}->{title};
-           last;
-         }
-       }
+        for (my $var = $pn+1; $var <= $max_post; $var++)
+        {
+          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} eq !~ m/^(page|draft)$/)
+          {
+            next;
+          } else
+          {
+            $page->{next}->{url} = $allentries->{$utids[$var]}->{url};
+            $page->{next}->{title} = $allentries->{$utids[$var]}->{title};
+            last;
+          }
+        }
 
-       for (my $var = $pn-1; $var >= 0; $var--) {
-         if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} eq "page")
-         {
-           next;
-         } else
-         {
-           $page->{prev}->{url} = $allentries->{$utids[$var]}->{url};
-           $page->{prev}->{title} = $allentries->{$utids[$var]}->{title};
-           last;
-         }
-       }
+        for (my $var = $pn-1; $var >= 0; $var--)
+        {
+          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} !~ m/^(page|draft)$/)
+          {
+            next;
+          } else
+          {
+            $page->{prev}->{url} = $allentries->{$utids[$var]}->{url};
+            $page->{prev}->{title} = $allentries->{$utids[$var]}->{title};
+            last;
+          }
+        }
       }
-       $pn++;
+      $pn++;
 
 
-       my $post_template_root;
-       my $post_layout;
-       if (
-       $allentries->{$utid}->{_layout}
-       and
-       -f catfile($pensource,'template',$config->{$floor}->{template},$allentries->{$utid}->{_layout})
-       ) {
-         $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
-         $post_layout = $allentries->{$utid}->{_layout};
-       } elsif (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
-       {
-         $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
-         $post_layout = 'post.tt2';
-       } else
-       {
-         next;
-         #$post_template_root = catdir($pensource,'template', $config->{_default}->{template});
-         #$post_layout = 'post.tt2';
-       }
+      my $post_template_root;
+      my $post_layout;
+      if
+      (
+        $allentries->{$utid}->{_layout}
+        and
+        -f catfile($pensource,'template',$config->{$floor}->{template},$allentries->{$utid}->{_layout})
+      ){
+        $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
+        $post_layout = $allentries->{$utid}->{_layout};
+      } elsif (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
+      {
+        $post_template_root = catdir($pensource,'template',$config->{$floor}->{template});
+        $post_layout = 'post.tt2';
+      } else
+      {
+        next;
+        #$post_template_root = catdir($pensource,'template', $config->{_default}->{template});
+        #$post_layout = 'post.tt2';
+      }
 #    my $post_template_root =
 #      (-f catfile($pensource,'template',$config->{$floor}->{template},'post.tt2') )
 #      ? catdir($pensource,'template',$config->{$floor}->{template})

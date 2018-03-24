@@ -1,5 +1,5 @@
 package Mira::CLI::Command::view;
-$Mira::CLI::Command::view::VERSION = '00.07.51';
+$Mira::CLI::Command::view::VERSION = '00.07.52';
 
 use strict;
 use warnings;
@@ -59,15 +59,16 @@ sub execute {
   use Mira::Server::Static;
 
   sub handle_request {
-      my ( $self, $cgi ) = @_;
+    my ( $self, $cgi ) = @_;
 
-      if ( !$self->serve_static( $cgi, $localdir ) ) {
-          print "HTTP/1.0 404 Not found\r\n";
-          print $cgi->header,
-                $cgi->start_html('Not found'),
-                $cgi->h1('Not found'),
-                $cgi->end_html;
-      }
+    if ( !$self->serve_static( $cgi, $localdir ) )
+    {
+      print "HTTP/1.0 404 Not found\r\n";
+      print $cgi->header,
+            $cgi->start_html('Not found'),
+            $cgi->h1('Not found'),
+            $cgi->end_html;
+    }
   }
 
   sub print_banner {

@@ -1,5 +1,5 @@
 package Mira::Control::Plugin::Plug;
-$Mira::Control::Plugin::Plug::VERSION = '00.07.51';
+$Mira::Control::Plugin::Plug::VERSION = '00.07.52';
 
 use strict;
 use warnings;
