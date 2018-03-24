@@ -1,5 +1,5 @@
 package Mira::View::Post;
-$Mira::View::Post::VERSION = '00.07.52';
+$Mira::View::Post::VERSION = '00.07.53';
 
 use strict;
 use warnings;

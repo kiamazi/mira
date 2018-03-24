@@ -3,7 +3,7 @@ package Mira;
 use strict;
 use warnings;
 use 5.012;
-our $VERSION = '00.07.52';
+our $VERSION = '00.07.53';
 
 
 1;
@@ -19,7 +19,7 @@ mira - static site generator
 
 =head1 VERSION
 
-This document describes L<mira> version B<00.07.52>.
+This document describes L<mira> version B<00.07.53>.
 
 
 =head1 Mira

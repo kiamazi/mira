@@ -1,5 +1,5 @@
 package Mira::Model::Floor;
-$Mira::Model::Floor::VERSION = '00.07.52';
+$Mira::Model::Floor::VERSION = '00.07.53';
 
 use strict;
 use warnings;
