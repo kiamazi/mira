@@ -38,7 +38,7 @@ sub template {
       {
         for (my $var = $pn+1; $var <= $max_post; $var++)
         {
-          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} eq !~ m/^(page|draft)$/)
+          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} !~ m/^(page|draft)$/)
           {
             next;
           } else
