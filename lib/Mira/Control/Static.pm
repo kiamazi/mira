@@ -39,12 +39,13 @@ sub address {
   }
 
   my @main_root_path = split m{/|\\|::}, $config->{_default}->{static};
-  $self->{_default} = [{
+  
+  -d catdir($source, 'statics') and $self->{_default} = [{
     path => catdir($source, 'statics'),
     address => catdir($source, $publishdir, @main_root_path)
   }];
 
-  $self->{_root} = [{
+  -d catdir($source, 'root') and $self->{_root} = [{
     path => catdir($source, 'root'),
     address => catdir($source, $publishdir)
   }];
