@@ -1,5 +1,5 @@
 package Mira::Control::Parser::Markup;
-$Mira::Control::Parser::Markup::VERSION = '00.07.54';
+$Mira::Control::Parser::Markup::VERSION = '00.07.55';
 
 use strict;
 use warnings;

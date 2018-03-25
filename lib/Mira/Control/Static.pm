@@ -1,5 +1,5 @@
 package Mira::Control::Static;
-$Mira::Control::Static::VERSION = '00.07.54';
+$Mira::Control::Static::VERSION = '00.07.55';
 
 use strict;
 use warnings;
@@ -39,7 +39,7 @@ sub address {
   }
 
   my @main_root_path = split m{/|\\|::}, $config->{_default}->{static};
-  
+
   -d catdir($source, 'statics') and $self->{_default} = [{
     path => catdir($source, 'statics'),
     address => catdir($source, $publishdir, @main_root_path)
