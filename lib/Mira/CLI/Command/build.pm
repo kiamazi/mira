@@ -1,5 +1,5 @@
 package Mira::CLI::Command::build;
-$Mira::CLI::Command::build::VERSION = '00.07.55';
+$Mira::CLI::Command::build::VERSION = '00.07.56';
 
 use strict;
 use warnings;
@@ -241,7 +241,9 @@ sub execute {
         build      => $build,
     );
 
-    print "The program ran for ", time() - $^T, " seconds\n";
+    $diff = Time::HiRes::tv_interval($start_time);
+    print "The program ran for ", $diff, " seconds\n";
+    #print "The program ran for ", time() - $^T, " seconds\n";
 
 }
 

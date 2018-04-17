@@ -1,5 +1,5 @@
 package Mira::Control::Parser::Markup;
-$Mira::Control::Parser::Markup::VERSION = '00.07.55';
+$Mira::Control::Parser::Markup::VERSION = '00.07.56';
 
 use strict;
 use warnings;
@@ -25,10 +25,10 @@ sub markup {
         $body =~ s/(.*)\n$/$1/; #remove new line which make by text::markdown at end
     }
 
-    if ($markup_lang and $markup_lang =~ /^(miraMarkdown|mmd)$/i)
+    if ($markup_lang and $markup_lang =~ /^(miraMarkdown|mmd|markmod)$/i)
     {
-        use Mira::Control::Parser::MiraMarkdown 'mira_markdown';
-        $body = mira_markdown($body);
+        use Text::Markmoredown 'markmod';
+        $body = markmod($body);
     }
 
     if ($markup_lang and $markup_lang =~ /^(text|txt)$/i)

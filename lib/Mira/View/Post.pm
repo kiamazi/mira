@@ -1,5 +1,5 @@
 package Mira::View::Post;
-$Mira::View::Post::VERSION = '00.07.55';
+$Mira::View::Post::VERSION = '00.07.56';
 
 use strict;
 use warnings;
@@ -38,7 +38,7 @@ sub template {
       {
         for (my $var = $pn+1; $var <= $max_post; $var++)
         {
-          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} !~ m/^(page|draft)$/)
+          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} =~ m/^(page|draft)$/)
           {
             next;
           } else
@@ -51,7 +51,7 @@ sub template {
 
         for (my $var = $pn-1; $var >= 0; $var--)
         {
-          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} !~ m/^(page|draft)$/)
+          if ($allentries->{$utids[$var]}->{_type} and $allentries->{$utids[$var]}->{_type} =~ m/^(page|draft)$/)
           {
             next;
           } else
