@@ -7,6 +7,8 @@ use 5.012;
 
 
 sub preparator {
+
+    say "v1.00.00";
     my $class = shift;
     my %switches = @_;
 
@@ -43,17 +45,34 @@ sub preparator {
     use Mira::Control::Parser::img;
     use Mira::Control::Content::Date;
 
+    use Parallel::ForkManager;
+
     foreach my $floor (@$floors)
     {
+        my $pm = Parallel::ForkManager->new( 4000 );
+        $pm->set_waitpid_blocking_sleep(0);
+        $pm->run_on_finish( sub {
+            my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_ref) = @_;
+            my $utid  = $data_ref->{utid};
+            my $values = $data_ref->{values};
+            if (not exists $data->{$utid})
+            {
+                $data->add($utid, $values);
+                $floors_data->add($floor, $utid);
+            }
+        });
+
         foreach my $file (@{$files->{$floor}})
         {
+            $pm->start and next;
+
             my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
             next unless $parser;
 
             my $utid = $parser->{utid};
             my $values = $parser->{values};
-            if (not exists $data->{$utid})
-            {
+            #if (not exists $data->{$utid})
+            #{
                 Mira::Control::Content::Date->date($values);
 
                 $values->{body} = Mira::Control::Parser::img->replace(
@@ -66,16 +85,18 @@ sub preparator {
                     _markup_lang($values, $config),
                     $config,
                 );
-                $data->add($utid, $values);
-                $floors_data->add($floor, $utid);
-            } else
-            {
-                say "this files have same utid, plz fix it :\n"
-                    .">". $file
-                    .">". $data->{$utid}->{_spec}->{file_address}
-                ."\n";
-            }
+            #    $data->add($utid, $values);
+            #    $floors_data->add($floor, $utid);
+            #} else
+            #{
+            #    say "this files have same utid, plz fix it :\n"
+            #        .">". $file
+            #        .">". $data->{$utid}->{_spec}->{file_address}
+            #    ."\n";
+            #}
+            $pm->finish(0, { utid => $utid, values => $values });
         }
+        $pm->wait_all_children;
     }
 
 
