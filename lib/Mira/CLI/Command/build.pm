@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use App::Cmd::Setup -command;
-aaaaaa
+
 use 5.012;
 
 use Cwd;
