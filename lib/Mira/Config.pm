@@ -9,34 +9,40 @@ use YAML;
 use File::Spec;
 use File::Spec::Functions;
 use File::Basename qw/basename/;
-use Carp;
 use Encode;
 use Encode::Locale;
-use File::Path qw(make_path);
+
 use 5.012;
 
 sub new {
-  my $class = shift;
-  my $source = shift;
-  my $self = {};
-  #$self->{_source} = $source;
+    my $class = shift;
+    my $self = {};
 
-    my $yaml;
-    if (-f catfile($source, 'config.yml') )
+    bless $self, $class;
+    return $self;
+}
+
+sub set {
+    my $self   = shift;
+    my $source = shift;
+
+    $self = $self->_default_config($source);
+    $self = $self->_floors_config($source);
+
+    return $self;
+}
+
+sub _default_config {
+    my ($self, $source) = @_;
+
+    my $config_file = catfile($source, 'config.yml');
+    if (-f $config_file)
     {
-      {
-        open my $fh, '<:encoding(UTF-8)', 'config.yml' or die $!;
-        local $/ = undef;
-        $yaml = <$fh>;
-        close $fh;
-      }
-      eval { #must read yaml message and print it in error output
-        $self->{_default} = Load( $yaml );
-      };
-      if ($@) {croak "$source/config.yml have problem";}
+        $self->{_default} = $self->_doYaml_to_Config($config_file);
     } else
     {
-      croak " ! - you are not in true path or --source is invalid path or /conf/config.yml isn't valid file";
+      say " ! - you are not in true path or --source is invalid path or
+      /conf/config.yml isn't valid file" and exit;
     }
 
     $self->{_default}->{root} = "/" unless (exists $self->{_default}->{root} and $self->{_default}->{root});
@@ -50,18 +56,24 @@ sub new {
     $self->{_default}->{archive_post_num} = "20" unless (exists $self->{_default}->{archive_post_num} and $self->{_default}->{archive_post_num});
     $self->{_default}->{feed_post_num} = "20" unless (exists $self->{_default}->{feed_post_num} and $self->{_default}->{feed_post_num});
     $self->{_default}->{default_floor} = "blog" unless (exists $self->{_default}->{default_floor} and $self->{_default}->{default_floor});
-#    $self->{_default}->{date_format} = "gregorian" unless (exists $self->{_default}->{date_format} and $self->{_default}->{date_format});
     $self->{_default}->{permalink} = ":year/:month/:day/:title/" unless (exists $self->{_default}->{permalink} and $self->{_default}->{permalink});
     $self->{_default}->{default_markup} = "markmod" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
-    $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
-    $self->{_default}->{imageurl} = "/static/images" unless (exists $self->{_default}->{imageurl} and $self->{_default}->{imageurl});
+#    $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
+#    $self->{_default}->{imageurl} = "/static/images" unless (exists $self->{_default}->{imageurl} and $self->{_default}->{imageurl});
     $self->{_default}->{timezone} = "+00:00" unless (exists $self->{_default}->{timezone} and $self->{_default}->{timezone});
     $self->{_default}->{t_start_tag} = "{{" unless (exists $self->{_default}->{t_start_tag} and $self->{_default}->{t_start_tag});
     $self->{_default}->{t_end_tag} = "}}" unless (exists $self->{_default}->{t_end_tag} and $self->{_default}->{t_end_tag});
     $self->{_default}->{t_outline_tag} = "%%" unless (exists $self->{_default}->{t_outline_tag} and $self->{_default}->{t_outline_tag});
     $self->{_default}->{feed_output} = 'feed.xml' unless (exists $self->{_default}->{feed_output} and $self->{_default}->{feed_output});
     $self->{_default}->{feed_template} = 'atom.tt2' unless (exists $self->{_default}->{feed_template} and $self->{_default}->{feed_template});
+
+    return $self;
+}
+
+sub _floors_config {
+    my ($self, $source) = @_;
+    my $yaml;
 
     my $glob = catfile($source, 'content', '*');
 
@@ -71,64 +83,73 @@ sub new {
 
     foreach my $floor (@floors)
     {
-      if (-f catfile($source, 'config', "$floor.yml") )
-      {
-        my $flyaml = catfile($source, 'config', "$floor.yml");
+        my $config_file = catfile($source, 'config', "$floor.yml");
+        if (-f $config_file)
         {
-          open my $fh, '<:encoding(UTF-8)', $flyaml or die $!;
-          local $/ = undef;
-          $yaml = <$fh>;
-          close $fh;
-        }
-        my $floorconf;
-        eval { #must read yaml message and print it in error output
-          $floorconf = Load($yaml);
-        };
-        if ($@)
+            $self->{$floor} = $self->_doYaml_to_Config($config_file, $floor);
+            $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
+            $self->{$floor}->{root} = "$self->{_default}->{root}/$floor/" unless ($self->{$floor}->{root});
+            $self->{$floor}->{url} = "$self->{_default}->{url}/$floor/" unless ($self->{$floor}->{url});
+#            $self->{$floor}->{static} = "$self->{$floor}->{root}/static/" unless ($self->{$floor}->{static});
+#            $self->{$floor}->{imageurl} = "$self->{$floor}->{root}/static/images/" unless ($self->{$floor}->{imageurl});
+        } else
         {
-          carp " # - $floor\.yml have problem, use default configs for floor: $floor";
-          $floorconf = _not_valids($floor, $self);
+            $self->{$floor} = $self->_not_valids($floor);
         }
-        $self->{$floor} = $floorconf;
-        $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
-        $self->{$floor}->{root} = "$self->{_default}->{root}/$floor/" unless ($self->{$floor}->{root});
-        $self->{$floor}->{url} = "$self->{_default}->{url}/$floor/" unless ($self->{$floor}->{url});
-        $self->{$floor}->{static} = "$self->{$floor}->{root}/static/" unless ($self->{$floor}->{static});
-        $self->{$floor}->{imageurl} = "$self->{$floor}->{root}/static/images/" unless ($self->{$floor}->{imageurl});
-      } else
-      {
-        $self->{$floor} = _not_valids($floor, $self);
-      }
 
-      $self->{$floor}->{url} =~ s{(?<!:)/+}{/}g;
-      #$self->{$floor}->{url} =~ s{((?:(?!.*?:)/+))}{/}g;
-      $self->{$floor}->{root} =~ s{^(.*?):/+}{/}g;
-      $self->{$floor}->{root} =~ s{/+}{/}g;
-      $self->{$floor}->{static} =~ s{/+}{/}g;
+        $self->{$floor}->{url} =~ s{(?<!:)/+}{/}g;
+        #$self->{$floor}->{url} =~ s{((?:(?!.*?:)/+))}{/}g;
+        $self->{$floor}->{root} =~ s{^(.*?):/+}{/}g;
+        $self->{$floor}->{root} =~ s{/+}{/}g;
+#        $self->{$floor}->{static} =~ s{/+}{/}g;
 
-      foreach my $key (keys %{ $self->{_default} })
-      {
-        $self->{$floor}->{$key} = $self->{_default}->{$key}
-        if (not exists $self->{$floor}->{$key});
-      }
-
+        foreach my $key (keys %{ $self->{_default} })
+        {
+            $self->{$floor}->{$key} = $self->{_default}->{$key}
+            if (not exists $self->{$floor}->{$key});
+        }
     }
-
     return $self;
 }
 
-sub _not_valids {
-  my $floor = shift;
-  my $self = shift;
-  my $configs = {
-    title    => $floor,
-    root     => $self->{_default}->{root} . "/" . $floor . "/",
-    url      => $self->{_default}->{url} . "/" . $floor . "/",
-    static   => $self->{_default}->{root} . "/" . $floor . "/static",
-    imageurl => $self->{_default}->{root} . "/" . $floor . "/static/images/",
-  };
+sub _doYaml_to_Config {
+    my $self         = shift;
+    my $config_file  = shift;
+    my $is_floor     = shift;
+    my $yaml;
+    my $conf;
 
-  return $configs;
+    {
+        open my $fh, '<:encoding(UTF-8)', $config_file or die $!;
+        local $/ = undef;
+        $yaml = <$fh>;
+        close $fh;
+    }
+    eval { #must read yaml message and print it in error output
+        $conf = Load( $yaml );
+    }; if ($@ and not $is_floor)
+    {
+        say "$config_file have problem" and exit;
+    } elsif ($@ and $is_floor)
+    {
+        say " # - $is_floor\.yml have problem, use default configs for floor: $is_floor";
+        $conf = $self->_not_valids($is_floor);
+    }
+    return $conf;
+}
+
+sub _not_valids {
+    my $self    = shift;
+    my $floor   = shift;
+    my $configs = {
+        title    => $floor,
+        root     => $self->{_default}->{root} . "/" . $floor . "/",
+        url      => $self->{_default}->{url}  . "/" . $floor . "/",
+#        static   => $self->{_default}->{root} . "/" . $floor . "/static",
+#        imageurl => $self->{_default}->{root} . "/" . $floor . "/static/images/",
+    };
+
+    return $configs;
 }
 
 1;

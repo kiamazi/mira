@@ -62,7 +62,9 @@ sub execute {
     my $start_time = [ Time::HiRes::gettimeofday() ];
 
     $source = $opt->{directory};
-    $config = Mira::Config->new($source);
+
+    my $confset = Mira::Config->new();
+    $config = $confset->set($source);
     my $floorsource = $opt->{floor}? catdir($source, 'content', $opt->{floor}) : '';
 
     ######################
