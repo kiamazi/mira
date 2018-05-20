@@ -27,8 +27,9 @@ sub description { 'builder script for Mira static site generator' }
 sub opt_spec {
     return (
         ['directory|d=s','application path (default: current directory)',{ default => $cwd }],
-        ['floor|f=s', 'floor you want build'],
-        [ 'help|h', 'this help' ],
+        ['floor|f=s',    'floor you want build'],
+        ['draft|d',      'build with draft files'],
+        [ 'help|h',      'this help' ],
     );
 }
 
@@ -64,16 +65,18 @@ sub execute {
     $source = $opt->{directory};
 
     my $confset = Mira::Config->new();
-    $config = $confset->set($source);
-    my $floorsource = $opt->{floor}? catdir($source, 'content', $opt->{floor}) : '';
+    $config     = $confset->set($source);
+
+    my $floorsource = $opt->{floor} ? catdir('content', $opt->{floor}) : '';
+    my $draft       = $opt->{draft} ? '' : '.draft';
 
     ######################
     use Mira::Control::Content;
 
     my $bases = Mira::Control::Content->preparator(
-        source       => $source,
-        ext          => '.draft',
-        config       => $config,
+        source       => $source     ,
+        ext          => $draft      ,
+        config       => $config     ,
         floorsource  => $floorsource,
     );
 

@@ -19,7 +19,7 @@ sub new {
 
     my $source      = $switches{source};
     my $floorsource = $switches{floorsource};
-    my $ext         = $switches{ext} ? $switches{ext} : '.draft';
+    my $ext         = $switches{ext}; # ? $switches{ext} : '.draft';
 
     my $self = {
         source      => $source,
@@ -43,7 +43,7 @@ sub floors {
         return [$floor];
     }
 
-    my $glob = catfile($source, 'content', '*');
+    my $glob = catfile('content', '*');
 
     my @content_directory_list = glob encode(locale_fs => $glob);
     @content_directory_list = grep {-d} @content_directory_list;
@@ -55,19 +55,21 @@ sub floors {
 
 
 sub files {
-    my $self = shift;
+    my $self   = shift;
     my $floors = shift;
     my $source = $self->{source};
-    my $ext = $self->{ext};
+    my $ext    = $self->{ext};
 
     my $files = {};
 
     foreach my $floor (@$floors)
     {
-        my $glob = catfile($source, 'content', $floor , "*");
+        my $glob = catfile('content', $floor , "*");
         my @path = glob encode(locale_fs => $glob);
         my @files = _room(@path);
-        my @entries = grep {-f and not /($ext)$/} @files;
+
+        my @entries;
+        @entries = $ext ? grep {-f and not /($ext)$/} @files : grep {-f} @files;
         foreach my $entry (@entries)
         {
             $entry = decode(locale_fs => $entry);

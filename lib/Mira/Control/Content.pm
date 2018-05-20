@@ -12,10 +12,10 @@ sub preparator {
     my $class = shift;
     my %switches = @_;
 
-    my $source = $switches{source};
+    my $source      = $switches{source};
     my $floorsource = $switches{floorsource};
-    my $ext = $switches{ext} ? $switches{ext} : '.draft';
-    my $config = $switches{config};
+    my $ext         = $switches{ext}; # ? $switches{ext} : '.draft';
+    my $config      = $switches{config};
 
 
     ######################
@@ -24,6 +24,9 @@ sub preparator {
     ######################
     use Mira::Model::Floor;
     my $floors_data = Mira::Model::Floor->new;
+    ######################
+    use Mira::Model::Address;
+    my $address_data = Mira::Model::Address->new;
 
 
     ######################
@@ -34,88 +37,92 @@ sub preparator {
         ext         => $ext,
         floorsource => $floorsource,
     );
-    my $floors = $content->floors;
-    my $files = $content->files($floors);
+    my $floors  = $content->floors;
+    my $files   = $content->files($floors);
     my $statics = $content->statics($floors);
 
 
     ######################
     use Mira::Control::Parser::Entry;
     use Mira::Control::Parser::Markup;
-    use Mira::Control::Parser::img;
+#    use Mira::Control::Parser::img;
     use Mira::Control::Content::Date;
 
-    use Parallel::ForkManager;
+#parallel::fork    use Parallel::ForkManager;
 
     foreach my $floor (@$floors)
     {
-        my $pm = Parallel::ForkManager->new( 4000 );
-        $pm->set_waitpid_blocking_sleep(0);
-        $pm->run_on_finish( sub {
-            my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_ref) = @_;
-            my $utid  = $data_ref->{utid};
-            my $values = $data_ref->{values};
-            if (not exists $data->{$utid})
-            {
-                $data->add($utid, $values);
-                $floors_data->add($floor, $utid);
-            }
-        });
-
+#parallel::fork        my $pm = Parallel::ForkManager->new( 4000 );
+#parallel::fork        $pm->set_waitpid_blocking_sleep(0);
+#parallel::fork        $pm->run_on_finish( sub {
+#parallel::fork            my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_ref) = @_;
+#parallel::fork            my $utid  = $data_ref->{utid};
+#parallel::fork            my $values = $data_ref->{values};
+#parallel::fork            if (not exists $data->{$utid})
+#parallel::fork            {
+#parallel::fork                $data->add($utid, $values);
+#parallel::fork                $floors_data->add($floor, $utid);
+#parallel::fork            }
+#parallel::fork        });
+#parallel::fork
         foreach my $file (@{$files->{$floor}})
         {
-            $pm->start and next;
+#            $pm->start and next;
 
             my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
             next unless $parser;
 
             my $utid = $parser->{utid};
             my $values = $parser->{values};
-            #if (not exists $data->{$utid})
-            #{
-                Mira::Control::Content::Date->date($values);
+            if (not exists $data->{$utid})
+            {
+                Mira::Control::Content::Date->date($values, $config->{$floor}->{timezone});
 
-                $values->{body} = Mira::Control::Parser::img->replace(
-                    $values->{body},
-                    _img_url($floor, $config),
-                    $config,
-                );
+#                $values->{body} = Mira::Control::Parser::img->replace(
+#                    $values->{body},
+#                    _img_url($floor, $config),
+#                    $config,
+#                );
                 $values->{body} = Mira::Control::Parser::Markup->markup(
                     $values->{body},
                     _markup_lang($values, $config),
                     $config,
                 );
-            #    $data->add($utid, $values);
-            #    $floors_data->add($floor, $utid);
-            #} else
-            #{
-            #    say "this files have same utid, plz fix it :\n"
-            #        .">". $file
-            #        .">". $data->{$utid}->{_spec}->{file_address}
-            #    ."\n";
-            #}
-            $pm->finish(0, { utid => $utid, values => $values });
+                $data->add($utid, $values);
+                $floors_data->add($floor, $utid);
+            } else
+            {
+                say "this files have same utid, plz fix it :\n"
+                    .">". $file
+                    .">". $data->{$utid}->{SPEC}->{file_address}
+                ."\n";
+            }
+#parallel::fork            $pm->finish(0, { utid => $utid, values => $values });
         }
-        $pm->wait_all_children;
+#parallel::fork        $pm->wait_all_children;
     }
 
 
-  ######################
-  use Mira::Control::Content::Address;
-  Mira::Control::Content::Address->address($data, $config);
+    ######################
+    use Mira::Control::Content::Address;
+    Mira::Control::Content::Address->address($data, $config);
 
-  ######################
-  use Mira::Model::Archive;
-  my $archive_base = Mira::Model::Archive->lists($data, $config);
+    ######################
+    use Mira::Model::Archive;
+    my $archive_base = Mira::Model::Archive->lists($data, $config);
+
+    ######################
+#    use Mira::Model::Address;
+#    my $address_base = Mira::Model::Address->new;
 
 
-  my $self = {
-    data  => { %$data },
-    floor => { %$floors_data },
-    archive  => $archive_base,
-    statics => $statics,
-  };
-  return $self;
+    my $self = {
+        data  => { %$data },
+        floor => { %$floors_data },
+        archive  => $archive_base,
+        statics => $statics,
+    };
+    return $self;
 
 
 }
@@ -136,7 +143,7 @@ sub _markup_lang {
     if (not $markup_lang and $config->{$floor}->{default_markup});
   $markup_lang = $config->{_default}->{default_markup}
     if (not $markup_lang and $config->{_default}->{default_markup});
-  $markup_lang = 'markdown' if not $markup_lang;
+  $markup_lang = 'markmod' if not $markup_lang;
 
   return $markup_lang;
 }
