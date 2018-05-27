@@ -22,6 +22,7 @@ sub template {
   my $archives = $switches{archives};
   my $floor_data = $switches{floor_data};
   my $build = $switches{build};
+  my $address_base = $switches{address_base};
 
   foreach my $floor (keys %$floors)
   {
@@ -62,6 +63,8 @@ sub template {
           }
         }
       }
+      $page->{number} = $pn+1;
+      $page->{total} = $max_post;
       $pn++;
 
 
@@ -91,35 +94,18 @@ sub template {
 #      : catdir($pensource,'template', $config->{_default}->{template});
 
 
-  	   my $post_index = Template->new({
-  	        INCLUDE_PATH => [ $post_template_root, catdir($post_template_root, 'include') ],
-            INTERPOLATE  => 1,
-            TRIM      => 1,
-            EVAL_PERL => 1,
-            ENCODING => 'utf8',
-            START_TAG => quotemeta($config->{$floor}->{t_start_tag}),
-            END_TAG   => quotemeta($config->{$floor}->{t_end_tag}),
-            OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
-  	   }) || die "$Template::ERROR\n";
+#  	   my $post_index = Template->new({
+#  	        INCLUDE_PATH => [ $post_template_root, catdir($post_template_root, 'include') ],
+#            INTERPOLATE  => 1,
+#            TRIM      => 1,
+#            EVAL_PERL => 1,
+#            ENCODING => 'utf8',
+#            START_TAG => quotemeta($config->{$floor}->{t_start_tag}),
+#            END_TAG   => quotemeta($config->{$floor}->{t_end_tag}),
+#            OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
+#  	   }) || die "$Template::ERROR\n";
 
   	   my $vars = {
-         MainTITLE       => $config->{_default}->{title},
-         MainDESCRIPTION => $config->{_default}->{description},
-         MainURL         => $config->{_default}->{url},
-         MainROOT        => $config->{_default}->{root},
-         MainSTATIC      => $config->{_default}->{static},
-         MainIMAGEURL    => $config->{_default}->{imageurl},
-         MainAUTHOR      => $config->{_default}->{author},
-         MainEMAIL       => $config->{_default}->{email},
-         TITLE           => $config->{$floor}->{title},
-         DESCRIPTION     => $config->{$floor}->{description},
-         URL             => $config->{$floor}->{url},
-         ROOT            => $config->{$floor}->{root},
-         STATIC          => $config->{$floor}->{static},
-         IMAGEURL        => $config->{$floor}->{imageurl},
-         AUTHOR          => $config->{$floor}->{author},
-         EMAIL           => $config->{$floor}->{email},
-
          PageTITLE       => "$allentries->{$utid}->{title} - $config->{$floor}->{title}",
          PostTITLE       => $allentries->{$utid}->{title},
          IS_POST         => 'true',
@@ -145,22 +131,6 @@ sub template {
        }
 
        #$vars->{MainURL} =~ s"(?<!http:)/+"/"g;
-       $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
-       $vars->{MainURL} =~ s{/$}{}g;
-
-       $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
-       $vars->{MainROOT} = "/" . $vars->{MainROOT} if $vars->{MainROOT} !~ m:^/:;
-       $vars->{MainROOT} =~ s{/+}{/}g;
-       $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
-
-       #$vars->{URL} =~ s"(?<!http:)/+"/"g;
-       $vars->{URL} =~ s{(?<!:)/+}{/}g;
-       $vars->{URL} =~ s{/$}{}g;
-
-       $vars->{ROOT} =~ s{^(.*?):/+}{/}g;
-       $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
-       $vars->{ROOT} =~ s{/+}{/}g;
-       $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";
 
        my $posts = [];
        push @$posts, $allentries->{$utid};
@@ -200,8 +170,19 @@ sub template {
        #my @target = split (m:/:, $allentries->{$utid}->{SPEC}->{address});
        my $index = catfile($pensource, $config->{_default}->{publishDIR}, $allentries->{$utid}->{SPEC}->{address});
 
-  	   $post_index->process($post_layout, $vars, $index, { binmode => ':utf8' })
-  		   || die $post_index->error(), "\n";
+       $address_base->add(
+           url           => $allentries->{$utid}->{url},
+           variables     => $vars,
+           template_root => $post_template_root,
+           template_file => $post_layout,
+           output        => $index,
+           START_TAG     => quotemeta($config->{$floor}->{t_start_tag}),
+           END_TAG       => quotemeta($config->{$floor}->{t_end_tag}),
+           OUTLINE_TAG   => quotemeta($config->{$floor}->{t_outline_tag}),
+       );
+
+#  	   $post_index->process($post_layout, $vars, $index, { binmode => ':utf8' })
+#  		   || die $post_index->error(), "\n";
 
     }
   }
@@ -209,3 +190,20 @@ sub template {
 }
 
 1;
+
+#MainTITLE       => $config->{_default}->{title},
+#MainDESCRIPTION => $config->{_default}->{description},
+#MainURL         => $config->{_default}->{url},
+#MainROOT        => $config->{_default}->{root},
+#MainSTATIC      => $config->{_default}->{static},
+#MainIMAGEURL    => $config->{_default}->{imageurl},
+#MainAUTHOR      => $config->{_default}->{author},
+#MainEMAIL       => $config->{_default}->{email},
+#TITLE           => $config->{$floor}->{title},
+#DESCRIPTION     => $config->{$floor}->{description},
+#URL             => $config->{$floor}->{url},
+#ROOT            => $config->{$floor}->{root},
+#STATIC          => $config->{$floor}->{static},
+#IMAGEURL        => $config->{$floor}->{imageurl},
+#AUTHOR          => $config->{$floor}->{author},
+#EMAIL           => $config->{$floor}->{email},

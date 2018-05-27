@@ -24,9 +24,6 @@ sub preparator {
     ######################
     use Mira::Model::Floor;
     my $floors_data = Mira::Model::Floor->new;
-    ######################
-    use Mira::Model::Address;
-    my $address_data = Mira::Model::Address->new;
 
 
     ######################
@@ -124,50 +121,46 @@ sub preparator {
     };
     return $self;
 
-
 }
-
-
-
 
 
 
 sub _markup_lang {
-  my $post = shift;
-  my $floor = $post->{floor};
-  my $config = shift;
-  my $markup_lang;
+    my $post = shift;
+    my $floor = $post->{floor};
+    my $config = shift;
+    my $markup_lang;
 
-  $markup_lang = $post->{_markup} if $post->{_markup};
-  $markup_lang = $config->{$floor}->{default_markup}
+    $markup_lang = $post->{_markup} if $post->{_markup};
+    $markup_lang = $config->{$floor}->{default_markup}
     if (not $markup_lang and $config->{$floor}->{default_markup});
-  $markup_lang = $config->{_default}->{default_markup}
+    $markup_lang = $config->{_default}->{default_markup}
     if (not $markup_lang and $config->{_default}->{default_markup});
-  $markup_lang = 'markmod' if not $markup_lang;
+    $markup_lang = 'markmod' if not $markup_lang;
 
-  return $markup_lang;
+    return $markup_lang;
 }
 
 
 sub _img_url {
-  my $floor = shift;
-  my $config = shift;
-  my $imgurl;
-  if ($config->{$floor} and $config->{$floor}->{imageurl})
-  {
+    my $floor = shift;
+    my $config = shift;
+    my $imgurl;
+    if ($config->{$floor} and $config->{$floor}->{imageurl})
+    {
     $imgurl = $config->{$floor}->{imageurl};
-  } elsif ($config->{_default}->{imageurl})
-  {
+    } elsif ($config->{_default}->{imageurl})
+    {
     $imgurl = $config->{_default}->{imageurl};
-  } elsif ($config->{$floor} and $config->{$floor}->{root})
-  {
+    } elsif ($config->{$floor} and $config->{$floor}->{root})
+    {
     $imgurl = "/$config->{$floor}->{root}/static/img/";
-  } else
-  {
+    } else
+    {
     $imgurl = "/$floor/static/img/";
-  }
-  $imgurl =~ s:/+:/:g;
-  return $imgurl;
+    }
+    $imgurl =~ s:/+:/:g;
+    return $imgurl;
 }
 
 

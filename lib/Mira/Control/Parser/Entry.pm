@@ -64,7 +64,7 @@ sub parse {
         if ($top->{utid})
         {
             $utid = $top->{utid};
-            $self->{utid} = $utid;
+
         } elsif ($top->{date})
         {
             if ( $top->{date} =~
@@ -78,7 +78,7 @@ sub parse {
                 my $sec   = $6;
                 $utid = sprintf "%04d%02d%02d%02d%02d%02d",
                     $year, $month, $day, $hour, $min, $sec;
-                $self->{utid} = $utid;
+
             } elsif ( $top->{date} =~ /^(\d{4})-(\d{1,2})-(\d{1,2})/ )
             {
                 my $year  = $1;
@@ -88,7 +88,7 @@ sub parse {
                 my ( $sec, $min, $hour ) = localtime( (lstat $entry)[9] );
                 my $datefix = sprintf "%02d%02d%02d", $hour, $min, $sec;
                 $utid = $utid . $hour . $min . $sec;
-                $self->{utid} = $utid;
+
             }
         } elsif ( $filename =~ /^(\d{4})-(\d{1,2})-(\d{1,2})/ )
         {
@@ -99,13 +99,14 @@ sub parse {
             my ( $sec, $min, $hour ) = localtime( (lstat $entry)[9] );
             my $datefix = sprintf "%02d%02d%02d", $hour, $min, $sec;
             $utid = $utid . $hour . $min . $sec;
-            $self->{utid} = $utid;
+
         } else
         {
             $utid = strftime("%Y%m%d%H%M%S", localtime( (lstat $entry)[9]) );
-            $self->{utid} = $utid;
+
         }
         $utid =~ s/[^\d]//g;
+        $self->{utid} = $utid;
 
         foreach my $field (keys %$top)
         {

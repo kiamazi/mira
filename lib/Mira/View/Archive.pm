@@ -23,6 +23,7 @@ sub template {
     my $archives   = $switches{archives};
     my $floor_data = $switches{floor_data};
     my $build      = $switches{build};
+    my $address_base = $switches{address_base};
 
     foreach my $floor ( keys %$archives )
     {
@@ -82,39 +83,22 @@ sub template {
                     not $allentries->{$_}->{_type} or $allentries->{$_}->{_type} !~ m/^(page|draft)$/
                 } @utids;
 
-                my $archive_index = Template->new(
-                {
-                    INCLUDE_PATH => [
-                        $archive_template_root,
-                        catdir( $archive_template_root, 'include' )
-                    ],
-                    INTERPOLATE => 1,
-                    TRIM      => 1,
-                    EVAL_PERL => 1,
-                    ENCODING    => 'utf8',
-                    START_TAG   => quotemeta( $config->{$floor}->{t_start_tag} ),
-                    END_TAG     => quotemeta( $config->{$floor}->{t_end_tag} ),
-                    OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
-                }) || die "$Template::ERROR\n";
+#                my $archive_index = Template->new(
+#                {
+#                    INCLUDE_PATH => [
+#                        $archive_template_root,
+#                        catdir( $archive_template_root, 'include' )
+#                    ],
+#                    INTERPOLATE => 1,
+#                    TRIM      => 1,
+#                    EVAL_PERL => 1,
+#                    ENCODING    => 'utf8',
+#                    START_TAG   => quotemeta( $config->{$floor}->{t_start_tag} ),
+#                    END_TAG     => quotemeta( $config->{$floor}->{t_end_tag} ),
+#                    OUTLINE_TAG => quotemeta( $config->{$floor}->{t_outline_tag} ),
+#                }) || die "$Template::ERROR\n";
 
                 my $vars = {
-                    MainTITLE       => $config->{_default}->{title},
-                    MainDESCRIPTION => $config->{_default}->{description},
-                    MainURL         => $config->{_default}->{url},
-                    MainROOT        => $config->{_default}->{root},
-                    MainSTATIC      => $config->{_default}->{static},
-                    MainIMAGEURL    => $config->{_default}->{imageurl},
-                    MainAUTHOR      => $config->{_default}->{author},
-                    MainEMAIL       => $config->{_default}->{email},
-                    TITLE           => $config->{$floor}->{title},
-                    DESCRIPTION     => $config->{$floor}->{description},
-                    URL             => $config->{$floor}->{url},
-                    ROOT            => $config->{$floor}->{root},
-                    STATIC          => $config->{$floor}->{static},
-                    IMAGEURL        => $config->{$floor}->{imageurl},
-                    AUTHOR          => $config->{$floor}->{author},
-                    EMAIL           => $config->{$floor}->{email},
-
                     ArchiveTITLE => $list,
                     PageTITLE    => "$config->{$floor}->{title} - $list",
 
@@ -139,25 +123,6 @@ sub template {
                     $string =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
                     return $string;
                 }
-
-                #$vars->{MainURL} =~ s"(?<!http:)/+"/"g;
-                $vars->{MainURL} =~ s{(?<!:)/+}{/}g;
-                $vars->{MainURL} =~ s{/$}{}g;
-
-                $vars->{MainROOT} =~ s{^(.*?):/+}{/}g;
-                $vars->{MainROOT} = "/" . $vars->{MainROOT}
-                  if $vars->{MainROOT} !~ m:^/:;
-                $vars->{MainROOT} =~ s{/+}{/}g;
-                $vars->{MainROOT} =~ s{/$}{}g unless $vars->{MainROOT} eq "/";
-
-                #$vars->{URL} =~ s"(?<!http:)/+"/"g;
-                $vars->{URL} =~ s{(?<!:)/+}{/}g;
-                $vars->{URL} =~ s{/$}{}g;
-
-                $vars->{ROOT} =~ s{^(.*?):/+}{/}g;
-                $vars->{ROOT} = "/" . $vars->{ROOT} if $vars->{ROOT} !~ m:^/:;
-                $vars->{ROOT} =~ s{/+}{/}g;
-                $vars->{ROOT} =~ s{/$}{}g unless $vars->{ROOT} eq "/";
 
                 if ( $arch_stct->{$archive}->{$list}->{year} )
                 {
@@ -266,9 +231,20 @@ sub template {
                       ( -f catfile( $archive_template_root, "$archive.tt2" ) )
                       ? "$archive.tt2"
                       : "archive.tt2";
-                    $archive_index->process( $arch_template, $vars, $index,
-                        { binmode => ':utf8' } )
-                      || die $archive_index->error(), "\n";
+
+                    $address_base->add(
+                        url           => $config->{$floor}->{url},
+                        variables     => $vars,
+                        template_root => $archive_template_root,
+                        template_file => $arch_template,
+                        output        => $index,
+                        START_TAG     => quotemeta($config->{$floor}->{t_start_tag}),
+                        END_TAG       => quotemeta($config->{$floor}->{t_end_tag}),
+                        OUTLINE_TAG   => quotemeta($config->{$floor}->{t_outline_tag}),
+                    );
+#                    $archive_index->process( $arch_template, $vars, $index,
+#                        { binmode => ':utf8' } )
+#                      || die $archive_index->error(), "\n";
                     $page_number++;
                 }
             }
