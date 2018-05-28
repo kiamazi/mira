@@ -49,8 +49,8 @@ sub lists {
             my $date_field = $self->{$utid}->{date};
             if ($date_field =~ /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/)
             {
-                my $year = $self->{$utid}->{_spec}->{year};
-                my $month = $self->{$utid}->{_spec}->{month};
+                my $year = $self->{$utid}->{CALENDAR}->{year};
+                my $month = $self->{$utid}->{CALENDAR}->{month};
                 push @{ $archive->{$floor}->{date}->{date}->{"$year$month"}->{posts} }, $utid;
 
                 $archive->{$floor}->{date}->{date}->{"$year$month"}->{name} =

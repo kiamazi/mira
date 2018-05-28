@@ -27,8 +27,9 @@ sub description { 'builder script for Mira static site generator' }
 sub opt_spec {
     return (
         ['directory|d=s','application path (default: current directory)',{ default => $cwd }],
-        ['floor|f=s', 'floor you want build'],
-        [ 'help|h', 'this help' ],
+        ['floor|f=s',    'floor you want build'],
+        ['draft|d',      'build with draft files'],
+        [ 'help|h',      'this help' ],
     );
 }
 
@@ -62,16 +63,20 @@ sub execute {
     my $start_time = [ Time::HiRes::gettimeofday() ];
 
     $source = $opt->{directory};
-    $config = Mira::Config->new($source);
-    my $floorsource = $opt->{floor}? catdir($source, 'content', $opt->{floor}) : '';
+
+    my $confset = Mira::Config->new();
+    $config     = $confset->set($source);
+
+    my $floorsource = $opt->{floor} ? catdir('content', $opt->{floor}) : '';
+    my $draft       = $opt->{draft} ? '' : '.draft';
 
     ######################
     use Mira::Control::Content;
 
     my $bases = Mira::Control::Content->preparator(
-        source       => $source,
-        ext          => '.draft',
-        config       => $config,
+        source       => $source     ,
+        ext          => $draft      ,
+        config       => $config     ,
         floorsource  => $floorsource,
     );
 
@@ -94,8 +99,8 @@ sub execute {
         my $plugins =
           Mira::Control::Plugin::Load->check( $source, $config->{$floor} );
         my $apis =
-          Mira::Plugin->new( $floor, $data_base, $archive_base,
-            $config );
+          Mira::Plugin->new( $floor, $data_base, $archive_base, $config );
+
         Mira::Control::Plugin::Plug->plug( $source, $plugins, $apis );
     }
 
@@ -116,6 +121,13 @@ sub execute {
     ######################
     $diff = Time::HiRes::tv_interval($start_time);
     print "statics copied: $diff\n";
+
+
+
+    ######################
+    use Mira::Model::Address;
+    my $address_base = Mira::Model::Address->new;
+
 
     ######################
     my @utids = keys %$data_base;
@@ -179,71 +191,120 @@ sub execute {
     print "start main: $diff\n";
 
     Mira::View::Main->template(
-        config     => $config,
-        posts      => $posts,         #utids
-        allentries => $data_base,     #all entries hash
-        floors     => $floors_base,
-        pensource  => $source,
-        floor_data => $floor_data,
-        build      => $build,
+        config       => $config,
+        posts        => $posts,         #utids
+        allentries   => $data_base,     #all entries hash
+        floors       => $floors_base,
+        pensource    => $source,
+        floor_data   => $floor_data,
+        build        => $build,
+        address_base => $address_base,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start floor indexes: $diff\n";
 
     Mira::View::Floor->template(
-        config     => $config,
-        posts      => $posts,          #utids
-        allentries => $data_base,      #all entries hash
-        floors     => $floors_base,
-        pensource  => $source,
-        archives   => $archive_base,
-        floor_data => $floor_data,
-        build      => $build,
+        config       => $config,
+        posts        => $posts,          #utids
+        allentries   => $data_base,      #all entries hash
+        floors       => $floors_base,
+        pensource    => $source,
+        archives     => $archive_base,
+        floor_data   => $floor_data,
+        build        => $build,
+        address_base => $address_base,
     );
 
     Mira::View::Feed->template(
-        config     => $config,
-        posts      => $posts,          #utids
-        allentries => $data_base,      #all entries hash
-        floors     => $floors_base,
-        pensource  => $source,
-        archives   => $archive_base,
-        floor_data => $floor_data,
-        build      => $build,
+        config       => $config,
+        posts        => $posts,          #utids
+        allentries   => $data_base,      #all entries hash
+        floors       => $floors_base,
+        pensource    => $source,
+        archives     => $archive_base,
+        floor_data   => $floor_data,
+        build        => $build,
+        address_base => $address_base,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start archives indexes: $diff\n";
 
     Mira::View::Archive->template(
-        config     => $config,
-        posts      => $posts,          #utids
-        allentries => $data_base,      #all entries hash
-        floors     => $floors_base,
-        pensource  => $source,
-        archives   => $archive_base,
-        floor_data => $floor_data,
-        build      => $build,
+        config       => $config,
+        posts        => $posts,          #utids
+        allentries   => $data_base,      #all entries hash
+        floors       => $floors_base,
+        pensource    => $source,
+        archives     => $archive_base,
+        floor_data   => $floor_data,
+        build        => $build,
+        address_base => $address_base,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
     print "start post indexes: $diff\n";
 
     Mira::View::Post->template(
-        config     => $config,
-        posts      => $posts,          #utids
-        allentries => $data_base,      #all entries hash
-        floors     => $floors_base,
-        pensource  => $source,
-        archives   => $archive_base,
-        floor_data => $floor_data,
-        build      => $build,
+        config       => $config,
+        posts        => $posts,          #utids
+        allentries   => $data_base,      #all entries hash
+        floors       => $floors_base,
+        pensource    => $source,
+        archives     => $archive_base,
+        floor_data   => $floor_data,
+        build        => $build,
+        address_base => $address_base,
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
-    print "The program ran for ", $diff, " seconds\n";
+
     #print "The program ran for ", time() - $^T, " seconds\n";
+
+
+
+
+
+    use File::Spec;
+    use File::Spec::Functions;
+    use Template;
+
+
+    foreach my $of (keys %$address_base)
+    {
+        my $output_root = $address_base->{$of}->{template_root};
+
+        my $output_index = Template->new({
+            INCLUDE_PATH => [$output_root , catdir($output_root, 'include') ],
+            INTERPOLATE  => 1,
+            TRIM      => 1,
+            EVAL_PERL => 1,
+            ENCODING => 'utf8',
+            START_TAG => $address_base->{$of}->{START_TAG},
+            END_TAG   => $address_base->{$of}->{END_TAG},
+            OUTLINE_TAG => $address_base->{$of}->{OUTLINE_TAG},
+        }) || die "$Template::ERROR\n";
+
+        my $vars = $address_base->{$of}->{vars};
+        sub farsinum {
+            my $string = shift;
+            $string =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
+            return $string;
+        }
+
+        $output_index->process(
+            $address_base->{$of}->{template_file},
+            $vars,
+            $address_base->{$of}->{output},
+            { binmode => ':utf8' }
+        ) || die $output_index->error(), "\n";
+    }
+
+
+
+$diff = Time::HiRes::tv_interval($start_time);
+print "The program ran for ", $diff, " seconds\n";
 
 }
 

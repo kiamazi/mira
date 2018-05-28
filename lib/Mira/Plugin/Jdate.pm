@@ -37,11 +37,11 @@ sub plug {
                     month => $month,
                     day   => $day
                 );
-                $data->{$utid}->{_spec}->{jyear} = sprintf "%04d",
+                $data->{$utid}->{SPEC}->{jyear} = sprintf "%04d",
                   $date->jalali->{year};
-                $data->{$utid}->{_spec}->{jmonth} = sprintf "%02d",
+                $data->{$utid}->{SPEC}->{jmonth} = sprintf "%02d",
                   $date->jalali->{month};
-                $data->{$utid}->{_spec}->{jday} = sprintf "%02d",
+                $data->{$utid}->{SPEC}->{jday} = sprintf "%02d",
                   $date->jalali->{day};
 
                 my $date_time = DateTime->new(
@@ -52,20 +52,20 @@ sub plug {
                 my $dow = $date_time->day_of_week;
 
                 $data->{$utid}->{CALENDAR}->{jyear} =
-                  $data->{$utid}->{_spec}->{jyear};
+                  $data->{$utid}->{SPEC}->{jyear};
                 $data->{$utid}->{CALENDAR}->{jmonth} =
-                  $data->{$utid}->{_spec}->{jmonth};
+                  $data->{$utid}->{SPEC}->{jmonth};
                 my $jmonth = $data->{$utid}->{CALENDAR}->{jmonth};
                 $data->{$utid}->{CALENDAR}->{jmonth_name} =
                   $jmonth_names[ $jmonth - 1 ];
                 $data->{$utid}->{CALENDAR}->{jday} =
-                  $data->{$utid}->{_spec}->{jday};
+                  $data->{$utid}->{SPEC}->{jday};
                 $data->{$utid}->{CALENDAR}->{jday_name} =
                   $jday_names[ $dow - 1 ];
                 $data->{$utid}->{jdate} =
-                    $data->{$utid}->{_spec}->{jyear} . "-"
-                  . $data->{$utid}->{_spec}->{jmonth} . "-"
-                  . $data->{$utid}->{_spec}->{jday};
+                    $data->{$utid}->{SPEC}->{jyear} . "-"
+                  . $data->{$utid}->{SPEC}->{jmonth} . "-"
+                  . $data->{$utid}->{SPEC}->{jday};
             }
         } elsif ( exists $data->{$utid}->{jdate}
             and $data->{$utid}->{jdate} =~
@@ -84,18 +84,18 @@ sub plug {
             );
             my $dow = $date_time->day_of_week;
 
-            $data->{$utid}->{_spec}->{jyear}  = sprintf "%04d", $year;
-            $data->{$utid}->{_spec}->{jmonth} = sprintf "%02d", $month;
-            $data->{$utid}->{_spec}->{jday}   = sprintf "%02d", $day;
+            $data->{$utid}->{SPEC}->{jyear}  = sprintf "%04d", $year;
+            $data->{$utid}->{SPEC}->{jmonth} = sprintf "%02d", $month;
+            $data->{$utid}->{SPEC}->{jday}   = sprintf "%02d", $day;
             $data->{$utid}->{CALENDAR}->{jyear} =
-              $data->{$utid}->{_spec}->{jyear};
+              $data->{$utid}->{SPEC}->{jyear};
             $data->{$utid}->{CALENDAR}->{jmonth} =
-              $data->{$utid}->{_spec}->{jmonth};
+              $data->{$utid}->{SPEC}->{jmonth};
             my $jmonth = $data->{$utid}->{CALENDAR}->{jmonth};
             $data->{$utid}->{CALENDAR}->{jmonth_name} =
               $jmonth_names[ $jmonth - 1 ];
             $data->{$utid}->{CALENDAR}->{jday} =
-              $data->{$utid}->{_spec}->{jday};
+              $data->{$utid}->{SPEC}->{jday};
             $data->{$utid}->{CALENDAR}->{jday_name} = $jday_names[ $dow - 1 ];
 
             if (not exists $data->{$utid}->{date}) {
@@ -136,8 +136,8 @@ sub plug {
             if ( $date_field =~
                 /^(?<year>\d{2,4})-(?<month>\d{1,2})-(?<day>\d{1,2})/ )
             {
-                my $year  = $data->{$utid}->{_spec}->{jyear};
-                my $month = $data->{$utid}->{_spec}->{jmonth};
+                my $year  = $data->{$utid}->{SPEC}->{jyear};
+                my $month = $data->{$utid}->{SPEC}->{jmonth};
                 push @{ $date_archives->{jdate}->{"$year$month"}
                       ->{posts} }, $utid;
 

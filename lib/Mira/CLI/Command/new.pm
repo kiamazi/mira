@@ -55,10 +55,13 @@ sub execute {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
     $year += 1900;
     $mon += 1;
+    $mon = sprintf "%02d", $mon;
+    $mday = sprintf "%02d", $mday;
     my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
     my $utid = sprintf "%04d%02d%02d%02d%02d%02d", $year, $mon, $mday, $hour, $min, $sec;
 
-    my $config = Mira::Config->new($source);
+    my $confset    = Mira::Config->new();
+    my $config     = $confset->set($source);
 
     $opt->{floor} = $config->{_default}->{default_floor} unless $opt->{floor};
     $opt->{floor} = lc($opt->{floor});
