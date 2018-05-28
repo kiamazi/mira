@@ -259,7 +259,7 @@ sub execute {
     );
 
     $diff = Time::HiRes::tv_interval($start_time);
-    print "The program ran for ", $diff, " seconds\n";
+
     #print "The program ran for ", time() - $^T, " seconds\n";
 
 
@@ -269,13 +269,10 @@ sub execute {
     use File::Spec;
     use File::Spec::Functions;
     use Template;
-    use Parallel::ForkManager;
 
-    my $pm = Parallel::ForkManager->new( 4000 );
-    $pm->set_waitpid_blocking_sleep(0);
 
-    foreach my $of (keys %$address_base) {
-        $pm->start and next;
+    foreach my $of (keys %$address_base)
+    {
         my $output_root = $address_base->{$of}->{template_root};
 
         my $output_index = Template->new({
@@ -302,11 +299,12 @@ sub execute {
             $address_base->{$of}->{output},
             { binmode => ':utf8' }
         ) || die $output_index->error(), "\n";
-        $pm->finish;
     }
-    $pm->wait_all_children;
 
 
+
+$diff = Time::HiRes::tv_interval($start_time);
+print "The program ran for ", $diff, " seconds\n";
 
 }
 
