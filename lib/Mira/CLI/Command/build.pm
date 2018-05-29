@@ -270,7 +270,6 @@ sub execute {
     use File::Spec::Functions;
     use Template;
 
-
     foreach my $of (keys %$address_base)
     {
         my $output_root = $address_base->{$of}->{template_root};
@@ -287,11 +286,6 @@ sub execute {
         }) || die "$Template::ERROR\n";
 
         my $vars = $address_base->{$of}->{vars};
-        sub farsinum {
-            my $string = shift;
-            $string =~ tr/1234567890/۱۲۳۴۵۶۷۸۹۰/;
-            return $string;
-        }
 
         $output_index->process(
             $address_base->{$of}->{template_file},
@@ -304,7 +298,7 @@ sub execute {
 
 
 $diff = Time::HiRes::tv_interval($start_time);
-print "The program ran for ", $diff, " seconds\n";
+print "\nThe program ran for ", $diff, " seconds\n";
 
 }
 

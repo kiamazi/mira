@@ -45,27 +45,11 @@ sub preparator {
 #    use Mira::Control::Parser::img;
     use Mira::Control::Content::Date;
 
-#parallel::fork    use Parallel::ForkManager;
 
     foreach my $floor (@$floors)
     {
-#parallel::fork        my $pm = Parallel::ForkManager->new( 4000 );
-#parallel::fork        $pm->set_waitpid_blocking_sleep(0);
-#parallel::fork        $pm->run_on_finish( sub {
-#parallel::fork            my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_ref) = @_;
-#parallel::fork            my $utid  = $data_ref->{utid};
-#parallel::fork            my $values = $data_ref->{values};
-#parallel::fork            if (not exists $data->{$utid})
-#parallel::fork            {
-#parallel::fork                $data->add($utid, $values);
-#parallel::fork                $floors_data->add($floor, $utid);
-#parallel::fork            }
-#parallel::fork        });
-#parallel::fork
         foreach my $file (@{$files->{$floor}})
         {
-#            $pm->start and next;
-
             my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
             next unless $parser;
 
@@ -94,9 +78,7 @@ sub preparator {
                     .">". $data->{$utid}->{SPEC}->{file_address}
                 ."\n";
             }
-#parallel::fork            $pm->finish(0, { utid => $utid, values => $values });
         }
-#parallel::fork        $pm->wait_all_children;
     }
 
 
