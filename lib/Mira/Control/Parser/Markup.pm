@@ -9,37 +9,38 @@ use 5.012;
 use Carp;
 
 sub markup {
-    my $class = shift;
-    my $body = shift;
+    my $class       = shift;
+    my $body        = shift;
     my $markup_lang = shift || 'md';
 
-    if ($markup_lang and $markup_lang =~ /^(markdown|md|bbcode|textile)$/i)
+    if ( $markup_lang and $markup_lang =~ /^(markdown|md|bbcode|textile)$/i )
     {
         use Markup::Unified;
         $markup_lang = 'markdown' if $markup_lang =~ /^md$/i;
         $markup_lang = lc($markup_lang);
         my $markup = Markup::Unified->new();
-        $markup->format($body, $markup_lang);
+        $markup->format( $body, $markup_lang );
         $markup->formatted;
         $body = $markup->{fvalue};
-        $body =~ s/(.*)\n$/$1/; #remove new line which make by text::markdown at end
+        $body =~
+          s/(.*)\n$/$1/;    #remove new line which make by text::markdown at end
     }
 
-    if ($markup_lang and $markup_lang =~ /^(miraMarkdown|mmd|markmod)$/i)
+    if ( $markup_lang and $markup_lang =~ /^(miraMarkdown|mmd|markmod)$/i )
     {
         use Text::Markmoredown 'markmod';
         $body = markmod($body);
     }
 
-    if ($markup_lang and $markup_lang =~ /^(text|txt)$/i)
+    if ( $markup_lang and $markup_lang =~ /^(text|txt)$/i )
     {
-      $body =~ s/\n/\n<br>/g;
+        $body =~ s/\n/\n<br>/g;
     }
 
 ##### Less and More section #####
     my $fbody = $body;
     $body = {};
-    if ($fbody =~ /(?<less>.*)<!--\s*more\s*-->(?<more>.*)/s)
+    if ( $fbody =~ /(?<less>.*)<!--\s*more\s*-->(?<more>.*)/s )
     {
         $body->{less} = $+{less};
         $fbody =~ s:<!--\s*more\s*-->:<a name="more"></a>:;
@@ -56,6 +57,5 @@ sub markup {
 
     return $body;
 }
-
 
 1;
