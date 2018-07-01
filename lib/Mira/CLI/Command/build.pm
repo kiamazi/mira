@@ -14,7 +14,7 @@ use File::Spec::Functions;
 use Time::HiRes;
 
 use utf8;
-binmode STDOUT, ":utf8";
+binmode STDOUT, ":encoding(UTF-8)";
 
 my $cwd = cwd;
 my $source;

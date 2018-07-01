@@ -17,7 +17,7 @@ use File::Path qw(make_path);
 use File::ShareDir ':ALL';
 
 use utf8;
-binmode STDOUT, ":utf8";
+binmode STDOUT, "::encoding(UTF-8)";
 
 
 

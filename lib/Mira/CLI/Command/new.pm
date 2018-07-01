@@ -16,7 +16,7 @@ use Encode;
 use Encode::Locale;
 
 use utf8;
-binmode STDOUT, ":utf8";
+binmode STDOUT, ":encoding(UTF-8)";
 
 
 use Mira::Config;
