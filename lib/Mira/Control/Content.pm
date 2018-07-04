@@ -57,11 +57,6 @@ sub preparator {
             {
                 Mira::Control::Content::Date->date($values, $config->{$floor}->{timezone});
 
-#                $values->{body} = Mira::Control::Parser::img->replace(
-#                    $values->{body},
-#                    _img_url($floor, $config),
-#                    $config,
-#                );
                 $values->{body} = Mira::Control::Parser::Markup->markup(
                     $values->{body},
                     _markup_lang($values, $config),
@@ -119,28 +114,6 @@ sub _markup_lang {
     $markup_lang = 'markmod' if not $markup_lang;
 
     return $markup_lang;
-}
-
-
-sub _img_url {
-    my $floor = shift;
-    my $config = shift;
-    my $imgurl;
-    if ($config->{$floor} and $config->{$floor}->{imageurl})
-    {
-    $imgurl = $config->{$floor}->{imageurl};
-    } elsif ($config->{_default}->{imageurl})
-    {
-    $imgurl = $config->{_default}->{imageurl};
-    } elsif ($config->{$floor} and $config->{$floor}->{root})
-    {
-    $imgurl = "/$config->{$floor}->{root}/static/img/";
-    } else
-    {
-    $imgurl = "/$floor/static/img/";
-    }
-    $imgurl =~ s:/+:/:g;
-    return $imgurl;
 }
 
 
