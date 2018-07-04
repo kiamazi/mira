@@ -42,8 +42,7 @@ sub execute {
   my ($self, $opt, $args) = @_;
   my $source = -d $opt->{directory} ? $opt->{directory} : $cwd;
 
-  my $confset    = Mira::Config->new();
-  my $config     = $confset->set($source);
+  my $config     = Mira::Config->set($source);
   my $publishDIR = $config->{_default}->{publishDIR};
 
   our $localdir = catdir($source, $publishDIR);

@@ -7,14 +7,12 @@ use 5.012;
 
 
 sub preparator {
-
-    say "v1.00.00";
     my $class = shift;
     my %switches = @_;
 
     my $source      = $switches{source};
     my $floorsource = $switches{floorsource};
-    my $ext         = $switches{ext}; # ? $switches{ext} : '.draft';
+    my $draft_ext   = $switches{draft_ext};
     my $config      = $switches{config};
 
 
@@ -31,7 +29,7 @@ sub preparator {
 
     my $content = Mira::Control::Content::Load->new(
         source      => $source,
-        ext         => $ext,
+        draft_ext   => $draft_ext,
         floorsource => $floorsource,
     );
     my $floors  = $content->floors;
@@ -53,7 +51,7 @@ sub preparator {
             my $parser = Mira::Control::Parser::Entry->parse(entry => $file, floor => $floor);
             next unless $parser;
 
-            my $utid = $parser->{utid};
+            my $utid   = $parser->{utid};
             my $values = $parser->{values};
             if (not exists $data->{$utid})
             {

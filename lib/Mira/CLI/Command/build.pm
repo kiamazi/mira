@@ -17,8 +17,6 @@ use utf8;
 binmode STDOUT, ":encoding(UTF-8)";
 
 my $cwd = cwd;
-my $source;
-my $config;
 
 sub abstract { 'site builder' }
 
@@ -62,20 +60,18 @@ sub execute {
     my ( $self, $opt, $args ) = @_;
     my $start_time = [ Time::HiRes::gettimeofday() ];
 
-    $source = $opt->{directory};
-
-    my $confset = Mira::Config->new();
-    $config     = $confset->set($source);
-
+    my $source      = $opt->{directory};
     my $floorsource = $opt->{floor} ? catdir('content', $opt->{floor}) : '';
-    my $draft       = $opt->{draft} ? '' : '.draft';
+    my $draft_ext       = $opt->{draft} ? '' : '.draft';
+
+    my $config      = Mira::Config->set($source);
 
     ######################
     use Mira::Control::Content;
 
     my $bases = Mira::Control::Content->preparator(
         source       => $source     ,
-        ext          => $draft      ,
+        draft_ext    => $draft_ext  ,
         config       => $config     ,
         floorsource  => $floorsource,
     );

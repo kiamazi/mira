@@ -14,17 +14,11 @@ use Encode::Locale;
 
 use 5.012;
 
-sub new {
-    my $class = shift;
-    my $self = {};
-
-    bless $self, $class;
-    return $self;
-}
-
 sub set {
-    my $self   = shift;
+    my $class  = shift;
     my $source = shift;
+    my $self = {};
+    bless $self, $class;
 
     $self = $self->_default_config($source);
     $self = $self->_floors_config($source);
@@ -36,7 +30,7 @@ sub _default_config {
     my ($self, $source) = @_;
 
     my $config_file = catfile($source, 'config.yml');
-    if (-f $config_file)
+    if ( -e $config_file && !-d _ )   # -f $config_file
     {
         $self->{_default} = $self->_doYaml_to_Config($config_file);
     } else
@@ -84,7 +78,7 @@ sub _floors_config {
     foreach my $floor (@floors)
     {
         my $config_file = catfile($source, 'config', "$floor.yml");
-        if (-f $config_file)
+        if ( -e $config_file && !-d _ )
         {
             $self->{$floor} = $self->_doYaml_to_Config($config_file, $floor);
             $self->{$floor}->{title} = $floor unless ($self->{$floor}->{title});
@@ -116,26 +110,26 @@ sub _doYaml_to_Config {
     my $self         = shift;
     my $config_file  = shift;
     my $is_floor     = shift;
+    my $file_content;
     my $yaml;
-    my $conf;
 
     {
         open my $fh, '<:encoding(UTF-8)', $config_file or die $!;
         local $/ = undef;
-        $yaml = <$fh>;
+        $file_content = <$fh>;
         close $fh;
     }
     eval { #must read yaml message and print it in error output
-        $conf = Load( $yaml );
+        $yaml = Load( $file_content );
     }; if ($@ and not $is_floor)
     {
         say "$config_file have problem" and exit;
     } elsif ($@ and $is_floor)
     {
         say " # - $is_floor\.yml have problem, use default configs for floor: $is_floor";
-        $conf = $self->_not_valids($is_floor);
+        $yaml = $self->_not_valids($is_floor);
     }
-    return $conf;
+    return $yaml;
 }
 
 sub _not_valids {

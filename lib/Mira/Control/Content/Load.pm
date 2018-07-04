@@ -12,18 +12,17 @@ use Carp;
 use Encode;
 use Encode::Locale;
 
-
 sub new {
     my $class    = shift;
     my %switches = @_;
 
     my $source      = $switches{source};
     my $floorsource = $switches{floorsource};
-    my $ext         = $switches{ext}; # ? $switches{ext} : '.draft';
+    my $draft_ext   = $switches{draft_ext};
 
     my $self = {
         source      => $source,
-        ext         => $ext,
+        draft_ext   => $draft_ext,
         floorsource => $floorsource,
     };
 
@@ -31,48 +30,50 @@ sub new {
     return $self;
 }
 
-
 sub floors {
     my $self        = shift;
     my $source      = $self->{source};
     my $floorsource = $self->{floorsource};
 
-    if ($floorsource and -d $floorsource)
+    if ( $floorsource and -d $floorsource )
     {
         my $floor = basename($floorsource);
         return [$floor];
     }
 
-    my $glob = catfile('content', '*');
+    my $glob = catfile( 'content', '*' );
 
-    my @content_directory_list = glob encode(locale_fs => $glob);
-    @content_directory_list = grep {-d} @content_directory_list;
+    my @content_directory_list = glob encode( locale_fs => $glob );
+    @content_directory_list = grep { -d } @content_directory_list;
 
-    my @floors = map {decode(locale_fs => basename($_))} @content_directory_list;
+    my @floors =
+      map { decode( locale_fs => basename($_) ) } @content_directory_list;
 
     return \@floors;
 }
 
-
 sub files {
-    my $self   = shift;
-    my $floors = shift;
-    my $source = $self->{source};
-    my $ext    = $self->{ext};
+    my $self      = shift;
+    my $floors    = shift;
+    my $source    = $self->{source};
+    my $draft_ext = $self->{draft_ext};
 
     my $files = {};
 
     foreach my $floor (@$floors)
     {
-        my $glob = catfile('content', $floor , "*");
-        my @path = glob encode(locale_fs => $glob);
+        my $glob  = catfile( 'content', $floor, "*" );
+        my @path  = glob encode( locale_fs => $glob );
         my @files = _room(@path);
 
-        my @entries;
-        @entries = $ext ? grep {-f and not /($ext)$/} @files : grep {-f} @files;
+        my @entries =
+          $draft_ext
+          ? grep { -e and !-d and not /($draft_ext)$/ } @files
+          : grep { -e and !-d } @files;
+
         foreach my $entry (@entries)
         {
-            $entry = decode(locale_fs => $entry);
+            $entry = decode( locale_fs => $entry );
             push @{ $files->{$floor} }, $entry;
         }
     }
@@ -81,7 +82,7 @@ sub files {
 }
 
 sub statics {
-    my $self = shift;
+    my $self   = shift;
     my $floors = shift;
     my $source = $self->{source};
 
@@ -89,14 +90,15 @@ sub statics {
 
     foreach my $floor (@$floors)
     {
-        my $glob = catfile($source, 'content', $floor , "*");
-        my @path = glob encode(locale_fs => $glob);
-        @path = grep {-d} @path;
+        my $glob = catfile( $source, 'content', $floor, "*" );
+        my @path = glob encode( locale_fs => $glob );
+        @path = grep { -d } @path;
         my @statics = _static_rooms(@path);
+
         #@statics = grep {-d and /statics$/} @statics;
         foreach my $static (@statics)
         {
-            $static = decode(locale_fs => $static);
+            $static = decode( locale_fs => $static );
             push @{ $statics->{$floor} }, $static;
         }
     }
@@ -105,20 +107,17 @@ sub statics {
 
 }
 
-
-
-
 sub _room {
     my @path = @_;
     my @files;
     foreach my $path (@path)
     {
-        next if (-d $path && basename($path) =~ /^_/);
-        (-f $path) && (push @files, $path) && next;# if -f $path;
-        if (-d $path)
+        next if ( -d $path && basename($path) =~ /^_/ );
+        ( -e $path && !-d _ ) && ( push @files, $path ) && next;  # if -f $path;
+        if ( -d $path )
         {
-            my $glob = catfile($path , "*");
-            my @paths = glob encode(locale_fs => $glob);
+            my $glob = catfile( $path, "*" );
+            my @paths = glob encode( locale_fs => $glob );
             push @files, _room(@paths);
         }
     }
@@ -131,10 +130,10 @@ sub _static_rooms {
     foreach my $path (@path)
     {
         next if not -d $path;
-        (push @dirs, $path) && next if (-d $path && basename($path) =~ /^_/);
-        my $glob = catfile($path , "*");
-        my @paths = glob encode(locale_fs => $glob);
-        @path = grep {-d} @path;
+        (push @dirs, $path) && next if ( -d $path && basename($path) =~ /^_/ );
+        my $glob = catfile( $path, "*" );
+        my @paths = glob encode( locale_fs => $glob );
+        @path = grep { -d } @path;
         push @dirs, _static_rooms(@paths);
     }
     return @dirs;
