@@ -24,10 +24,11 @@ sub description { 'builder script for Mira static site generator' }
 
 sub opt_spec {
     return (
-        ['directory|d=s','application path (default: current directory)',{ default => $cwd }],
-        ['floor|f=s',    'floor you want build'],
+        ['directory|d=s','application path (default: current directory)',
+                              { default => $cwd }],
+        ['floor|f=s',    'floor you want build'  ],
         ['draft|d',      'build with draft files'],
-        [ 'help|h',      'this help' ],
+        [ 'help|h',      'this help'             ],
     );
 }
 
@@ -36,17 +37,17 @@ sub validate_args {
     my $path = $opt->{directory};
     -d $path or $self->usage_error("directory '$path' does not exist");
     -f catfile( $path, 'config.yml' ) or _usage_error
-        (
-            "directory '$path' does not valid address.\ncant't find config.yml"
-        );
+    (
+        "directory '$path' does not valid address.\ncant't find config.yml"
+    );
     -d catdir( $path, 'content' ) or _usage_error
-        (
-            "directory '$path' does not valid address.\ncant't find content folder"
-        );
+    (
+        "directory '$path' does not valid address.\ncant't find content folder"
+    );
     -d catdir( $path, 'template' ) or _usage_error
-        (
-            "directory '$path' does not valid address.\ncant't find template folder"
-        );
+    (
+        "directory '$path' does not valid address.\ncant't find template folder"
+    );
     if ($opt->{floor})
     {
         -d catdir( $path, 'content', $opt->{floor} ) or _usage_error
