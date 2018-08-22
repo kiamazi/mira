@@ -63,7 +63,7 @@ sub execute {
 
     my $source      = $opt->{directory};
     my $floorsource = $opt->{floor} ? catdir('content', $opt->{floor}) : '';
-    my $draft_ext       = $opt->{draft} ? '' : '.draft';
+    my $draft_ext   = $opt->{draft} ? '' : '.draft';
 
     my $config      = Mira::Config->set($source);
 

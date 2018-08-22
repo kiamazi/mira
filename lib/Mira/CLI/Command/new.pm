@@ -60,8 +60,7 @@ sub execute {
     my $now_date = sprintf "%04d-%02d-%02d %02d:%02d:%02d", $year, $mon, $mday, $hour, $min, $sec;
     my $utid = sprintf "%04d%02d%02d%02d%02d%02d", $year, $mon, $mday, $hour, $min, $sec;
 
-    my $confset    = Mira::Config->new();
-    my $config     = $confset->set($source);
+    my $config     = Mira::Config->set($source);
 
     $opt->{floor} = $config->{_default}->{default_floor} unless $opt->{floor};
     $opt->{floor} = lc($opt->{floor});
