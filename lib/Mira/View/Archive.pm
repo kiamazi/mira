@@ -197,6 +197,12 @@ sub template {
                         catfile( $pensource, $config->{_default}->{publishDIR},
                         @show_list_address, $target );
 
+					my $archive_url =
+						$config->{$floor}->{url} .
+						$arch_stct->{$archive}->{$list}->{url}
+					;
+					$archive_url =~ s{(?<!:)/+}{/}g;
+
                     $page->{next}->{url} =
                         @utids
                         ?   "$show_list_url/page/"
@@ -233,7 +239,7 @@ sub template {
                       : "archive.tt2";
 
                     $address_base->add(
-                        url           => $config->{$floor}->{url},
+                        url           => $archive_url,
                         variables     => $vars,
                         template_root => $archive_template_root,
                         template_file => $arch_template,

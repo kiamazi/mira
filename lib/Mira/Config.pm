@@ -53,7 +53,7 @@ sub _default_config {
     $self->{_default}->{permalink} = ":year/:month/:day/:title/" unless (exists $self->{_default}->{permalink} and $self->{_default}->{permalink});
     $self->{_default}->{default_markup} = "markmod" unless (exists $self->{_default}->{default_markup} and $self->{_default}->{default_markup});
     $self->{_default}->{default_extension} = "md" unless (exists $self->{_default}->{default_extension} and $self->{_default}->{default_extension});
-#    $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
+    $self->{_default}->{static} = "/static" unless (exists $self->{_default}->{static} and $self->{_default}->{static});
 #    $self->{_default}->{imageurl} = "/static/images" unless (exists $self->{_default}->{imageurl} and $self->{_default}->{imageurl});
     $self->{_default}->{timezone} = "+00:00" unless (exists $self->{_default}->{timezone} and $self->{_default}->{timezone});
     $self->{_default}->{t_start_tag} = "{{" unless (exists $self->{_default}->{t_start_tag} and $self->{_default}->{t_start_tag});

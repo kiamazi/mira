@@ -170,8 +170,14 @@ sub template {
        #my @target = split (m:/:, $allentries->{$utid}->{SPEC}->{address});
        my $index = catfile($pensource, $config->{_default}->{publishDIR}, $allentries->{$utid}->{SPEC}->{address});
 
+	   my $post_url =
+		   $config->{$floor}->{url} .
+		   $allentries->{$utid}->{url}
+	   ;
+	   $post_url =~ s{(?<!:)/+}{/}g;
+
        $address_base->add(
-           url           => $allentries->{$utid}->{url},
+           url           => $post_url,
            variables     => $vars,
            template_root => $post_template_root,
            template_file => $post_layout,
