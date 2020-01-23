@@ -28,9 +28,9 @@ sub new {
   my %switches = @_;
 
   my $self = {};
-  $self->{year} = $switches{year} ? $switches{year} : croak "meed year value";
-  $self->{month} = $switches{month} ? $switches{month} : croak "meed month value";
-  $self->{day} = $switches{day} ? $switches{day} : croak "meed day value";
+  $self->{year} = $switches{year} ? $switches{year} : croak "need year value";
+  $self->{month} = $switches{month} ? $switches{month} : croak "need month value";
+  $self->{day} = $switches{day} ? $switches{day} : croak "need day value";
 
   bless $self, $class;
   return $self;

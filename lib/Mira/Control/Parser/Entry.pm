@@ -94,7 +94,7 @@ sub _read_content {
         m/
         ^(---+)?\s*
         (?<detail>[\w\W]+?)
-        \n+---+\s*
+        \n+---+\s*[>|]?\s*
         (?<body>[\w\W]*)$
         /mx)
     {
