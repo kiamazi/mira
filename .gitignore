@@ -36,3 +36,4 @@ inc/
 ###
 .vstags
 /.vscode/
+/.idea/
