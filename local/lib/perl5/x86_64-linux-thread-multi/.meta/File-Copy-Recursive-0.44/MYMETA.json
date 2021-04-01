@@ -1,0 +1,67 @@
+{
+   "abstract" : "Perl extension for recursively copying files and directories",
+   "author" : [
+      "Daniel Muey <http://drmuey.com/cpan_contact.pl>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 7.24, CPAN::Meta::Converter version 2.150001, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "unknown"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "File-Copy-Recursive",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Cwd" : "0",
+            "File::Copy" : "0",
+            "File::Glob" : "0",
+            "File::Spec" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Temp" : "0",
+            "Path::Tiny" : "0",
+            "Test::Deep" : "0",
+            "Test::Fatal" : "0",
+            "Test::File" : "0",
+            "Test::More" : "0.88",
+            "Test::Warnings" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-File-Copy-Recursive@rt.cpan.org",
+         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=File-Copy-Recursive"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/drmuey/p5-File-Copy-Recursive.git",
+         "web" : "https://github.com/drmuey/p5-File-Copy-Recursive"
+      }
+   },
+   "version" : "0.44",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

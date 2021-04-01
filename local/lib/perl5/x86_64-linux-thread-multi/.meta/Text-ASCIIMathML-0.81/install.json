@@ -1,0 +1,1 @@
+{"version":0.81,"name":"Text::ASCIIMathML","target":"Text::ASCIIMathML","dist":"Text-ASCIIMathML-0.81","pathname":"N/NO/NODINE/Text-ASCIIMathML-0.81.tar.gz","provides":{"Text::ASCIIMathML":{"version":0.81,"file":"lib/Text/ASCIIMathML.pm"},"Text::ASCIIMathML::Node":{"version":0.81,"file":"lib/Text/ASCIIMathML.pm"}}}

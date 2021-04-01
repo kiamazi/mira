@@ -1,0 +1,104 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Text::Markmoredown 'markmod';
+
+my $file = shift;
+
+    my $content;
+    {
+        open my $fh, "<", $file or die $!;
+        local $/ = undef;
+        $content = <$fh>;
+        close $fh;
+    }
+
+    my $md = markmod($content);
+
+#    my $html = qq{
+#    <html>
+#    <head>
+#    <meta charset="utf-8">
+#
+#    <style>
+#        code,
+#        pre {
+#          direction: ltr;
+#          text-align: left;
+#          max-width: 100%;
+#          font-size: 14px;
+#          overflow-x: auto;
+#          background: #f5f5f5;
+#        }
+#        pre {border-bottom: 3px dashed #777; padding: 10px;}
+#        body {
+#            font-family: serif;
+#            font-size: 14pt;
+#            padding: 0 100px;
+#        }
+#        blockquote {
+#            margin-right: 1em;
+#            position: relative;
+#            color: #555;
+#            padding: 10px;
+#            border-right: 5px solid #DDD;
+#          }
+#
+#        blockquote:before {
+#            content: "”";
+#            display: block;
+#            position: absolute;
+#            right: -55px;
+#            top: 5px;
+#            font-family: serif;
+#            font-weight: bold;
+#            font-size: 4.235801032rem;
+#            line-height: 1;
+#            color: #d1d1d1;
+#        }
+#        img {
+#            max-width: 100%;
+#        }
+#        table {
+#            border-top: 1px solid #fff;
+#            border-collapse: collapse;
+#            width: 100%;
+#            direction: ltr;
+#            text-align: left;
+#        }
+#        td, th {
+#            border-left: 1px solid #d9d9d9;
+#            padding: 5px 10px;
+#            width: auto;
+#        }
+#        th {
+#            background-color: #eee;
+#            border-bottom: 1px solid #d9d9d9;
+#            text-align: left;
+#        }
+#        tr:nth-child(odd) {
+#            background-color: #f1f5fa;
+#        }
+#        table table {
+#            margin: 10px 0;
+#            width: auto;
+#        }
+#        table table th, table table td {
+#            background-color: #fff;
+#            border: 1px solid #d9d9d9;
+#            padding: 0.2em 0.5em;
+#            width: auto;
+#        }
+#        mark {
+#            background: yellow;
+#        }
+#    </style>
+#    </head>
+#    <body>
+#    $md
+#    </body>
+#    </html>};
+#    $html =~ s/^ {4}//mg;
+
+    print $md . "\n";

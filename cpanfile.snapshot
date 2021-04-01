@@ -1,12 +1,5 @@
 # carton snapshot format: version 1.0
 DISTRIBUTIONS
-  Algorithm-Diff-1.1903
-    pathname: T/TY/TYEMQ/Algorithm-Diff-1.1903.tar.gz
-    provides:
-      Algorithm::Diff 1.1903
-      Algorithm::Diff::_impl 1.1903
-    requirements:
-      ExtUtils::MakeMaker 0
   App-Cmd-0.331
     pathname: R/RJ/RJBS/App-Cmd-0.331.tar.gz
     provides:
@@ -695,14 +688,6 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
-  Exporter-Tiny-1.000000
-    pathname: T/TO/TOBYINK/Exporter-Tiny-1.000000.tar.gz
-    provides:
-      Exporter::Shiny 1.000000
-      Exporter::Tiny 1.000000
-    requirements:
-      ExtUtils::MakeMaker 6.17
-      perl 5.006001
   File-Copy-Recursive-0.44
     pathname: D/DM/DMUEY/File-Copy-Recursive-0.44.tar.gz
     provides:
@@ -757,16 +742,6 @@ DISTRIBUTIONS
       overload 0
       strict 0
       warnings 0
-  HTML-BBCode-2.07
-    pathname: B/BL/BLOM/HTML-BBCode-2.07.tar.gz
-    provides:
-      HTML::BBCode 2.07
-      HTML::BBCode::StripScripts 0.04
-    requirements:
-      ExtUtils::MakeMaker 0
-      HTML::StripScripts 1.04
-      HTML::StripScripts::Parser 0
-      URI 0
   HTML-Parser-3.72
     pathname: G/GA/GAAS/HTML-Parser-3.72.tar.gz
     provides:
@@ -782,25 +757,6 @@ DISTRIBUTIONS
       HTML::Tagset 3
       XSLoader 0
       perl 5.008
-  HTML-StripScripts-1.06
-    pathname: D/DR/DRTECH/HTML-StripScripts-1.06.tar.gz
-    provides:
-      HTML::StripScripts 1.06
-      MyStripScripts undef
-    requirements:
-      ExtUtils::MakeMaker 0
-      strict 0
-      vars 0
-      warnings 0
-  HTML-StripScripts-Parser-1.03
-    pathname: D/DR/DRTECH/HTML-StripScripts-Parser-1.03.tar.gz
-    provides:
-      HTML::StripScripts::Parser 1.03
-    requirements:
-      ExtUtils::MakeMaker 0
-      HTML::Parser 3.56
-      HTML::StripScripts 1.05
-      Test::More 0
   HTML-Tagset-3.20
     pathname: P/PE/PETDANCE/HTML-Tagset-3.20.tar.gz
     provides:
@@ -845,29 +801,6 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.006002
-  List-MoreUtils-0.428
-    pathname: R/RE/REHSACK/List-MoreUtils-0.428.tar.gz
-    provides:
-      List::MoreUtils 0.428
-      List::MoreUtils::PP 0.428
-    requirements:
-      Exporter::Tiny 0.038
-      ExtUtils::MakeMaker 0
-      List::MoreUtils::XS 0.426
-  List-MoreUtils-XS-0.428
-    pathname: R/RE/REHSACK/List-MoreUtils-XS-0.428.tar.gz
-    provides:
-      List::MoreUtils::XS 0.428
-    requirements:
-      Carp 0
-      ExtUtils::MakeMaker 0
-      File::Basename 0
-      File::Copy 0
-      File::Path 0
-      File::Spec 0
-      IPC::Cmd 0
-      XSLoader 0.22
-      base 0
   MRO-Compat-0.13
     pathname: H/HA/HAARG/MRO-Compat-0.13.tar.gz
     provides:
@@ -886,64 +819,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Mira-00.07.56
-    pathname: K/KI/KIAVASH/mira/Mira-00.07.56.tar.gz
-    provides:
-      Mira 0.007056
-      Mira::CLI 0.007056
-      Mira::CLI::Command::build 0.007056
-      Mira::CLI::Command::init 0.007056
-      Mira::CLI::Command::new 0.007056
-      Mira::CLI::Command::view 0.007056
-      Mira::Config 0.007056
-      Mira::Control::Content 0.007056
-      Mira::Control::Content::Address 0.007056
-      Mira::Control::Content::Date 0.007056
-      Mira::Control::Content::Load 0.007056
-      Mira::Control::Parser::Entry 0.007056
-      Mira::Control::Parser::Markup 0.007056
-      Mira::Control::Parser::MiraMarkdown 0.007056
-      Mira::Control::Parser::img 0.007056
-      Mira::Control::Plugin::Load 0.007056
-      Mira::Control::Plugin::Plug 0.007056
-      Mira::Control::Static 0.007056
-      Mira::Model::Archive 0.007056
-      Mira::Model::Base 0.007056
-      Mira::Model::Floor 0.007056
-      Mira::Plugin 0.007056
-      Mira::Plugin::Date::Jalali 0.007056
-      Mira::Plugin::Jdate 0.007056
-      Mira::Server::Static 0.007056
-      Mira::View 0.007056
-      Mira::View::Archive 0.007056
-      Mira::View::Feed 0.007056
-      Mira::View::Floor 0.007056
-      Mira::View::Main 0.007056
-      Mira::View::Post 0.007056
-      MiraStaticServer 0.007056
-    requirements:
-      App::Cmd 0
-      CGI 0
-      DateTime 0
-      Encode::Locale 0
-      ExtUtils::MakeMaker 0
-      File::Copy::Recursive 0
-      File::ShareDir 0
-      File::ShareDir::Install 0
-      HTML::BBCode 2.06
-      HTTP::Date 0
-      HTTP::Server::Simple 0
-      LWP::MediaTypes 0
-      Markup::Unified 0
-      Template 0
-      Test::Harness 0
-      Text::Markdown v1.0.31
-      Text::Markmoredown 0
-      Text::MultiMarkdown v1.0.34
-      Text::Textile 2.12
-      URI::Escape 0
-      YAML 0
-      perl 5.012
   Module-Build-0.4224
     pathname: L/LE/LEONT/Module-Build-0.4224.tar.gz
     provides:
@@ -1242,17 +1117,6 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Scalar::Util 0
       perl 5.006
-  Sub-Uplevel-0.2800
-    pathname: D/DA/DAGOLDEN/Sub-Uplevel-0.2800.tar.gz
-    provides:
-      Sub::Uplevel 0.2800
-    requirements:
-      Carp 0
-      ExtUtils::MakeMaker 6.17
-      constant 0
-      perl 5.006
-      strict 0
-      warnings 0
   Template-Toolkit-2.27
     pathname: A/AB/ABW/Template-Toolkit-2.27.tar.gz
     provides:
@@ -1314,31 +1178,6 @@ DISTRIBUTIONS
       File::Spec 0.8
       File::Temp 0.12
       Scalar::Util 0
-  Test-Differences-0.64
-    pathname: D/DC/DCANTRELL/Test-Differences-0.64.tar.gz
-    provides:
-      Test::Differences 0.64
-    requirements:
-      Capture::Tiny 0.24
-      Data::Dumper 2.126
-      Test::More 0.88
-      Text::Diff 0.35
-  Test-Exception-0.43
-    pathname: E/EX/EXODIST/Test-Exception-0.43.tar.gz
-    provides:
-      Test::Exception 0.43
-    requirements:
-      Carp 0
-      Exporter 0
-      ExtUtils::MakeMaker 0
-      Sub::Uplevel 0.18
-      Test::Builder 0.7
-      Test::Builder::Tester 1.07
-      Test::Harness 2.03
-      base 0
-      perl 5.006001
-      strict 0
-      warnings 0
   Test-Fatal-0.014
     pathname: R/RJ/RJBS/Test-Fatal-0.014.tar.gz
     provides:
@@ -1358,66 +1197,16 @@ DISTRIBUTIONS
       Text::ASCIIMathML::Node 0.81
     requirements:
       ExtUtils::MakeMaker 0
-  Text-Diff-1.45
-    pathname: N/NE/NEILB/Text-Diff-1.45.tar.gz
+  Text-Markmoredown-0.000036
+    pathname: K/KI/KIAVASH/text/Text-Markmoredown-0.000036.tar.gz
     provides:
-      Text::Diff 1.45
-      Text::Diff::Base 1.45
-      Text::Diff::Config 1.44
-      Text::Diff::Table 1.44
-    requirements:
-      Algorithm::Diff 1.19
-      Exporter 0
-      ExtUtils::MakeMaker 0
-      perl 5.006
-  Text-Markdown-1.000031
-    pathname: B/BO/BOBTFISH/Text-Markdown-1.000031.tar.gz
-    provides:
-      Text::Markdown 1.000031
-    requirements:
-      Digest::MD5 0
-      Encode 0
-      ExtUtils::MakeMaker 6.42
-      FindBin 0
-      List::MoreUtils 0
-      Test::Differences 0
-      Test::Exception 0
-      Test::More 0.42
-      Text::Balanced 0
-  Text-Markmoredown-0.000035
-    pathname: K/KI/KIAVASH/text/Text-Markmoredown-0.000035.tar.gz
-    provides:
-      Text::Markmoredown 0.000035
+      Text::Markmoredown 0.000036
     requirements:
       Digest::MD5 0
       ExtUtils::MakeMaker 0
       HTML::Entities 0
       Text::ASCIIMathML 0
       perl 5.008
-  Text-MultiMarkdown-1.000035
-    pathname: B/BO/BOBTFISH/Text-MultiMarkdown-1.000035.tar.gz
-    provides:
-      Text::MultiMarkdown 1.000035
-    requirements:
-      Digest::MD5 0
-      Encode 0
-      ExtUtils::MakeMaker 6.59
-      FindBin 0
-      HTML::Entities 0
-      List::MoreUtils 0
-      Test::Exception 0
-      Test::More 0.42
-      Text::Markdown v1.0.26
-      perl 5.008
-  Text-Textile-2.13
-    pathname: B/BC/BCHOATE/Text-Textile-2.13.tar.gz
-    provides:
-      Text::Textile 2.13
-    requirements:
-      Exporter 0
-      ExtUtils::MakeMaker 0
-      Test::Harness 2.5
-      Test::More 0
   Try-Tiny-0.30
     pathname: E/ET/ETHER/Try-Tiny-0.30.tar.gz
     provides:

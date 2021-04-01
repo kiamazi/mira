@@ -1,0 +1,2725 @@
+{
+   "abstract" : "Time zone object base class and factory",
+   "author" : [
+      "Dave Rolsky <autarch@urth.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 6.012, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "DateTime-TimeZone",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Code::TidyAll" : "0.56",
+            "Code::TidyAll::Plugin::SortLines::Naturally" : "0.000003",
+            "Code::TidyAll::Plugin::Test::Vars" : "0.02",
+            "DateTime" : "0",
+            "Dist::Zilla::Plugin::OSPrereqs" : "0",
+            "File::Find::Rule" : "0",
+            "File::Spec" : "0",
+            "File::pushd" : "0",
+            "Getopt::Long" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
+            "IPC::System::Simple" : "0",
+            "List::Util" : "1.33",
+            "Locale::Country" : "3.11",
+            "Net::FTP" : "0",
+            "Parallel::ForkManager" : "1.19",
+            "Path::Class" : "0",
+            "Perl::Critic" : "1.126",
+            "Perl::Tidy" : "20160302",
+            "Pod::Coverage::TrustPod" : "0",
+            "Pod::Wordlist" : "0",
+            "Test::CPAN::Changes" : "0.19",
+            "Test::CPAN::Meta::JSON" : "0.16",
+            "Test::CleanNamespaces" : "0.15",
+            "Test::Code::TidyAll" : "0.50",
+            "Test::EOL" : "0",
+            "Test::Mojibake" : "0",
+            "Test::More" : "0.96",
+            "Test::NoTabs" : "0",
+            "Test::Output" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Pod::Coverage" : "1.08",
+            "Test::Portability::Files" : "0",
+            "Test::Spelling" : "0.12",
+            "Test::Taint" : "0",
+            "Test::Vars" : "0.009",
+            "Test::Version" : "2.05",
+            "autodie" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Class::Singleton" : "1.03",
+            "Cwd" : "3",
+            "File::Basename" : "0",
+            "File::Compare" : "0",
+            "File::Find" : "0",
+            "File::Spec" : "0",
+            "List::Util" : "1.33",
+            "Module::Runtime" : "0",
+            "Params::ValidationCompiler" : "0.13",
+            "Specio::Library::Builtins" : "0",
+            "Specio::Library::String" : "0",
+            "Try::Tiny" : "0",
+            "constant" : "0",
+            "namespace::autoclean" : "0",
+            "parent" : "0",
+            "perl" : "5.008004",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "recommends" : {
+            "CPAN::Meta" : "2.120900"
+         },
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0",
+            "File::Copy" : "0",
+            "File::Path" : "0",
+            "File::Spec" : "0",
+            "File::Spec::Functions" : "0",
+            "File::Temp" : "0",
+            "Storable" : "0",
+            "Sys::Hostname" : "0",
+            "Test::Fatal" : "0",
+            "Test::More" : "0.96",
+            "Test::Requires" : "0",
+            "base" : "0",
+            "lib" : "0",
+            "overload" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "DateTime::TimeZone" : {
+         "file" : "lib/DateTime/TimeZone.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Abidjan" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Abidjan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Accra" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Accra.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Algiers" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Algiers.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Bissau" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Bissau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Cairo" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Cairo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Casablanca" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Casablanca.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Ceuta" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Ceuta.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::El_Aaiun" : {
+         "file" : "lib/DateTime/TimeZone/Africa/El_Aaiun.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Johannesburg" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Johannesburg.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Juba" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Juba.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Khartoum" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Khartoum.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Lagos" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Lagos.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Maputo" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Maputo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Monrovia" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Monrovia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Nairobi" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Nairobi.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Ndjamena" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Ndjamena.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Sao_Tome" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Sao_Tome.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Tripoli" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Tripoli.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Tunis" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Tunis.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Africa::Windhoek" : {
+         "file" : "lib/DateTime/TimeZone/Africa/Windhoek.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Adak" : {
+         "file" : "lib/DateTime/TimeZone/America/Adak.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Anchorage" : {
+         "file" : "lib/DateTime/TimeZone/America/Anchorage.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Araguaina" : {
+         "file" : "lib/DateTime/TimeZone/America/Araguaina.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Buenos_Aires" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Buenos_Aires.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Catamarca" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Catamarca.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Cordoba" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Cordoba.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Jujuy" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Jujuy.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::La_Rioja" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/La_Rioja.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Mendoza" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Mendoza.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Rio_Gallegos" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Rio_Gallegos.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Salta" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Salta.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::San_Juan" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/San_Juan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::San_Luis" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/San_Luis.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Tucuman" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Tucuman.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Argentina::Ushuaia" : {
+         "file" : "lib/DateTime/TimeZone/America/Argentina/Ushuaia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Asuncion" : {
+         "file" : "lib/DateTime/TimeZone/America/Asuncion.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Atikokan" : {
+         "file" : "lib/DateTime/TimeZone/America/Atikokan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Bahia" : {
+         "file" : "lib/DateTime/TimeZone/America/Bahia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Bahia_Banderas" : {
+         "file" : "lib/DateTime/TimeZone/America/Bahia_Banderas.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Barbados" : {
+         "file" : "lib/DateTime/TimeZone/America/Barbados.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Belem" : {
+         "file" : "lib/DateTime/TimeZone/America/Belem.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Belize" : {
+         "file" : "lib/DateTime/TimeZone/America/Belize.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Blanc_Sablon" : {
+         "file" : "lib/DateTime/TimeZone/America/Blanc_Sablon.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Boa_Vista" : {
+         "file" : "lib/DateTime/TimeZone/America/Boa_Vista.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Bogota" : {
+         "file" : "lib/DateTime/TimeZone/America/Bogota.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Boise" : {
+         "file" : "lib/DateTime/TimeZone/America/Boise.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Cambridge_Bay" : {
+         "file" : "lib/DateTime/TimeZone/America/Cambridge_Bay.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Campo_Grande" : {
+         "file" : "lib/DateTime/TimeZone/America/Campo_Grande.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Cancun" : {
+         "file" : "lib/DateTime/TimeZone/America/Cancun.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Caracas" : {
+         "file" : "lib/DateTime/TimeZone/America/Caracas.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Cayenne" : {
+         "file" : "lib/DateTime/TimeZone/America/Cayenne.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Chicago" : {
+         "file" : "lib/DateTime/TimeZone/America/Chicago.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Chihuahua" : {
+         "file" : "lib/DateTime/TimeZone/America/Chihuahua.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Costa_Rica" : {
+         "file" : "lib/DateTime/TimeZone/America/Costa_Rica.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Creston" : {
+         "file" : "lib/DateTime/TimeZone/America/Creston.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Cuiaba" : {
+         "file" : "lib/DateTime/TimeZone/America/Cuiaba.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Curacao" : {
+         "file" : "lib/DateTime/TimeZone/America/Curacao.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Danmarkshavn" : {
+         "file" : "lib/DateTime/TimeZone/America/Danmarkshavn.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Dawson" : {
+         "file" : "lib/DateTime/TimeZone/America/Dawson.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Dawson_Creek" : {
+         "file" : "lib/DateTime/TimeZone/America/Dawson_Creek.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Denver" : {
+         "file" : "lib/DateTime/TimeZone/America/Denver.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Detroit" : {
+         "file" : "lib/DateTime/TimeZone/America/Detroit.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Edmonton" : {
+         "file" : "lib/DateTime/TimeZone/America/Edmonton.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Eirunepe" : {
+         "file" : "lib/DateTime/TimeZone/America/Eirunepe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::El_Salvador" : {
+         "file" : "lib/DateTime/TimeZone/America/El_Salvador.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Fort_Nelson" : {
+         "file" : "lib/DateTime/TimeZone/America/Fort_Nelson.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Fortaleza" : {
+         "file" : "lib/DateTime/TimeZone/America/Fortaleza.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Glace_Bay" : {
+         "file" : "lib/DateTime/TimeZone/America/Glace_Bay.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Godthab" : {
+         "file" : "lib/DateTime/TimeZone/America/Godthab.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Goose_Bay" : {
+         "file" : "lib/DateTime/TimeZone/America/Goose_Bay.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Grand_Turk" : {
+         "file" : "lib/DateTime/TimeZone/America/Grand_Turk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Guatemala" : {
+         "file" : "lib/DateTime/TimeZone/America/Guatemala.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Guayaquil" : {
+         "file" : "lib/DateTime/TimeZone/America/Guayaquil.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Guyana" : {
+         "file" : "lib/DateTime/TimeZone/America/Guyana.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Halifax" : {
+         "file" : "lib/DateTime/TimeZone/America/Halifax.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Havana" : {
+         "file" : "lib/DateTime/TimeZone/America/Havana.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Hermosillo" : {
+         "file" : "lib/DateTime/TimeZone/America/Hermosillo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Indianapolis" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Indianapolis.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Knox" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Knox.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Marengo" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Marengo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Petersburg" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Petersburg.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Tell_City" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Tell_City.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Vevay" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Vevay.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Vincennes" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Vincennes.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Indiana::Winamac" : {
+         "file" : "lib/DateTime/TimeZone/America/Indiana/Winamac.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Inuvik" : {
+         "file" : "lib/DateTime/TimeZone/America/Inuvik.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Iqaluit" : {
+         "file" : "lib/DateTime/TimeZone/America/Iqaluit.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Jamaica" : {
+         "file" : "lib/DateTime/TimeZone/America/Jamaica.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Juneau" : {
+         "file" : "lib/DateTime/TimeZone/America/Juneau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Kentucky::Louisville" : {
+         "file" : "lib/DateTime/TimeZone/America/Kentucky/Louisville.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Kentucky::Monticello" : {
+         "file" : "lib/DateTime/TimeZone/America/Kentucky/Monticello.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::La_Paz" : {
+         "file" : "lib/DateTime/TimeZone/America/La_Paz.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Lima" : {
+         "file" : "lib/DateTime/TimeZone/America/Lima.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Los_Angeles" : {
+         "file" : "lib/DateTime/TimeZone/America/Los_Angeles.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Maceio" : {
+         "file" : "lib/DateTime/TimeZone/America/Maceio.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Managua" : {
+         "file" : "lib/DateTime/TimeZone/America/Managua.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Manaus" : {
+         "file" : "lib/DateTime/TimeZone/America/Manaus.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Martinique" : {
+         "file" : "lib/DateTime/TimeZone/America/Martinique.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Matamoros" : {
+         "file" : "lib/DateTime/TimeZone/America/Matamoros.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Mazatlan" : {
+         "file" : "lib/DateTime/TimeZone/America/Mazatlan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Menominee" : {
+         "file" : "lib/DateTime/TimeZone/America/Menominee.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Merida" : {
+         "file" : "lib/DateTime/TimeZone/America/Merida.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Metlakatla" : {
+         "file" : "lib/DateTime/TimeZone/America/Metlakatla.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Mexico_City" : {
+         "file" : "lib/DateTime/TimeZone/America/Mexico_City.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Miquelon" : {
+         "file" : "lib/DateTime/TimeZone/America/Miquelon.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Moncton" : {
+         "file" : "lib/DateTime/TimeZone/America/Moncton.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Monterrey" : {
+         "file" : "lib/DateTime/TimeZone/America/Monterrey.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Montevideo" : {
+         "file" : "lib/DateTime/TimeZone/America/Montevideo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Nassau" : {
+         "file" : "lib/DateTime/TimeZone/America/Nassau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::New_York" : {
+         "file" : "lib/DateTime/TimeZone/America/New_York.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Nipigon" : {
+         "file" : "lib/DateTime/TimeZone/America/Nipigon.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Nome" : {
+         "file" : "lib/DateTime/TimeZone/America/Nome.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Noronha" : {
+         "file" : "lib/DateTime/TimeZone/America/Noronha.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::North_Dakota::Beulah" : {
+         "file" : "lib/DateTime/TimeZone/America/North_Dakota/Beulah.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::North_Dakota::Center" : {
+         "file" : "lib/DateTime/TimeZone/America/North_Dakota/Center.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::North_Dakota::New_Salem" : {
+         "file" : "lib/DateTime/TimeZone/America/North_Dakota/New_Salem.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Ojinaga" : {
+         "file" : "lib/DateTime/TimeZone/America/Ojinaga.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Panama" : {
+         "file" : "lib/DateTime/TimeZone/America/Panama.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Pangnirtung" : {
+         "file" : "lib/DateTime/TimeZone/America/Pangnirtung.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Paramaribo" : {
+         "file" : "lib/DateTime/TimeZone/America/Paramaribo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Phoenix" : {
+         "file" : "lib/DateTime/TimeZone/America/Phoenix.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Port_au_Prince" : {
+         "file" : "lib/DateTime/TimeZone/America/Port_au_Prince.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Port_of_Spain" : {
+         "file" : "lib/DateTime/TimeZone/America/Port_of_Spain.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Porto_Velho" : {
+         "file" : "lib/DateTime/TimeZone/America/Porto_Velho.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Puerto_Rico" : {
+         "file" : "lib/DateTime/TimeZone/America/Puerto_Rico.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Punta_Arenas" : {
+         "file" : "lib/DateTime/TimeZone/America/Punta_Arenas.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Rainy_River" : {
+         "file" : "lib/DateTime/TimeZone/America/Rainy_River.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Rankin_Inlet" : {
+         "file" : "lib/DateTime/TimeZone/America/Rankin_Inlet.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Recife" : {
+         "file" : "lib/DateTime/TimeZone/America/Recife.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Regina" : {
+         "file" : "lib/DateTime/TimeZone/America/Regina.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Resolute" : {
+         "file" : "lib/DateTime/TimeZone/America/Resolute.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Rio_Branco" : {
+         "file" : "lib/DateTime/TimeZone/America/Rio_Branco.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Santarem" : {
+         "file" : "lib/DateTime/TimeZone/America/Santarem.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Santiago" : {
+         "file" : "lib/DateTime/TimeZone/America/Santiago.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Santo_Domingo" : {
+         "file" : "lib/DateTime/TimeZone/America/Santo_Domingo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Sao_Paulo" : {
+         "file" : "lib/DateTime/TimeZone/America/Sao_Paulo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Scoresbysund" : {
+         "file" : "lib/DateTime/TimeZone/America/Scoresbysund.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Sitka" : {
+         "file" : "lib/DateTime/TimeZone/America/Sitka.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::St_Johns" : {
+         "file" : "lib/DateTime/TimeZone/America/St_Johns.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Swift_Current" : {
+         "file" : "lib/DateTime/TimeZone/America/Swift_Current.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Tegucigalpa" : {
+         "file" : "lib/DateTime/TimeZone/America/Tegucigalpa.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Thule" : {
+         "file" : "lib/DateTime/TimeZone/America/Thule.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Thunder_Bay" : {
+         "file" : "lib/DateTime/TimeZone/America/Thunder_Bay.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Tijuana" : {
+         "file" : "lib/DateTime/TimeZone/America/Tijuana.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Toronto" : {
+         "file" : "lib/DateTime/TimeZone/America/Toronto.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Vancouver" : {
+         "file" : "lib/DateTime/TimeZone/America/Vancouver.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Whitehorse" : {
+         "file" : "lib/DateTime/TimeZone/America/Whitehorse.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Winnipeg" : {
+         "file" : "lib/DateTime/TimeZone/America/Winnipeg.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Yakutat" : {
+         "file" : "lib/DateTime/TimeZone/America/Yakutat.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::America::Yellowknife" : {
+         "file" : "lib/DateTime/TimeZone/America/Yellowknife.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Casey" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Casey.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Davis" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Davis.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::DumontDUrville" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/DumontDUrville.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Macquarie" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Macquarie.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Mawson" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Mawson.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Palmer" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Palmer.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Rothera" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Rothera.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Syowa" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Syowa.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Troll" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Troll.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Antarctica::Vostok" : {
+         "file" : "lib/DateTime/TimeZone/Antarctica/Vostok.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Almaty" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Almaty.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Amman" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Amman.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Anadyr" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Anadyr.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Aqtau" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Aqtau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Aqtobe" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Aqtobe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Ashgabat" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Ashgabat.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Atyrau" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Atyrau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Baghdad" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Baghdad.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Baku" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Baku.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Bangkok" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Bangkok.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Barnaul" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Barnaul.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Beirut" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Beirut.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Bishkek" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Bishkek.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Brunei" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Brunei.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Chita" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Chita.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Choibalsan" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Choibalsan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Colombo" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Colombo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Damascus" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Damascus.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Dhaka" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Dhaka.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Dili" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Dili.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Dubai" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Dubai.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Dushanbe" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Dushanbe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Famagusta" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Famagusta.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Gaza" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Gaza.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Hebron" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Hebron.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Ho_Chi_Minh" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Ho_Chi_Minh.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Hong_Kong" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Hong_Kong.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Hovd" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Hovd.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Irkutsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Irkutsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Jakarta" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Jakarta.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Jayapura" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Jayapura.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Jerusalem" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Jerusalem.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kabul" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kabul.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kamchatka" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kamchatka.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Karachi" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Karachi.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kathmandu" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kathmandu.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Khandyga" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Khandyga.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kolkata" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kolkata.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Krasnoyarsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Krasnoyarsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kuala_Lumpur" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kuala_Lumpur.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Kuching" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Kuching.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Macau" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Macau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Magadan" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Magadan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Makassar" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Makassar.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Manila" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Manila.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Nicosia" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Nicosia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Novokuznetsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Novokuznetsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Novosibirsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Novosibirsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Omsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Omsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Oral" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Oral.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Pontianak" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Pontianak.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Pyongyang" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Pyongyang.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Qatar" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Qatar.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Qyzylorda" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Qyzylorda.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Riyadh" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Riyadh.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Sakhalin" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Sakhalin.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Samarkand" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Samarkand.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Seoul" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Seoul.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Shanghai" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Shanghai.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Singapore" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Singapore.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Srednekolymsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Srednekolymsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Taipei" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Taipei.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Tashkent" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Tashkent.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Tbilisi" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Tbilisi.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Tehran" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Tehran.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Thimphu" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Thimphu.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Tokyo" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Tokyo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Tomsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Tomsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Ulaanbaatar" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Ulaanbaatar.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Urumqi" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Urumqi.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Ust_Nera" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Ust_Nera.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Vladivostok" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Vladivostok.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Yakutsk" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Yakutsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Yangon" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Yangon.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Yekaterinburg" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Yekaterinburg.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Asia::Yerevan" : {
+         "file" : "lib/DateTime/TimeZone/Asia/Yerevan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Azores" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Azores.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Bermuda" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Bermuda.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Canary" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Canary.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Cape_Verde" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Cape_Verde.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Faroe" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Faroe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Madeira" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Madeira.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Reykjavik" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Reykjavik.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::South_Georgia" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/South_Georgia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Atlantic::Stanley" : {
+         "file" : "lib/DateTime/TimeZone/Atlantic/Stanley.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Adelaide" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Adelaide.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Brisbane" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Brisbane.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Broken_Hill" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Broken_Hill.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Currie" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Currie.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Darwin" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Darwin.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Eucla" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Eucla.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Hobart" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Hobart.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Lindeman" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Lindeman.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Lord_Howe" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Lord_Howe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Melbourne" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Melbourne.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Perth" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Perth.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Australia::Sydney" : {
+         "file" : "lib/DateTime/TimeZone/Australia/Sydney.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::CET" : {
+         "file" : "lib/DateTime/TimeZone/CET.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::CST6CDT" : {
+         "file" : "lib/DateTime/TimeZone/CST6CDT.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Catalog" : {
+         "file" : "lib/DateTime/TimeZone/Catalog.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::EET" : {
+         "file" : "lib/DateTime/TimeZone/EET.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::EST" : {
+         "file" : "lib/DateTime/TimeZone/EST.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::EST5EDT" : {
+         "file" : "lib/DateTime/TimeZone/EST5EDT.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Amsterdam" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Amsterdam.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Andorra" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Andorra.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Astrakhan" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Astrakhan.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Athens" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Athens.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Belgrade" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Belgrade.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Berlin" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Berlin.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Brussels" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Brussels.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Bucharest" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Bucharest.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Budapest" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Budapest.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Chisinau" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Chisinau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Copenhagen" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Copenhagen.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Dublin" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Dublin.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Gibraltar" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Gibraltar.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Helsinki" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Helsinki.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Istanbul" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Istanbul.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Kaliningrad" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Kaliningrad.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Kiev" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Kiev.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Kirov" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Kirov.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Lisbon" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Lisbon.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::London" : {
+         "file" : "lib/DateTime/TimeZone/Europe/London.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Luxembourg" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Luxembourg.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Madrid" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Madrid.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Malta" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Malta.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Minsk" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Minsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Monaco" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Monaco.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Moscow" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Moscow.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Oslo" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Oslo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Paris" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Paris.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Prague" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Prague.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Riga" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Riga.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Rome" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Rome.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Samara" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Samara.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Saratov" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Saratov.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Simferopol" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Simferopol.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Sofia" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Sofia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Stockholm" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Stockholm.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Tallinn" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Tallinn.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Tirane" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Tirane.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Ulyanovsk" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Ulyanovsk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Uzhgorod" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Uzhgorod.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Vienna" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Vienna.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Vilnius" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Vilnius.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Volgograd" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Volgograd.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Warsaw" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Warsaw.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Zaporozhye" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Zaporozhye.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Europe::Zurich" : {
+         "file" : "lib/DateTime/TimeZone/Europe/Zurich.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Floating" : {
+         "file" : "lib/DateTime/TimeZone/Floating.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::HST" : {
+         "file" : "lib/DateTime/TimeZone/HST.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Chagos" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Chagos.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Christmas" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Christmas.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Cocos" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Cocos.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Kerguelen" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Kerguelen.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Mahe" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Mahe.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Maldives" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Maldives.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Mauritius" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Mauritius.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Indian::Reunion" : {
+         "file" : "lib/DateTime/TimeZone/Indian/Reunion.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Local" : {
+         "file" : "lib/DateTime/TimeZone/Local.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Local::Android" : {
+         "file" : "lib/DateTime/TimeZone/Local/Android.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Local::Unix" : {
+         "file" : "lib/DateTime/TimeZone/Local/Unix.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Local::VMS" : {
+         "file" : "lib/DateTime/TimeZone/Local/VMS.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::MET" : {
+         "file" : "lib/DateTime/TimeZone/MET.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::MST" : {
+         "file" : "lib/DateTime/TimeZone/MST.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::MST7MDT" : {
+         "file" : "lib/DateTime/TimeZone/MST7MDT.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OffsetOnly" : {
+         "file" : "lib/DateTime/TimeZone/OffsetOnly.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OlsonDB" : {
+         "file" : "lib/DateTime/TimeZone/OlsonDB.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OlsonDB::Change" : {
+         "file" : "lib/DateTime/TimeZone/OlsonDB/Change.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OlsonDB::Observance" : {
+         "file" : "lib/DateTime/TimeZone/OlsonDB/Observance.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OlsonDB::Rule" : {
+         "file" : "lib/DateTime/TimeZone/OlsonDB/Rule.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::OlsonDB::Zone" : {
+         "file" : "lib/DateTime/TimeZone/OlsonDB/Zone.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::PST8PDT" : {
+         "file" : "lib/DateTime/TimeZone/PST8PDT.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Apia" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Apia.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Auckland" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Auckland.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Bougainville" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Bougainville.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Chatham" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Chatham.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Chuuk" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Chuuk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Easter" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Easter.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Efate" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Efate.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Enderbury" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Enderbury.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Fakaofo" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Fakaofo.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Fiji" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Fiji.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Funafuti" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Funafuti.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Galapagos" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Galapagos.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Gambier" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Gambier.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Guadalcanal" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Guadalcanal.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Guam" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Guam.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Honolulu" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Honolulu.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Kiritimati" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Kiritimati.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Kosrae" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Kosrae.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Kwajalein" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Kwajalein.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Majuro" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Majuro.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Marquesas" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Marquesas.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Nauru" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Nauru.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Niue" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Niue.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Norfolk" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Norfolk.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Noumea" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Noumea.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Pago_Pago" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Pago_Pago.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Palau" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Palau.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Pitcairn" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Pitcairn.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Pohnpei" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Pohnpei.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Port_Moresby" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Port_Moresby.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Rarotonga" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Rarotonga.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Tahiti" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Tahiti.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Tarawa" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Tarawa.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Tongatapu" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Tongatapu.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Wake" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Wake.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::Pacific::Wallis" : {
+         "file" : "lib/DateTime/TimeZone/Pacific/Wallis.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::UTC" : {
+         "file" : "lib/DateTime/TimeZone/UTC.pm",
+         "version" : "2.19"
+      },
+      "DateTime::TimeZone::WET" : {
+         "file" : "lib/DateTime/TimeZone/WET.pm",
+         "version" : "2.19"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/houseabsolute/DateTime-TimeZone/issues"
+      },
+      "homepage" : "http://metacpan.org/release/DateTime-TimeZone",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/houseabsolute/DateTime-TimeZone.git",
+         "web" : "https://github.com/houseabsolute/DateTime-TimeZone"
+      }
+   },
+   "version" : "2.19",
+   "x_Dist_Zilla" : {
+      "perl" : {
+         "version" : "5.026002"
+      },
+      "plugins" : [
+         {
+            "class" : "Dist::Zilla::Plugin::GatherDir",
+            "config" : {
+               "Dist::Zilla::Plugin::GatherDir" : {
+                  "exclude_filename" : [
+                     "CONTRIBUTING.md",
+                     "LICENSE",
+                     "Makefile.PL",
+                     "README.md",
+                     "cpanfile"
+                  ],
+                  "exclude_match" : [
+                     "^t/zd.*"
+                  ],
+                  "follow_symlinks" : 0,
+                  "include_dotfiles" : 0,
+                  "prefix" : "",
+                  "prune_directory" : [],
+                  "root" : "."
+               }
+            },
+            "name" : "GatherDir",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::PruneCruft",
+            "name" : "PruneCruft",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::lib",
+            "config" : {
+               "Dist::Zilla::Plugin::lib" : {
+                  "lib" : [
+                     "inc"
+                  ]
+               }
+            },
+            "name" : "lib",
+            "version" : "0.001002"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MakeMaker",
+            "config" : {
+               "Dist::Zilla::Role::TestRunner" : {
+                  "default_jobs" : 1
+               }
+            },
+            "name" : "=DTTZBundle/MakeMaker",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::ManifestSkip",
+            "name" : "=DTTZBundle/ManifestSkip",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::License",
+            "name" : "=DTTZBundle/License",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::ExecDir",
+            "name" : "=DTTZBundle/ExecDir",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::ShareDir",
+            "name" : "=DTTZBundle/ShareDir",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Manifest",
+            "name" : "=DTTZBundle/Manifest",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CheckVersionIncrement",
+            "name" : "=DTTZBundle/CheckVersionIncrement",
+            "version" : "0.121750"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::TestRelease",
+            "name" : "=DTTZBundle/TestRelease",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::ConfirmRelease",
+            "name" : "=DTTZBundle/ConfirmRelease",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::UploadToCPAN",
+            "name" : "=DTTZBundle/UploadToCPAN",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::VersionFromMainModule",
+            "config" : {
+               "Dist::Zilla::Role::ModuleMetadata" : {
+                  "Module::Metadata" : "1.000033",
+                  "version" : "0.006"
+               }
+            },
+            "name" : "=DTTZBundle/VersionFromMainModule",
+            "version" : "0.04"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Authority",
+            "name" : "=DTTZBundle/Authority",
+            "version" : "1.009"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::AutoPrereqs",
+            "name" : "=DTTZBundle/AutoPrereqs",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CopyFilesFromBuild",
+            "name" : "=DTTZBundle/CopyFilesFromBuild",
+            "version" : "0.170880"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::GitHub::Meta",
+            "name" : "=DTTZBundle/GitHub::Meta",
+            "version" : "0.44"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::GitHub::Update",
+            "config" : {
+               "Dist::Zilla::Plugin::GitHub::Update" : {
+                  "metacpan" : 1
+               }
+            },
+            "name" : "=DTTZBundle/GitHub::Update",
+            "version" : "0.44"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaResources",
+            "name" : "=DTTZBundle/MetaResources",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaProvides::Package",
+            "config" : {
+               "Dist::Zilla::Plugin::MetaProvides::Package" : {
+                  "finder_objects" : [
+                     {
+                        "class" : "Dist::Zilla::Plugin::FinderCode",
+                        "name" : "=DTTZBundle/MetaProvides::Package/AUTOVIV/:InstallModulesPM",
+                        "version" : "6.012"
+                     }
+                  ],
+                  "include_underscores" : 0
+               },
+               "Dist::Zilla::Role::MetaProvider::Provider" : {
+                  "$Dist::Zilla::Role::MetaProvider::Provider::VERSION" : "2.002004",
+                  "inherit_missing" : 1,
+                  "inherit_version" : 1,
+                  "meta_noindex" : 1
+               },
+               "Dist::Zilla::Role::ModuleMetadata" : {
+                  "Module::Metadata" : "1.000033",
+                  "version" : "0.006"
+               }
+            },
+            "name" : "=DTTZBundle/MetaProvides::Package",
+            "version" : "2.004003"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Meta::Contributors",
+            "name" : "=DTTZBundle/Meta::Contributors",
+            "version" : "0.003"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaConfig",
+            "name" : "=DTTZBundle/MetaConfig",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaJSON",
+            "name" : "=DTTZBundle/MetaJSON",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaYAML",
+            "name" : "=DTTZBundle/MetaYAML",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::NextRelease",
+            "name" : "=DTTZBundle/NextRelease",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "test",
+                  "type" : "requires"
+               }
+            },
+            "name" : "=DTTZBundle/Test::More with subtest",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "develop",
+                  "type" : "requires"
+               }
+            },
+            "name" : "=DTTZBundle/Modules for use with tidyall",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "develop",
+                  "type" : "requires"
+               }
+            },
+            "name" : "=DTTZBundle/Test::Version which fixes https://github.com/plicease/Test-Version/issues/7",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::PromptIfStale",
+            "config" : {
+               "Dist::Zilla::Plugin::PromptIfStale" : {
+                  "check_all_plugins" : 0,
+                  "check_all_prereqs" : 0,
+                  "modules" : [
+                     "Dist::Zilla::PluginBundle::DROLSKY"
+                  ],
+                  "phase" : "build",
+                  "run_under_travis" : 0,
+                  "skip" : []
+               }
+            },
+            "name" : "=DTTZBundle/Dist::Zilla::PluginBundle::DROLSKY",
+            "version" : "0.055"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::PromptIfStale",
+            "config" : {
+               "Dist::Zilla::Plugin::PromptIfStale" : {
+                  "check_all_plugins" : 1,
+                  "check_all_prereqs" : 1,
+                  "modules" : [],
+                  "phase" : "release",
+                  "run_under_travis" : 0,
+                  "skip" : [
+                     "Dist::Zilla::Plugin::DROLSKY::Contributors",
+                     "Dist::Zilla::Plugin::DROLSKY::Git::CheckFor::CorrectBranch",
+                     "Dist::Zilla::Plugin::DROLSKY::License",
+                     "Dist::Zilla::Plugin::DROLSKY::TidyAll",
+                     "Dist::Zilla::Plugin::DROLSKY::WeaverConfig",
+                     "Pod::Weaver::PluginBundle::DROLSKY"
+                  ]
+               }
+            },
+            "name" : "=DTTZBundle/PromptIfStale",
+            "version" : "0.055"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Pod::Coverage::Configurable",
+            "name" : "=DTTZBundle/Test::Pod::Coverage::Configurable",
+            "version" : "0.07"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::PodSpelling",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::PodSpelling" : {
+                  "directories" : [
+                     "bin",
+                     "lib"
+                  ],
+                  "spell_cmd" : "",
+                  "stopwords" : [
+                     "AE",
+                     "AO",
+                     "API",
+                     "AQ",
+                     "Aland",
+                     "BD",
+                     "BG",
+                     "BH",
+                     "BJ",
+                     "BN",
+                     "BQ",
+                     "BT",
+                     "BW",
+                     "BZ",
+                     "Barthelemy",
+                     "Bolivarian",
+                     "Bonaire",
+                     "Burkina",
+                     "CN",
+                     "CPAN",
+                     "CX",
+                     "CY",
+                     "Cabo",
+                     "Caicos",
+                     "Costa",
+                     "Cunha",
+                     "Czechia",
+                     "DK",
+                     "DM",
+                     "DROLSKY",
+                     "DROLSKY's",
+                     "Darussalam",
+                     "DateTime",
+                     "EE",
+                     "EG",
+                     "El",
+                     "Eustatius",
+                     "FI",
+                     "FJ",
+                     "FK",
+                     "FO",
+                     "Faroe",
+                     "Faso",
+                     "FromEnv",
+                     "Futuna",
+                     "GF",
+                     "GG",
+                     "GH",
+                     "GL",
+                     "GN",
+                     "GQ",
+                     "GW",
+                     "GY",
+                     "HK",
+                     "HN",
+                     "HPUX",
+                     "HU",
+                     "Hong",
+                     "IM",
+                     "JE",
+                     "JM",
+                     "Jamahiriya",
+                     "KE",
+                     "KH",
+                     "KI",
+                     "KZ",
+                     "Kitts",
+                     "LK",
+                     "LV",
+                     "LY",
+                     "Lanka",
+                     "Leone",
+                     "Leste",
+                     "MF",
+                     "MH",
+                     "MQ",
+                     "MX",
+                     "MZ",
+                     "Maarten",
+                     "Malvinas",
+                     "Marino",
+                     "Mayen",
+                     "Mayotte",
+                     "Millenium",
+                     "Miquelon",
+                     "NG",
+                     "NL",
+                     "Niue",
+                     "PN",
+                     "PY",
+                     "Palau",
+                     "Papua",
+                     "PayPal",
+                     "PayPal",
+                     "Plurinational",
+                     "Puerto",
+                     "QA",
+                     "RO",
+                     "RW",
+                     "Rata",
+                     "Rica",
+                     "Rolsky",
+                     "Rolsky's",
+                     "SG",
+                     "SL",
+                     "SV",
+                     "SX",
+                     "SY",
+                     "SZ",
+                     "Saba",
+                     "Sao",
+                     "Sint",
+                     "Sri",
+                     "Starman",
+                     "Starman",
+                     "Storable",
+                     "Subclass",
+                     "Subclasses",
+                     "TF",
+                     "TG",
+                     "TJ",
+                     "TK",
+                     "TT",
+                     "TW",
+                     "TZ",
+                     "TZ",
+                     "Timor",
+                     "Tokelau",
+                     "UA",
+                     "UG",
+                     "UIs",
+                     "UTC",
+                     "UY",
+                     "UZ",
+                     "VC",
+                     "VE",
+                     "VMS",
+                     "VN",
+                     "VU",
+                     "Viet",
+                     "WF",
+                     "WS",
+                     "XP",
+                     "ZA",
+                     "ZM",
+                     "ZW",
+                     "Zealand",
+                     "d'Ivoire",
+                     "da",
+                     "datetime",
+                     "drolsky",
+                     "env",
+                     "pre",
+                     "subclasses",
+                     "timezones",
+                     "versa"
+                  ],
+                  "wordlist" : "Pod::Wordlist"
+               }
+            },
+            "name" : "=DTTZBundle/Test::PodSpelling",
+            "version" : "2.007005"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::PodSyntaxTests",
+            "name" : "=DTTZBundle/PodSyntaxTests",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::RunExtraTests",
+            "config" : {
+               "Dist::Zilla::Role::TestRunner" : {
+                  "default_jobs" : 1
+               }
+            },
+            "name" : "=DTTZBundle/RunExtraTests",
+            "version" : "0.029"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MojibakeTests",
+            "name" : "=DTTZBundle/MojibakeTests",
+            "version" : "0.8"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::CleanNamespaces",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::CleanNamespaces" : {
+                  "filename" : "xt/author/clean-namespaces.t",
+                  "skips" : []
+               }
+            },
+            "name" : "=DTTZBundle/Test::CleanNamespaces",
+            "version" : "0.006"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::CPAN::Changes",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::CPAN::Changes" : {
+                  "changelog" : "Changes"
+               }
+            },
+            "name" : "=DTTZBundle/Test::CPAN::Changes",
+            "version" : "0.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::CPAN::Meta::JSON",
+            "name" : "=DTTZBundle/Test::CPAN::Meta::JSON",
+            "version" : "0.004"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::EOL",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::EOL" : {
+                  "filename" : "xt/author/eol.t",
+                  "finder" : [
+                     ":ExecFiles",
+                     ":InstallModules",
+                     ":TestFiles"
+                  ],
+                  "trailing_whitespace" : 1
+               }
+            },
+            "name" : "=DTTZBundle/Test::EOL",
+            "version" : "0.19"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::NoTabs",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::NoTabs" : {
+                  "filename" : "xt/author/no-tabs.t",
+                  "finder" : [
+                     ":InstallModules",
+                     ":ExecFiles",
+                     ":TestFiles"
+                  ]
+               }
+            },
+            "name" : "=DTTZBundle/Test::NoTabs",
+            "version" : "0.15"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Portability",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::Portability" : {
+                  "options" : ""
+               }
+            },
+            "name" : "=DTTZBundle/Test::Portability",
+            "version" : "2.001000"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::TidyAll",
+            "name" : "=DTTZBundle/Test::TidyAll",
+            "version" : "0.04"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Compile",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::Compile" : {
+                  "bail_out_on_fail" : 0,
+                  "fail_on_warning" : "author",
+                  "fake_home" : 0,
+                  "filename" : "xt/author/00-compile.t",
+                  "module_finder" : [
+                     ":InstallModules"
+                  ],
+                  "needs_display" : 0,
+                  "phase" : "develop",
+                  "script_finder" : [
+                     ":PerlExecFiles"
+                  ],
+                  "skips" : [],
+                  "switch" : []
+               }
+            },
+            "name" : "=DTTZBundle/Test::Compile",
+            "version" : "2.058"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::ReportPrereqs",
+            "name" : "=DTTZBundle/Test::ReportPrereqs",
+            "version" : "0.027"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Version",
+            "name" : "=DTTZBundle/Test::Version",
+            "version" : "1.09"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::DROLSKY::Contributors",
+            "name" : "=DTTZBundle/DROLSKY::Contributors",
+            "version" : "0.89"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Contributors",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Contributors" : {
+                  "git_version" : "2.17.0",
+                  "include_authors" : 0,
+                  "include_releaser" : 1,
+                  "order_by" : "name",
+                  "paths" : []
+               }
+            },
+            "name" : "=DTTZBundle/Git::Contributors",
+            "version" : "0.034"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::SurgicalPodWeaver",
+            "config" : {
+               "Dist::Zilla::Plugin::PodWeaver" : {
+                  "config_plugins" : [
+                     "@DROLSKY"
+                  ],
+                  "finder" : [
+                     ":InstallModules",
+                     ":ExecFiles"
+                  ],
+                  "plugins" : [
+                     {
+                        "class" : "Pod::Weaver::Plugin::EnsurePod5",
+                        "name" : "@CorePrep/EnsurePod5",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Plugin::H1Nester",
+                        "name" : "@CorePrep/H1Nester",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Plugin::SingleEncoding",
+                        "name" : "@DROLSKY/SingleEncoding",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Plugin::Transformer",
+                        "name" : "@DROLSKY/List",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Plugin::Transformer",
+                        "name" : "@DROLSKY/Verbatim",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Region",
+                        "name" : "@DROLSKY/header",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Name",
+                        "name" : "@DROLSKY/Name",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Version",
+                        "name" : "@DROLSKY/Version",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Region",
+                        "name" : "@DROLSKY/prelude",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Generic",
+                        "name" : "SYNOPSIS",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Generic",
+                        "name" : "DESCRIPTION",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Generic",
+                        "name" : "OVERVIEW",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Collect",
+                        "name" : "ATTRIBUTES",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Collect",
+                        "name" : "METHODS",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Collect",
+                        "name" : "FUNCTIONS",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Collect",
+                        "name" : "TYPES",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Leftovers",
+                        "name" : "@DROLSKY/Leftovers",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Region",
+                        "name" : "@DROLSKY/postlude",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::GenerateSection",
+                        "name" : "@DROLSKY/generate SUPPORT",
+                        "version" : "1.06"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::AllowOverride",
+                        "name" : "@DROLSKY/allow override SUPPORT",
+                        "version" : "0.05"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::GenerateSection",
+                        "name" : "@DROLSKY/generate SOURCE",
+                        "version" : "1.06"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::GenerateSection",
+                        "name" : "@DROLSKY/generate DONATIONS",
+                        "version" : "1.06"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Authors",
+                        "name" : "@DROLSKY/Authors",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Contributors",
+                        "name" : "@DROLSKY/Contributors",
+                        "version" : "0.009"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Legal",
+                        "name" : "@DROLSKY/Legal",
+                        "version" : "4.015"
+                     },
+                     {
+                        "class" : "Pod::Weaver::Section::Region",
+                        "name" : "@DROLSKY/footer",
+                        "version" : "4.015"
+                     }
+                  ]
+               }
+            },
+            "name" : "=DTTZBundle/SurgicalPodWeaver",
+            "version" : "0.0023"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::DROLSKY::WeaverConfig",
+            "name" : "=DTTZBundle/DROLSKY::WeaverConfig",
+            "version" : "0.89"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::ReadmeAnyFromPod",
+            "config" : {
+               "Dist::Zilla::Role::FileWatcher" : {
+                  "version" : "0.006"
+               }
+            },
+            "name" : "=DTTZBundle/README.md in build",
+            "version" : "0.163250"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::GenerateFile::FromShareDir",
+            "config" : {
+               "Dist::Zilla::Plugin::GenerateFile::FromShareDir" : {
+                  "destination_filename" : "CONTRIBUTING.md",
+                  "dist" : "Dist-Zilla-PluginBundle-DROLSKY",
+                  "encoding" : "UTF-8",
+                  "has_xs" : 0,
+                  "location" : "build",
+                  "source_filename" : "CONTRIBUTING.md"
+               },
+               "Dist::Zilla::Role::RepoFileInjector" : {
+                  "allow_overwrite" : 1,
+                  "repo_root" : ".",
+                  "version" : "0.009"
+               }
+            },
+            "name" : "=DTTZBundle/Generate CONTRIBUTING.md",
+            "version" : "0.014"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::InstallGuide",
+            "name" : "=DTTZBundle/InstallGuide",
+            "version" : "1.200009"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CPANFile",
+            "name" : "=DTTZBundle/CPANFile",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::DROLSKY::License",
+            "name" : "=DTTZBundle/DROLSKY::License",
+            "version" : "0.89"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CheckStrictVersion",
+            "name" : "=DTTZBundle/CheckStrictVersion",
+            "version" : "0.001"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CheckSelfDependency",
+            "config" : {
+               "Dist::Zilla::Plugin::CheckSelfDependency" : {
+                  "finder" : [
+                     ":InstallModules"
+                  ]
+               },
+               "Dist::Zilla::Role::ModuleMetadata" : {
+                  "Module::Metadata" : "1.000033",
+                  "version" : "0.006"
+               }
+            },
+            "name" : "=DTTZBundle/CheckSelfDependency",
+            "version" : "0.011"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::CheckPrereqsIndexed",
+            "name" : "=DTTZBundle/CheckPrereqsIndexed",
+            "version" : "0.020"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::DROLSKY::Git::CheckFor::CorrectBranch",
+            "config" : {
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               }
+            },
+            "name" : "=DTTZBundle/DROLSKY::Git::CheckFor::CorrectBranch",
+            "version" : "0.89"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::EnsureChangesHasContent",
+            "name" : "=DTTZBundle/EnsureChangesHasContent",
+            "version" : "0.02"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::CheckFor::MergeConflicts",
+            "config" : {
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               }
+            },
+            "name" : "=DTTZBundle/Git::CheckFor::MergeConflicts",
+            "version" : "0.014"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::DROLSKY::TidyAll",
+            "name" : "=DTTZBundle/DROLSKY::TidyAll",
+            "version" : "0.89"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Check",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Check" : {
+                  "untracked_files" : "die"
+               },
+               "Dist::Zilla::Role::Git::DirtyFiles" : {
+                  "allow_dirty" : [
+                     "CONTRIBUTING.md",
+                     "Changes",
+                     "LICENSE",
+                     "Makefile.PL",
+                     "README.md",
+                     "cpanfile",
+                     "tidyall.ini"
+                  ],
+                  "allow_dirty_match" : [],
+                  "changelog" : "Changes"
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               }
+            },
+            "name" : "=DTTZBundle/Git::Check",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Commit",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Commit" : {
+                  "add_files_in" : [],
+                  "commit_msg" : "v%v%n%n%c"
+               },
+               "Dist::Zilla::Role::Git::DirtyFiles" : {
+                  "allow_dirty" : [
+                     "CONTRIBUTING.md",
+                     "Changes",
+                     "LICENSE",
+                     "Makefile.PL",
+                     "README.md",
+                     "cpanfile",
+                     "tidyall.ini"
+                  ],
+                  "allow_dirty_match" : [],
+                  "changelog" : "Changes"
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               },
+               "Dist::Zilla::Role::Git::StringFormatter" : {
+                  "time_zone" : "local"
+               }
+            },
+            "name" : "=DTTZBundle/Commit generated files",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Tag",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Tag" : {
+                  "branch" : null,
+                  "changelog" : "Changes",
+                  "signed" : 0,
+                  "tag" : "v2.19",
+                  "tag_format" : "v%v",
+                  "tag_message" : "v%v"
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               },
+               "Dist::Zilla::Role::Git::StringFormatter" : {
+                  "time_zone" : "local"
+               }
+            },
+            "name" : "=DTTZBundle/Git::Tag",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Push",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Push" : {
+                  "push_to" : [
+                     "origin"
+                  ],
+                  "remotes_must_exist" : 1
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               }
+            },
+            "name" : "=DTTZBundle/Git::Push",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::BumpVersionAfterRelease",
+            "config" : {
+               "Dist::Zilla::Plugin::BumpVersionAfterRelease" : {
+                  "finders" : [
+                     ":ExecFiles",
+                     ":InstallModules"
+                  ],
+                  "global" : 0,
+                  "munge_makefile_pl" : 1
+               }
+            },
+            "name" : "=DTTZBundle/BumpVersionAfterRelease",
+            "version" : "0.018"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Commit",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Commit" : {
+                  "add_files_in" : [],
+                  "commit_msg" : "Bump version after release"
+               },
+               "Dist::Zilla::Role::Git::DirtyFiles" : {
+                  "allow_dirty" : [
+                     "Changes",
+                     "dist.ini"
+                  ],
+                  "allow_dirty_match" : [
+                     "(?^:.+)"
+                  ],
+                  "changelog" : "Changes"
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               },
+               "Dist::Zilla::Role::Git::StringFormatter" : {
+                  "time_zone" : "local"
+               }
+            },
+            "name" : "=DTTZBundle/Commit version bump",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Git::Push",
+            "config" : {
+               "Dist::Zilla::Plugin::Git::Push" : {
+                  "push_to" : [
+                     "origin"
+                  ],
+                  "remotes_must_exist" : 1
+               },
+               "Dist::Zilla::Role::Git::Repo" : {
+                  "git_version" : "2.17.0",
+                  "repo_root" : "."
+               }
+            },
+            "name" : "=DTTZBundle/Push version bump",
+            "version" : "2.043"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::OSPrereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::OSPrereqs" : {
+                  "os" : "MSWin32"
+               }
+            },
+            "name" : "=DTTZBundle/MSWin32",
+            "version" : "0.010"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Prereqs",
+            "config" : {
+               "Dist::Zilla::Plugin::Prereqs" : {
+                  "phase" : "develop",
+                  "type" : "requires"
+               }
+            },
+            "name" : "DevelopRequires",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":InstallModules",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":IncModules",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":TestFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":ExtraTestFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":ExecFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":PerlExecFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":ShareFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":MainModule",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":AllFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : ":NoFiles",
+            "version" : "6.012"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::FinderCode",
+            "name" : "=DTTZBundle/MetaProvides::Package/AUTOVIV/:InstallModulesPM",
+            "version" : "6.012"
+         }
+      ],
+      "zilla" : {
+         "class" : "Dist::Zilla::Dist::Builder",
+         "config" : {
+            "is_trial" : 0
+         },
+         "version" : "6.012"
+      }
+   },
+   "x_authority" : "cpan:DROLSKY",
+   "x_contributors" : [
+      "Alexey Molchanov <alexey.molchanov@gmail.com>",
+      "Alfie John <alfiej@fastmail.fm>",
+      "Bron Gondwana <brong@fastmail.fm>",
+      "Daisuke Maki <dmaki@cpan.org>",
+      "David Pinkowitz <dave@pinkowitz.com>",
+      "Iain Truskett <deceased>",
+      "Jakub Wilk <jwilk@jwilk.net>",
+      "Joshua Hoblitt <jhoblitt@cpan.org>",
+      "Karen Etheridge <ether@cpan.org>",
+      "karupanerura <karupa@cpan.org>",
+      "Olaf Alders <olaf@wundersolutions.com>",
+      "Peter Rabbitson <ribasushi@cpan.org>",
+      "Tom Wyant <wyant@cpan.org>"
+   ],
+   "x_generated_by_perl" : "v5.26.2",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

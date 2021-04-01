@@ -1,0 +1,56 @@
+{
+   "abstract" : "A simple, unified interface for Textile, Markdown and BBCode.",
+   "author" : [
+      "Ido Perlmuter <ido@ido50.net>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 5.031, CPAN::Meta::Converter version 2.143240, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Markup-Unified",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Module::Load::Conditional" : "0",
+            "overload" : "0",
+            "perl" : "5.006",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/ido50/Markup-Unified/issues"
+      },
+      "homepage" : "http://search.cpan.org/dist/Markup-Unified",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/ido50/Markup-Unified.git",
+         "web" : "https://github.com/ido50/Markup-Unified"
+      }
+   },
+   "version" : "1.000000",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

@@ -1,0 +1,70 @@
+{
+   "abstract" : "Associate user-defined magic to variables from Perl.",
+   "author" : [
+      "Vincent Pit <perl@profvince.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 7.3, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Variable-Magic",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Carp" : "0",
+            "Config" : "0",
+            "Exporter" : "0",
+            "ExtUtils::MakeMaker" : "0",
+            "IO::Handle" : "0",
+            "IO::Select" : "0",
+            "IPC::Open3" : "0",
+            "POSIX" : "0",
+            "Socket" : "0",
+            "Test::More" : "0",
+            "XSLoader" : "0",
+            "base" : "0",
+            "lib" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "Exporter" : "0",
+            "XSLoader" : "0",
+            "base" : "0",
+            "perl" : "5.008"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "http://rt.cpan.org/Dist/Display.html?Name=Variable-Magic"
+      },
+      "homepage" : "http://search.cpan.org/dist/Variable-Magic/",
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "url" : "http://git.profvince.com/?p=perl%2Fmodules%2FVariable-Magic.git"
+      }
+   },
+   "version" : "0.62",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

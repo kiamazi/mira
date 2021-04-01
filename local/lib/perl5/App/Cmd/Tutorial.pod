@@ -1,0 +1,675 @@
+
+#pod =head1 DESCRIPTION
+#pod
+#pod App::Cmd is a set of tools designed to make it simple to write sophisticated
+#pod command line programs.  It handles commands with multiple subcommands,
+#pod generates usage text, validates options, and lets you write your program as
+#pod easy-to-test classes.
+#pod
+#pod An App::Cmd-based application is made up of three main parts:  the script,
+#pod the application class, and the command classes.
+#pod
+#pod =head2 The Script
+#pod
+#pod The script is the actual executable file run at the command line.  It can
+#pod generally consist of just a few lines:
+#pod
+#pod   #!/usr/bin/perl
+#pod   use YourApp;
+#pod   YourApp->run;
+#pod
+#pod =head2 The Application Class
+#pod
+#pod All the work of argument parsing, validation, and dispatch is taken care of by
+#pod your application class.  The application class can also be pretty simple, and
+#pod might look like this:
+#pod
+#pod   package YourApp;
+#pod   use App::Cmd::Setup -app;
+#pod   1;
+#pod
+#pod When a new application instance is created, it loads all of the command classes
+#pod it can find, looking for modules under the Command namespace under its own
+#pod name.  In the above snippet, for example, YourApp will look for any module with
+#pod a name starting with C<YourApp::Command::>.
+#pod
+#pod =head2 The Command Classes
+#pod
+#pod We can set up a simple command class like this:
+#pod
+#pod   # ABSTRACT: set up YourApp
+#pod   package YourApp::Command::initialize;
+#pod   use YourApp -command;
+#pod   1;
+#pod
+#pod Now, a user can run this command, but he'll get an error:
+#pod
+#pod   $ yourcmd initialize
+#pod   YourApp::Command::initialize does not implement mandatory method 'execute'
+#pod
+#pod Oops!  This dies because we haven't told the command class what it should do
+#pod when executed.  This is easy, we just add some code:
+#pod
+#pod   sub execute {
+#pod     my ($self, $opt, $args) = @_;
+#pod
+#pod     print "Everything has been initialized.  (Not really.)\n";
+#pod   }
+#pod
+#pod Now it works:
+#pod
+#pod   $ yourcmd initialize
+#pod   Everything has been initialized.  (Not really.)
+#pod
+#pod =head2 Default Commands
+#pod
+#pod By default applications made with App::Cmd know two commands: C<commands> and
+#pod C<help>.
+#pod
+#pod =over
+#pod
+#pod =item commands
+#pod
+#pod lists available commands.
+#pod
+#pod   $yourcmd commands
+#pod   Available commands:
+#pod
+#pod     commands: list the application's commands
+#pod         help: display a command's help screen
+#pod
+#pod         init: set up YourApp
+#pod
+#pod Note that by default the commands receive a description from the C<# ABSTRACT>
+#pod comment in the respective command's module, or from the C<=head1 NAME> Pod
+#pod section.
+#pod
+#pod =item help
+#pod
+#pod allows one to query for details on command's specifics.
+#pod
+#pod   $yourcmd help initialize
+#pod    yourcmd initialize [-z] [long options...]
+#pod
+#pod           -z --zero        ignore zeros
+#pod
+#pod Of course, it's possible to disable or change the default commands, see
+#pod L<App::Cmd>.
+#pod
+#pod =back
+#pod
+#pod =head2 Arguments and Options
+#pod
+#pod In this example
+#pod
+#pod   $ yourcmd reset -zB --new-seed xyzxy foo.db bar.db
+#pod
+#pod C<-zB> and C<--new-seed xyzxy> are "options" and C<foo.db> and C<bar.db>
+#pod are "arguments."
+#pod
+#pod With a properly configured command class, the above invocation results in
+#pod nicely formatted data:
+#pod
+#pod   $opt = {
+#pod     zero      => 1,
+#pod     no_backup => 1, #default value
+#pod     new_seed  => 'xyzzy',
+#pod   };
+#pod
+#pod   $args = [ qw(foo.db bar.db) ];
+#pod
+#pod Arguments are processed by L<Getopt::Long::Descriptive> (GLD).  To customize
+#pod its argument processing, a command class can implement a few methods:
+#pod C<usage_desc> provides the usage format string; C<opt_spec> provides the option
+#pod specification list; C<validate_args> is run after Getopt::Long::Descriptive,
+#pod and is meant to validate the C<$args>, which GLD ignores. See L<Getopt::Long>
+#pod for format specifications.
+#pod
+#pod The first two methods provide configuration passed to GLD's C<describe_options>
+#pod routine.  To improve our command class, we might add the following code:
+#pod
+#pod   sub usage_desc { "yourcmd %o [dbfile ...]" }
+#pod
+#pod   sub opt_spec {
+#pod     return (
+#pod       [ "skip-refs|R",  "skip reference checks during init", ],
+#pod       [ "values|v=s@",  "starting values", { default => [ 0, 1, 3 ] } ],
+#pod     );
+#pod   }
+#pod
+#pod   sub validate_args {
+#pod     my ($self, $opt, $args) = @_;
+#pod
+#pod     # we need at least one argument beyond the options; die with that message
+#pod     # and the complete "usage" text describing switches, etc
+#pod     $self->usage_error("too few arguments") unless @$args;
+#pod   }
+#pod
+#pod =head2 Global Options
+#pod
+#pod There are several ways of making options available everywhere (globally). This
+#pod recipe makes local options accessible in all commands.
+#pod
+#pod To add a C<--help> option to all your commands create a base class like:
+#pod
+#pod   package MyApp::Command;
+#pod   use App::Cmd::Setup -command;
+#pod
+#pod   sub opt_spec {
+#pod     my ( $class, $app ) = @_;
+#pod     return (
+#pod       [ 'help' => "this usage screen" ],
+#pod       $class->options($app),
+#pod     )
+#pod   }
+#pod
+#pod   sub validate_args {
+#pod     my ( $self, $opt, $args ) = @_;
+#pod     if ( $opt->{help} ) {
+#pod       my ($command) = $self->command_names;
+#pod       $self->app->execute_command(
+#pod         $self->app->prepare_command("help", $command)
+#pod       );
+#pod       exit;
+#pod     }
+#pod     $self->validate( $opt, $args );
+#pod   }
+#pod
+#pod Where C<options> and C<validate> are "inner" methods which your command
+#pod subclasses implement to provide command-specific options and validation.
+#pod
+#pod Note: this is a new file, previously not mentioned in this tutorial and this
+#pod tip does not recommend the use of global_opt_spec which offers an alternative
+#pod way of specifying global options.
+#pod
+#pod =head1 TIPS
+#pod
+#pod =over 4
+#pod
+#pod =item *
+#pod
+#pod Delay using large modules using L<Class::Load>, L<Module::Runtime> or C<require> in
+#pod your commands to save memory and make startup faster. Since only one of these
+#pod commands will be run anyway, there's no need to preload the requirements for
+#pod all of them.
+#pod
+#pod =item *
+#pod
+#pod Add a C<description> method to your commands for more verbose output
+#pod from the built-in L<help|App::Cmd::Command::help> command.
+#pod
+#pod   sub description {
+#pod     return "The initialize command prepares ...";
+#pod   }
+#pod
+#pod =item *
+#pod
+#pod To let your users configure default values for options, put a sub like
+#pod
+#pod   sub config {
+#pod     my $app = shift;
+#pod     $app->{config} ||= TheLovelyConfigModule->load_config_file();
+#pod   }
+#pod
+#pod in your main app file, and then do something like:
+#pod
+#pod   package YourApp;
+#pod   sub opt_spec {
+#pod     my ( $class, $app ) = @_;
+#pod     my ( $name ) = $class->command_names;
+#pod     return (
+#pod       [ 'blort=s' => "That special option",
+#pod         { default => $app->config->{$name}{blort} || $fallback_default },
+#pod       ],
+#pod     );
+#pod   }
+#pod
+#pod Or better yet, put this logic in a superclass and process the return value from
+#pod an "inner" method:
+#pod
+#pod   package YourApp::Command;
+#pod   sub opt_spec {
+#pod     my ( $class, $app ) = @_;
+#pod     return (
+#pod       [ 'help' => "this usage screen" ],
+#pod       $class->options($app),
+#pod     )
+#pod   }
+#pod
+#pod
+#pod =item *
+#pod
+#pod You need to activate C<strict> and C<warnings> as usual if you want them.
+#pod App::Cmd doesn't do that for you.
+#pod
+#pod =back
+#pod
+#pod =head1 IGNORING THINGS
+#pod
+#pod Some people find that for whatever reason, they wish to put Modules in their
+#pod C<MyApp::Command::> namespace which are not commands, or not commands intended
+#pod for use by C<MyApp>.
+#pod
+#pod Good examples include, but are not limited to, things like
+#pod C<MyApp::Command::frobrinate::Plugin::Quietly>, where C<::Quietly> is only
+#pod useful for the C<frobrinate> command.
+#pod
+#pod The default behaviour is to treat such packages as errors, as for the majority
+#pod of use cases, things in C<::Command> are expected to I<only> be commands, and
+#pod thus, anything that, by our heuristics, is not a command, is highly likely to be
+#pod a mistake.
+#pod
+#pod And as all commands are loaded simultaneously, an error in any one of these
+#pod commands will yield a fatal error.
+#pod
+#pod There are a few ways to specify that you are sure you want to do this, with
+#pod varying ranges of scope and complexity.
+#pod
+#pod =head2 Ignoring a Single Module.
+#pod
+#pod This is the simplest approach, and most useful for one-offs.
+#pod
+#pod   package YourApp::Command::foo::NotACommand;
+#pod
+#pod   use YourApp -ignore;
+#pod
+#pod   <whatever you want here>
+#pod
+#pod This will register this package's namespace with YourApp to be excluded from
+#pod its plugin validation magic. It otherwise makes no changes to
+#pod C<::NotACommand>'s namespace, does nothing magical with C<@ISA>, and doesn't
+#pod bolt any hidden functions on.
+#pod
+#pod Its also probably good to notice that it is ignored I<only> by
+#pod C<YourApp>. If for whatever reason you have two different C<App::Cmd> systems
+#pod under which C<::NotACommand> is visible, you'll need to set it ignored to both.
+#pod
+#pod This is probably a big big warning B<NOT> to do that.
+#pod
+#pod =head2 Ignoring Multiple modules from the App level.
+#pod
+#pod If you really fancy it, you can override the C<should_ignore> method provided by
+#pod C<App::Cmd> to tweak its ignore logic. The most useful example of this is as
+#pod follows:
+#pod
+#pod   sub should_ignore {
+#pod     my ( $self, $command_class ) = @_;
+#pod     return 1 if not $command_class->isa( 'App::Cmd::Command' );
+#pod     return;
+#pod   }
+#pod
+#pod This will prematurely mark for ignoring all packages that don't subclass
+#pod C<App::Cmd::Command>, which causes non-commands ( or perhaps commands that are
+#pod coded wrongly / broken ) to be silently skipped.
+#pod
+#pod Note that by overriding this method, you will lose the effect of any of the
+#pod other ignore mechanisms completely. If you want to combine the original
+#pod C<should_ignore> method with your own logic, you'll want to steal C<Moose>'s
+#pod C<around> method modifier.
+#pod
+#pod   use Moose::Util;
+#pod
+#pod   Moose::Util::add_method_modifier( __PACKAGE__, 'around', [
+#pod     should_ignore => sub {
+#pod       my $orig = shift;
+#pod       my $self = shift;
+#pod       return 1 if not $command_class->isa( 'App::Cmd::Command' );
+#pod       return $self->$orig( @_ );
+#pod   }]);
+#pod
+#pod =head1 SEE ALSO
+#pod
+#pod L<CPAN modules using App::Cmd|http://deps.cpantesters.org/depended-on-by.pl?module=App%3A%3ACmd>
+#pod
+#pod =cut
+
+# ABSTRACT: getting started with App::Cmd
+# PODNAME: App::Cmd::Tutorial
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+App::Cmd::Tutorial - getting started with App::Cmd
+
+=head1 VERSION
+
+version 0.331
+
+=head1 DESCRIPTION
+
+App::Cmd is a set of tools designed to make it simple to write sophisticated
+command line programs.  It handles commands with multiple subcommands,
+generates usage text, validates options, and lets you write your program as
+easy-to-test classes.
+
+An App::Cmd-based application is made up of three main parts:  the script,
+the application class, and the command classes.
+
+=head2 The Script
+
+The script is the actual executable file run at the command line.  It can
+generally consist of just a few lines:
+
+  #!/usr/bin/perl
+  use YourApp;
+  YourApp->run;
+
+=head2 The Application Class
+
+All the work of argument parsing, validation, and dispatch is taken care of by
+your application class.  The application class can also be pretty simple, and
+might look like this:
+
+  package YourApp;
+  use App::Cmd::Setup -app;
+  1;
+
+When a new application instance is created, it loads all of the command classes
+it can find, looking for modules under the Command namespace under its own
+name.  In the above snippet, for example, YourApp will look for any module with
+a name starting with C<YourApp::Command::>.
+
+=head2 The Command Classes
+
+We can set up a simple command class like this:
+
+  # ABSTRACT: set up YourApp
+  package YourApp::Command::initialize;
+  use YourApp -command;
+  1;
+
+Now, a user can run this command, but he'll get an error:
+
+  $ yourcmd initialize
+  YourApp::Command::initialize does not implement mandatory method 'execute'
+
+Oops!  This dies because we haven't told the command class what it should do
+when executed.  This is easy, we just add some code:
+
+  sub execute {
+    my ($self, $opt, $args) = @_;
+
+    print "Everything has been initialized.  (Not really.)\n";
+  }
+
+Now it works:
+
+  $ yourcmd initialize
+  Everything has been initialized.  (Not really.)
+
+=head2 Default Commands
+
+By default applications made with App::Cmd know two commands: C<commands> and
+C<help>.
+
+=over
+
+=item commands
+
+lists available commands.
+
+  $yourcmd commands
+  Available commands:
+
+    commands: list the application's commands
+        help: display a command's help screen
+
+        init: set up YourApp
+
+Note that by default the commands receive a description from the C<# ABSTRACT>
+comment in the respective command's module, or from the C<=head1 NAME> Pod
+section.
+
+=item help
+
+allows one to query for details on command's specifics.
+
+  $yourcmd help initialize
+   yourcmd initialize [-z] [long options...]
+
+          -z --zero        ignore zeros
+
+Of course, it's possible to disable or change the default commands, see
+L<App::Cmd>.
+
+=back
+
+=head2 Arguments and Options
+
+In this example
+
+  $ yourcmd reset -zB --new-seed xyzxy foo.db bar.db
+
+C<-zB> and C<--new-seed xyzxy> are "options" and C<foo.db> and C<bar.db>
+are "arguments."
+
+With a properly configured command class, the above invocation results in
+nicely formatted data:
+
+  $opt = {
+    zero      => 1,
+    no_backup => 1, #default value
+    new_seed  => 'xyzzy',
+  };
+
+  $args = [ qw(foo.db bar.db) ];
+
+Arguments are processed by L<Getopt::Long::Descriptive> (GLD).  To customize
+its argument processing, a command class can implement a few methods:
+C<usage_desc> provides the usage format string; C<opt_spec> provides the option
+specification list; C<validate_args> is run after Getopt::Long::Descriptive,
+and is meant to validate the C<$args>, which GLD ignores. See L<Getopt::Long>
+for format specifications.
+
+The first two methods provide configuration passed to GLD's C<describe_options>
+routine.  To improve our command class, we might add the following code:
+
+  sub usage_desc { "yourcmd %o [dbfile ...]" }
+
+  sub opt_spec {
+    return (
+      [ "skip-refs|R",  "skip reference checks during init", ],
+      [ "values|v=s@",  "starting values", { default => [ 0, 1, 3 ] } ],
+    );
+  }
+
+  sub validate_args {
+    my ($self, $opt, $args) = @_;
+
+    # we need at least one argument beyond the options; die with that message
+    # and the complete "usage" text describing switches, etc
+    $self->usage_error("too few arguments") unless @$args;
+  }
+
+=head2 Global Options
+
+There are several ways of making options available everywhere (globally). This
+recipe makes local options accessible in all commands.
+
+To add a C<--help> option to all your commands create a base class like:
+
+  package MyApp::Command;
+  use App::Cmd::Setup -command;
+
+  sub opt_spec {
+    my ( $class, $app ) = @_;
+    return (
+      [ 'help' => "this usage screen" ],
+      $class->options($app),
+    )
+  }
+
+  sub validate_args {
+    my ( $self, $opt, $args ) = @_;
+    if ( $opt->{help} ) {
+      my ($command) = $self->command_names;
+      $self->app->execute_command(
+        $self->app->prepare_command("help", $command)
+      );
+      exit;
+    }
+    $self->validate( $opt, $args );
+  }
+
+Where C<options> and C<validate> are "inner" methods which your command
+subclasses implement to provide command-specific options and validation.
+
+Note: this is a new file, previously not mentioned in this tutorial and this
+tip does not recommend the use of global_opt_spec which offers an alternative
+way of specifying global options.
+
+=head1 TIPS
+
+=over 4
+
+=item *
+
+Delay using large modules using L<Class::Load>, L<Module::Runtime> or C<require> in
+your commands to save memory and make startup faster. Since only one of these
+commands will be run anyway, there's no need to preload the requirements for
+all of them.
+
+=item *
+
+Add a C<description> method to your commands for more verbose output
+from the built-in L<help|App::Cmd::Command::help> command.
+
+  sub description {
+    return "The initialize command prepares ...";
+  }
+
+=item *
+
+To let your users configure default values for options, put a sub like
+
+  sub config {
+    my $app = shift;
+    $app->{config} ||= TheLovelyConfigModule->load_config_file();
+  }
+
+in your main app file, and then do something like:
+
+  package YourApp;
+  sub opt_spec {
+    my ( $class, $app ) = @_;
+    my ( $name ) = $class->command_names;
+    return (
+      [ 'blort=s' => "That special option",
+        { default => $app->config->{$name}{blort} || $fallback_default },
+      ],
+    );
+  }
+
+Or better yet, put this logic in a superclass and process the return value from
+an "inner" method:
+
+  package YourApp::Command;
+  sub opt_spec {
+    my ( $class, $app ) = @_;
+    return (
+      [ 'help' => "this usage screen" ],
+      $class->options($app),
+    )
+  }
+
+=item *
+
+You need to activate C<strict> and C<warnings> as usual if you want them.
+App::Cmd doesn't do that for you.
+
+=back
+
+=head1 IGNORING THINGS
+
+Some people find that for whatever reason, they wish to put Modules in their
+C<MyApp::Command::> namespace which are not commands, or not commands intended
+for use by C<MyApp>.
+
+Good examples include, but are not limited to, things like
+C<MyApp::Command::frobrinate::Plugin::Quietly>, where C<::Quietly> is only
+useful for the C<frobrinate> command.
+
+The default behaviour is to treat such packages as errors, as for the majority
+of use cases, things in C<::Command> are expected to I<only> be commands, and
+thus, anything that, by our heuristics, is not a command, is highly likely to be
+a mistake.
+
+And as all commands are loaded simultaneously, an error in any one of these
+commands will yield a fatal error.
+
+There are a few ways to specify that you are sure you want to do this, with
+varying ranges of scope and complexity.
+
+=head2 Ignoring a Single Module.
+
+This is the simplest approach, and most useful for one-offs.
+
+  package YourApp::Command::foo::NotACommand;
+
+  use YourApp -ignore;
+
+  <whatever you want here>
+
+This will register this package's namespace with YourApp to be excluded from
+its plugin validation magic. It otherwise makes no changes to
+C<::NotACommand>'s namespace, does nothing magical with C<@ISA>, and doesn't
+bolt any hidden functions on.
+
+Its also probably good to notice that it is ignored I<only> by
+C<YourApp>. If for whatever reason you have two different C<App::Cmd> systems
+under which C<::NotACommand> is visible, you'll need to set it ignored to both.
+
+This is probably a big big warning B<NOT> to do that.
+
+=head2 Ignoring Multiple modules from the App level.
+
+If you really fancy it, you can override the C<should_ignore> method provided by
+C<App::Cmd> to tweak its ignore logic. The most useful example of this is as
+follows:
+
+  sub should_ignore {
+    my ( $self, $command_class ) = @_;
+    return 1 if not $command_class->isa( 'App::Cmd::Command' );
+    return;
+  }
+
+This will prematurely mark for ignoring all packages that don't subclass
+C<App::Cmd::Command>, which causes non-commands ( or perhaps commands that are
+coded wrongly / broken ) to be silently skipped.
+
+Note that by overriding this method, you will lose the effect of any of the
+other ignore mechanisms completely. If you want to combine the original
+C<should_ignore> method with your own logic, you'll want to steal C<Moose>'s
+C<around> method modifier.
+
+  use Moose::Util;
+
+  Moose::Util::add_method_modifier( __PACKAGE__, 'around', [
+    should_ignore => sub {
+      my $orig = shift;
+      my $self = shift;
+      return 1 if not $command_class->isa( 'App::Cmd::Command' );
+      return $self->$orig( @_ );
+  }]);
+
+=head1 SEE ALSO
+
+L<CPAN modules using App::Cmd|http://deps.cpantesters.org/depended-on-by.pl?module=App%3A%3ACmd>
+
+=head1 AUTHOR
+
+Ricardo Signes <rjbs@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Ricardo Signes.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

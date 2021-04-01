@@ -1,0 +1,85 @@
+{
+   "abstract" : "Get information about a class and its structure",
+   "author" : [
+      "Graham Ollis <plicease@cpan.org>",
+      "Adam Kennedy <adamk@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 6.010, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Class-Inspector",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "FindBin" : "0",
+            "Test::EOL" : "0",
+            "Test::Fixme" : "0.07",
+            "Test::More" : "0.94",
+            "Test::NoTabs" : "0",
+            "Test::Pod" : "0",
+            "Test::Pod::Coverage" : "0",
+            "Test::Pod::Spelling::CommonMistakes" : "0",
+            "Test::Strict" : "0",
+            "YAML" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "File::Spec" : "0.80",
+            "perl" : "5.006"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.94"
+         }
+      }
+   },
+   "provides" : {
+      "Class::Inspector" : {
+         "file" : "lib/Class/Inspector.pm",
+         "version" : "1.32"
+      },
+      "Class::Inspector::Functions" : {
+         "file" : "lib/Class/Inspector/Functions.pm",
+         "version" : "1.32"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/plicease/Class-Inspector/issues"
+      },
+      "homepage" : "https://metacpan.org/pod/Class::Inspector",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/plicease/Class-Inspector.git",
+         "web" : "https://github.com/plicease/Class-Inspector"
+      }
+   },
+   "version" : "1.32",
+   "x_contributors" : [
+      "Adam Kennedy <adamk@cpan.org>",
+      "Graham Ollis <plicease@cpan.org>",
+      "Tom Wyant",
+      "Steffen Müller",
+      "Kivanc Yazan (KYZN)"
+   ],
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

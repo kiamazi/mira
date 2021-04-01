@@ -1,0 +1,66 @@
+{
+   "abstract" : "mro::* interface compatibility for Perls < 5.9.5",
+   "author" : [
+      "Brandon L. Black <blblack@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 7.24, CPAN::Meta::Converter version 2.150005, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "MRO-Compat",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {}
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::Pod" : "1.14",
+            "Test::Pod::Coverage" : "1.04"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "perl" : "5.006"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.47"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-MRO-Compat@rt.cpan.org",
+         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=MRO-Compat"
+      },
+      "homepage" : "https://metacpan.org/release/MRO-Compat",
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/moose/MRO-Compat.git",
+         "web" : "https://github.com/moose/MRO-Compat"
+      }
+   },
+   "version" : "0.13",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

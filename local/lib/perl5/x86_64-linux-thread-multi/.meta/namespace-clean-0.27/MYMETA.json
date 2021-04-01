@@ -1,0 +1,64 @@
+{
+   "abstract" : "Keep imports and functions out of your namespace",
+   "author" : [
+      "Robert 'phaylon' Sedlacek <rs@474.at>",
+      "Florian Ragwitz <rafl@debian.org>",
+      "Jesse Luehrs <doy@tozt.net>",
+      "Peter Rabbitson <ribasushi@cpan.org>",
+      "Father Chrysostomos <sprout@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.150005, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "namespace-clean",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {}
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "B::Hooks::EndOfScope" : "0.12",
+            "Package::Stash" : "0.23",
+            "perl" : "5.008001"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.47"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-namespace-clean@rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=namespace-clean"
+      },
+      "homepage" : "http://search.cpan.org/dist/namespace-clean",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://git.shadowcat.co.uk/p5sagit/namespace-clean.git",
+         "web" : "https://github.com/p5sagit/namespace-clean"
+      },
+      "x_IRC" : "irc://irc.perl.org/#toolchain"
+   },
+   "version" : "0.27",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}
